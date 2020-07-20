@@ -5,8 +5,63 @@
         <description>Recent content in Posts on Aamer Paul</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sat, 18 Jul 2020 14:40:14 +0530</lastBuildDate>
+        <lastBuildDate>Mon, 20 Jul 2020 15:44:00 +0530</lastBuildDate>
         <atom:link href="https://aamernabi.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Fail-fast iterator and Fail-safe iterator</title>
+            <link>https://aamernabi.github.io/posts/fail-fast_and_fail-safe_iterator/</link>
+            <pubDate>Mon, 20 Jul 2020 15:44:00 +0530</pubDate>
+            
+            <guid>https://aamernabi.github.io/posts/fail-fast_and_fail-safe_iterator/</guid>
+            <description>&lt;h4 id=&#34;fail-fast-iterator&#34;&gt;Fail-fast iterator&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Fail-Fast iterators immediately throw &lt;strong&gt;ConcurrentModificationException&lt;/strong&gt; if there is &lt;em&gt;&lt;strong&gt;structural modification&lt;/strong&gt;&lt;/em&gt; of
+the collection.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;A fail-fast iterator in Java is designed to immediately throw a&lt;code&gt;ConcurrentModificationException&lt;/code&gt;if the collection it is
+iterating over is structurally modified (elements added or removed) while the iteration is in progress, except when
+modification is done through the iterator&amp;rsquo;s own&lt;code&gt;remove()&lt;/code&gt;method. This behavior helps in detecting concurrent
+modification issues early, preventing potential data corruption or unexpected behavior.&lt;/p&gt;</description>
+            <content type="html"><![CDATA[<h4 id="fail-fast-iterator">Fail-fast iterator</h4>
+<blockquote>
+<p>Fail-Fast iterators immediately throw <strong>ConcurrentModificationException</strong> if there is <em><strong>structural modification</strong></em> of
+the collection.</p></blockquote>
+<p>A fail-fast iterator in Java is designed to immediately throw a<code>ConcurrentModificationException</code>if the collection it is
+iterating over is structurally modified (elements added or removed) while the iteration is in progress, except when
+modification is done through the iterator&rsquo;s own<code>remove()</code>method. This behavior helps in detecting concurrent
+modification issues early, preventing potential data corruption or unexpected behavior.</p>
+<p>Fail-fast iterators work by maintaining a modification counter (<code>modCount</code>) within the collection. Each time the
+collection is structurally modified, the<code>modCount</code>is incremented. When an iterator is created, it records the current
+value of<code>modCount</code>. Before each iteration (e.g., in the<code>next()</code>method), the iterator checks if the current<code>modCount</code>of
+the collection matches the recorded value. If they differ, it indicates that the collection has been modified since the
+iterator was created, and a<code>ConcurrentModificationException</code>is thrown.</p>
+<p>Iterator on ArrayList, HashMap classes are some examples of fail-fast Iterator.</p>
+<p>Examples of collections in Java that use fail-fast iterators include<code>ArrayList</code>,<code>HashMap</code>, and<code>HashSet</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>  List<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> list <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;&gt;</span>(Arrays.<span style="color:#a6e22e">asList</span>(<span style="color:#e6db74">&#34;A&#34;</span>, <span style="color:#e6db74">&#34;B&#34;</span>, <span style="color:#e6db74">&#34;C&#34;</span>));
+</span></span><span style="display:flex;"><span>  Iterator<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> iterator <span style="color:#f92672">=</span> list.<span style="color:#a6e22e">iterator</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">while</span> (iterator.<span style="color:#a6e22e">hasNext</span>()) {
+</span></span><span style="display:flex;"><span>    String element <span style="color:#f92672">=</span> iterator.<span style="color:#a6e22e">next</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (element.<span style="color:#a6e22e">equals</span>(<span style="color:#e6db74">&#34;B&#34;</span>)) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>        list.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#34;C&#34;</span>); <span style="color:#75715e">// Structural modification outside iterator</span>
+</span></span><span style="display:flex;"><span>      } <span style="color:#66d9ef">catch</span> (ConcurrentModificationException e) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Exception: &#34;</span> <span style="color:#f92672">+</span> e);
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>In the example above, attempting to modify the<code>list</code>while iterating through it using the iterator will result in a
+<code>ConcurrentModificationException</code>.</p>
+<h4 id="fail-safe-iterator">Fail-safe Iterator</h4>
+<blockquote>
+<p><strong>Fail-Safe iterators</strong> don’t throw any exceptions if a collection is structurally modified while iterating over it.</p></blockquote>
+<p>This is because, they operate on the <em><strong>clone</strong></em> of the collection, not on the original collection and that’s why they
+are called fail-safe iterators. Iterator on <code>CopyOnWriteArrayList</code>, <code>ConcurrentHashMap</code> classes are examples of fail-safe
+Iterator.</p>
+]]></content>
+        </item>
         
         <item>
             <title>Example Post</title>

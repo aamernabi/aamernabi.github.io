@@ -6,8 +6,15 @@
     <description>Recent content on Aamer Paul</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Jul 2020 14:40:14 +0530</lastBuildDate>
+    <lastBuildDate>Mon, 20 Jul 2020 15:44:00 +0530</lastBuildDate>
     <atom:link href="https://aamernabi.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fail-fast iterator and Fail-safe iterator</title>
+      <link>https://aamernabi.github.io/posts/fail-fast_and_fail-safe_iterator/</link>
+      <pubDate>Mon, 20 Jul 2020 15:44:00 +0530</pubDate>
+      <guid>https://aamernabi.github.io/posts/fail-fast_and_fail-safe_iterator/</guid>
+      <description>&lt;h4 id=&#34;fail-fast-iterator&#34;&gt;Fail-fast iterator&lt;/h4&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;Fail-Fast iterators immediately throw &lt;strong&gt;ConcurrentModificationException&lt;/strong&gt; if there is &lt;em&gt;&lt;strong&gt;structural modification&lt;/strong&gt;&lt;/em&gt; of&#xA;the collection.&lt;/p&gt;&lt;/blockquote&gt;&#xA;&lt;p&gt;A fail-fast iterator in Java is designed to immediately throw a&lt;code&gt;ConcurrentModificationException&lt;/code&gt;if the collection it is&#xA;iterating over is structurally modified (elements added or removed) while the iteration is in progress, except when&#xA;modification is done through the iterator&amp;rsquo;s own&lt;code&gt;remove()&lt;/code&gt;method. This behavior helps in detecting concurrent&#xA;modification issues early, preventing potential data corruption or unexpected behavior.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>About Me</title>
       <link>https://aamernabi.github.io/about/</link>

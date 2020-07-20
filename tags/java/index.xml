@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java on Aamer Paul</title>
+    <link>https://aamernabi.github.io/tags/java/</link>
+    <description>Recent content in Java on Aamer Paul</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 20 Jul 2020 15:44:00 +0530</lastBuildDate>
+    <atom:link href="https://aamernabi.github.io/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fail-fast iterator and Fail-safe iterator</title>
+      <link>https://aamernabi.github.io/posts/fail-fast_and_fail-safe_iterator/</link>
+      <pubDate>Mon, 20 Jul 2020 15:44:00 +0530</pubDate>
+      <guid>https://aamernabi.github.io/posts/fail-fast_and_fail-safe_iterator/</guid>
+      <description>&lt;h4 id=&#34;fail-fast-iterator&#34;&gt;Fail-fast iterator&lt;/h4&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;Fail-Fast iterators immediately throw &lt;strong&gt;ConcurrentModificationException&lt;/strong&gt; if there is &lt;em&gt;&lt;strong&gt;structural modification&lt;/strong&gt;&lt;/em&gt; of&#xA;the collection.&lt;/p&gt;&lt;/blockquote&gt;&#xA;&lt;p&gt;A fail-fast iterator in Java is designed to immediately throw a&lt;code&gt;ConcurrentModificationException&lt;/code&gt;if the collection it is&#xA;iterating over is structurally modified (elements added or removed) while the iteration is in progress, except when&#xA;modification is done through the iterator&amp;rsquo;s own&lt;code&gt;remove()&lt;/code&gt;method. This behavior helps in detecting concurrent&#xA;modification issues early, preventing potential data corruption or unexpected behavior.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
