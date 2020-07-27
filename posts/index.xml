@@ -5,8 +5,90 @@
         <description>Recent content in Posts on Aamer Paul</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Mon, 27 Jul 2020 12:09:10 +0530</lastBuildDate>
+        <lastBuildDate>Mon, 27 Jul 2020 20:09:10 +0530</lastBuildDate>
         <atom:link href="https://aamernabi.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Blocking Queue in Java</title>
+            <link>https://aamernabi.github.io/posts/java-blocking-queue/</link>
+            <pubDate>Mon, 27 Jul 2020 20:09:10 +0530</pubDate>
+            
+            <guid>https://aamernabi.github.io/posts/java-blocking-queue/</guid>
+            <description>&lt;blockquote&gt;
+&lt;p&gt;A &lt;code&gt;BlockingQueue&lt;/code&gt; in Java is a &lt;code&gt;thread-safe queue&lt;/code&gt; that supports operations that wait for the queue to become non-empty when retrieving an element (for consuming), and wait for space to become available in the queue when storing an element (for producing).&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h3 id=&#34;why-do-we-need-blockingqueue&#34;&gt;Why do we need &lt;code&gt;BlockingQueue&lt;/code&gt;?&lt;/h3&gt;
+&lt;p&gt;In multi-threaded applications:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Producers&lt;/strong&gt; add data to a queue.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Consumers&lt;/strong&gt; remove data from the queue.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Instead of manually managing thread synchronization (with &lt;code&gt;wait()&lt;/code&gt; and &lt;code&gt;notify()&lt;/code&gt;), &lt;code&gt;BlockingQueue&lt;/code&gt;:&lt;/p&gt;</description>
+            <content type="html"><![CDATA[<blockquote>
+<p>A <code>BlockingQueue</code> in Java is a <code>thread-safe queue</code> that supports operations that wait for the queue to become non-empty when retrieving an element (for consuming), and wait for space to become available in the queue when storing an element (for producing).</p></blockquote>
+<h3 id="why-do-we-need-blockingqueue">Why do we need <code>BlockingQueue</code>?</h3>
+<p>In multi-threaded applications:</p>
+<ul>
+<li><strong>Producers</strong> add data to a queue.</li>
+<li><strong>Consumers</strong> remove data from the queue.</li>
+</ul>
+<p>Instead of manually managing thread synchronization (with <code>wait()</code> and <code>notify()</code>), <code>BlockingQueue</code>:</p>
+<ul>
+<li>Automatically <strong>blocks</strong> producers if the queue is full.</li>
+<li>Automatically <strong>blocks</strong> consumers if the queue is empty.</li>
+</ul>
+<p>This simplifies code and reduces the risk of concurrency bugs.</p>
+<p>The BlockingQueue acts as the coordinator between the producer and consumer threads, wrapping a list implementation together with thread signaling. The list contains a configurable number of elements that the producing threads fill with arbitrary data messages. On the other side, the consumer threads extract the messages in the order that they were enqueued and then process them. Coordination between the producers and consumers is necessary if they get out of sync, for example, if the producers hand off more messages than the consumers can handle. So BlockingQueue uses thread conditions to ensure that producers cannot enqueue new messages if the BlockingQueue list is full, and that consumers know when there are messages to fetch. Synchronization between the threads can be achieved with thread signaling, as Example: Consumer and Producer shows. But the BlockingQueue both blocks threads and signals the important state changes—i.e., the list is not full and the list is not empty.</p>
+<h3 id="example-producer-consumer-with-blockingqueue">Example: Producer-Consumer with BlockingQueue</h3>
+<p>The producer-consumer pattern implemented with the LinkedBlockingQueue-implementation is easily implemented by adding
+messages to the queue with put(), and removing them with take(), where put() blocks the caller if the queue is full, and
+take() blocks the caller if the queue is empty:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.concurrent.*;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BlockingQueueExample</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>    BlockingQueue<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> queue <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LinkedBlockingQueue<span style="color:#f92672">&lt;&gt;</span>(5); <span style="color:#75715e">// Fixed size queue</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Producer thread</span>
+</span></span><span style="display:flex;"><span>    Thread producer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread(() <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 1; i <span style="color:#f92672">&lt;=</span> 10; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>          String item <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Item &#34;</span> <span style="color:#f92672">+</span> i;
+</span></span><span style="display:flex;"><span>          System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Producing: &#34;</span> <span style="color:#f92672">+</span> item);
+</span></span><span style="display:flex;"><span>          queue.<span style="color:#a6e22e">put</span>(item);  <span style="color:#75715e">// blocks if queue is full</span>
+</span></span><span style="display:flex;"><span>          Thread.<span style="color:#a6e22e">sleep</span>(500);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      } <span style="color:#66d9ef">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>        Thread.<span style="color:#a6e22e">currentThread</span>().<span style="color:#a6e22e">interrupt</span>();
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Consumer thread</span>
+</span></span><span style="display:flex;"><span>    Thread consumer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread(() <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 1; i <span style="color:#f92672">&lt;=</span> 10; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>          String item <span style="color:#f92672">=</span> queue.<span style="color:#a6e22e">take</span>(); <span style="color:#75715e">// blocks if queue is empty</span>
+</span></span><span style="display:flex;"><span>          System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Consuming: &#34;</span> <span style="color:#f92672">+</span> item);
+</span></span><span style="display:flex;"><span>          Thread.<span style="color:#a6e22e">sleep</span>(1000);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      } <span style="color:#66d9ef">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>        Thread.<span style="color:#a6e22e">currentThread</span>().<span style="color:#a6e22e">interrupt</span>();
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    producer.<span style="color:#a6e22e">start</span>();
+</span></span><span style="display:flex;"><span>    consumer.<span style="color:#a6e22e">start</span>();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="implementations-of-blockingqueue">Implementations of <code>BlockingQueue</code>:</h3>
+<ul>
+<li><code>ArrayBlockingQueue</code>: Bounded, backed by an array</li>
+<li><code>LinkedBlockingQueue</code>: Optional capacity limit, uses linked nodes</li>
+<li><code>PriorityBlockingQueue</code>: Elements are ordered using priority</li>
+<li><code>DelayQueue</code>: Elements become available after a delay</li>
+<li><code>SynchronousQueue</code>: No internal capacity — handoff queue</li>
+</ul>
+]]></content>
+        </item>
         
         <item>
             <title>Completable Future in Java</title>

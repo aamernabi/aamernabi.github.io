@@ -6,8 +6,15 @@
     <description>Recent content on Aamer Paul</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Jul 2020 12:09:10 +0530</lastBuildDate>
+    <lastBuildDate>Mon, 27 Jul 2020 20:09:10 +0530</lastBuildDate>
     <atom:link href="https://aamernabi.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Blocking Queue in Java</title>
+      <link>https://aamernabi.github.io/posts/java-blocking-queue/</link>
+      <pubDate>Mon, 27 Jul 2020 20:09:10 +0530</pubDate>
+      <guid>https://aamernabi.github.io/posts/java-blocking-queue/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;A &lt;code&gt;BlockingQueue&lt;/code&gt; in Java is a &lt;code&gt;thread-safe queue&lt;/code&gt; that supports operations that wait for the queue to become non-empty when retrieving an element (for consuming), and wait for space to become available in the queue when storing an element (for producing).&lt;/p&gt;&lt;/blockquote&gt;&#xA;&lt;h3 id=&#34;why-do-we-need-blockingqueue&#34;&gt;Why do we need &lt;code&gt;BlockingQueue&lt;/code&gt;?&lt;/h3&gt;&#xA;&lt;p&gt;In multi-threaded applications:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Producers&lt;/strong&gt; add data to a queue.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Consumers&lt;/strong&gt; remove data from the queue.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Instead of manually managing thread synchronization (with &lt;code&gt;wait()&lt;/code&gt; and &lt;code&gt;notify()&lt;/code&gt;), &lt;code&gt;BlockingQueue&lt;/code&gt;:&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Completable Future in Java</title>
       <link>https://aamernabi.github.io/posts/java-completable-future/</link>
