@@ -6,8 +6,15 @@
     <description>Recent content on Aamer Paul</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Jul 2020 20:09:10 +0530</lastBuildDate>
+    <lastBuildDate>Tue, 19 Jan 2021 10:41:26 +0530</lastBuildDate>
     <atom:link href="https://aamernabi.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AtomicInteger</title>
+      <link>https://aamernabi.github.io/posts/atomicinteger/</link>
+      <pubDate>Tue, 19 Jan 2021 10:41:26 +0530</pubDate>
+      <guid>https://aamernabi.github.io/posts/atomicinteger/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;An &lt;strong&gt;AtomicInteger&lt;/strong&gt; in Java is a class from the java.util.concurrent.atomic package that provides thread-safe operations on a single int value without using synchronization (i.e., synchronized blocks).&lt;/p&gt;&lt;/blockquote&gt;&#xA;&lt;p&gt;AtomicInteger solves this by using low-level CPU operations (like compare-and-swap) to ensure updates are atomic.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;get()&lt;/code&gt;: Returns the current value&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;set(int newValue)&lt;/code&gt;: Sets the value&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;incrementAndGet()&lt;/code&gt;: Increments by 1, returns new value&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;getAndIncrement()&lt;/code&gt;: Returns current, then increments by 1&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;addAndGet(int delta)&lt;/code&gt;: Adds delta, returns new value&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;getAndSet(int value)&lt;/code&gt;: Sets to new value, returns old value&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;compareAndSet(expect, update)&lt;/code&gt;: Atomically updates if value matches &lt;code&gt;expect&lt;/code&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;why-do-we-need-atomicinteger&#34;&gt;Why do we need AtomicInteger?&lt;/h3&gt;&#xA;&lt;p&gt;In multithreaded programs, incrementing or updating a simple int variable is not atomic — meaning, two threads&#xA;might interfere with each other.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Blocking Queue in Java</title>
       <link>https://aamernabi.github.io/posts/java-blocking-queue/</link>

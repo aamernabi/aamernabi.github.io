@@ -5,8 +5,99 @@
         <description>Recent content in Posts on Aamer Paul</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Mon, 27 Jul 2020 20:09:10 +0530</lastBuildDate>
+        <lastBuildDate>Tue, 19 Jan 2021 10:41:26 +0530</lastBuildDate>
         <atom:link href="https://aamernabi.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>AtomicInteger</title>
+            <link>https://aamernabi.github.io/posts/atomicinteger/</link>
+            <pubDate>Tue, 19 Jan 2021 10:41:26 +0530</pubDate>
+            
+            <guid>https://aamernabi.github.io/posts/atomicinteger/</guid>
+            <description>&lt;blockquote&gt;
+&lt;p&gt;An &lt;strong&gt;AtomicInteger&lt;/strong&gt; in Java is a class from the java.util.concurrent.atomic package that provides thread-safe operations on a single int value without using synchronization (i.e., synchronized blocks).&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;AtomicInteger solves this by using low-level CPU operations (like compare-and-swap) to ensure updates are atomic.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;get()&lt;/code&gt;: Returns the current value&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set(int newValue)&lt;/code&gt;: Sets the value&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;incrementAndGet()&lt;/code&gt;: Increments by 1, returns new value&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;getAndIncrement()&lt;/code&gt;: Returns current, then increments by 1&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;addAndGet(int delta)&lt;/code&gt;: Adds delta, returns new value&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;getAndSet(int value)&lt;/code&gt;: Sets to new value, returns old value&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;compareAndSet(expect, update)&lt;/code&gt;: Atomically updates if value matches &lt;code&gt;expect&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;why-do-we-need-atomicinteger&#34;&gt;Why do we need AtomicInteger?&lt;/h3&gt;
+&lt;p&gt;In multithreaded programs, incrementing or updating a simple int variable is not atomic — meaning, two threads
+might interfere with each other.&lt;/p&gt;</description>
+            <content type="html"><![CDATA[<blockquote>
+<p>An <strong>AtomicInteger</strong> in Java is a class from the java.util.concurrent.atomic package that provides thread-safe operations on a single int value without using synchronization (i.e., synchronized blocks).</p></blockquote>
+<p>AtomicInteger solves this by using low-level CPU operations (like compare-and-swap) to ensure updates are atomic.</p>
+<ul>
+<li><code>get()</code>: Returns the current value</li>
+<li><code>set(int newValue)</code>: Sets the value</li>
+<li><code>incrementAndGet()</code>: Increments by 1, returns new value</li>
+<li><code>getAndIncrement()</code>: Returns current, then increments by 1</li>
+<li><code>addAndGet(int delta)</code>: Adds delta, returns new value</li>
+<li><code>getAndSet(int value)</code>: Sets to new value, returns old value</li>
+<li><code>compareAndSet(expect, update)</code>: Atomically updates if value matches <code>expect</code></li>
+</ul>
+<h3 id="why-do-we-need-atomicinteger">Why do we need AtomicInteger?</h3>
+<p>In multithreaded programs, incrementing or updating a simple int variable is not atomic — meaning, two threads
+might interfere with each other.</p>
+<p>In below example, output may be different.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">nonAtomicExample</span>() <span style="color:#66d9ef">throws</span> InterruptedException {
+</span></span><span style="display:flex;"><span>  counter <span style="color:#f92672">=</span> 0;
+</span></span><span style="display:flex;"><span>  Runnable task <span style="color:#f92672">=</span> () <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> 10_000; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>      counter<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Thread<span style="color:#f92672">[]</span> threads <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">[</span>10<span style="color:#f92672">]</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> 10; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>    threads<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread(task);
+</span></span><span style="display:flex;"><span>    threads<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>.<span style="color:#a6e22e">start</span>();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (Thread thread : threads) {
+</span></span><span style="display:flex;"><span>    thread.<span style="color:#a6e22e">join</span>();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Final Counter (Expected 100000): &#34;</span> <span style="color:#f92672">+</span> counter);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>This happens because <code>counter++</code> is not atomic. It&rsquo;s really 3 operations:</p>
+<ol>
+<li>Read the value of counter</li>
+<li>Increment it</li>
+<li>Write it back</li>
+</ol>
+<p>If two threads read the value at the same time, both might increment the same original value — causing lost updates.</p>
+<h3 id="atomicinteger-example">AtomicInteger Example:</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>  <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   * Here, incrementAndGet() ensures that the read-modify-write operation is atomic, using low-level hardware
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   * instructions (CAS - compare and swap) under the hood.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   */</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">atomicExample</span>() <span style="color:#66d9ef">throws</span> InterruptedException {
+</span></span><span style="display:flex;"><span>    Runnable task <span style="color:#f92672">=</span> () <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> 10_000; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        atomicCounter.<span style="color:#a6e22e">incrementAndGet</span>(); <span style="color:#75715e">// Atomic operation</span>
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Thread<span style="color:#f92672">[]</span> threads <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">[</span>10<span style="color:#f92672">]</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> 10; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>      threads<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread(task);
+</span></span><span style="display:flex;"><span>      threads<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>.<span style="color:#a6e22e">start</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (Thread thread : threads) {
+</span></span><span style="display:flex;"><span>      thread.<span style="color:#a6e22e">join</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Final Counter (Expected 100000): &#34;</span> <span style="color:#f92672">+</span> atomicCounter.<span style="color:#a6e22e">get</span>());
+</span></span><span style="display:flex;"><span>  }
+</span></span></code></pre></div>]]></content>
+        </item>
         
         <item>
             <title>Blocking Queue in Java</title>
