@@ -6,8 +6,15 @@
     <description>Recent content in Java on Aamer Paul</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 Mar 2024 21:25:32 +0530</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jul 2024 16:25:32 +0530</lastBuildDate>
     <atom:link href="https://aamernabi.github.io/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java Sealed Interface</title>
+      <link>https://aamernabi.github.io/posts/java-sealed-interface/</link>
+      <pubDate>Tue, 02 Jul 2024 16:25:32 +0530</pubDate>
+      <guid>https://aamernabi.github.io/posts/java-sealed-interface/</guid>
+      <description>&lt;p&gt;A &lt;strong&gt;sealed class&lt;/strong&gt; and &lt;strong&gt;sealed interface&lt;/strong&gt; is a feature introduced in Java 15 (as a preview) and officially released in Java 17.&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Sealed classes&lt;/strong&gt; and &lt;strong&gt;interfaces&lt;/strong&gt; provide controlled inheritance of your class hierarchies.&lt;/p&gt;&lt;/blockquote&gt;&#xA;&lt;h4 id=&#34;sealed-class&#34;&gt;Sealed class&lt;/h4&gt;&#xA;&lt;p&gt;A &lt;strong&gt;sealed class&lt;/strong&gt; restricts which other classes can inherit from it. This provides better control over the class hierarchy and enhances maintainability, security, and optimization (e.g., for pattern matching).&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Syntax&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;sealed&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Vehicle&lt;/span&gt; permits Car, Truck {&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// class body&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Here, &lt;code&gt;Vehicle&lt;/code&gt; is a &lt;strong&gt;sealed class&lt;/strong&gt;, and only &lt;code&gt;Car&lt;/code&gt; and &lt;code&gt;Truck&lt;/code&gt; are allowed to extend it.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Java Functional Interface</title>
       <link>https://aamernabi.github.io/posts/java-functional-interface/</link>

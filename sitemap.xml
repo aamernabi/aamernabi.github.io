@@ -3,18 +3,21 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://aamernabi.github.io/</loc>
-    <lastmod>2024-03-26T21:25:32+05:30</lastmod>
+    <lastmod>2024-07-02T16:25:32+05:30</lastmod>
   </url><url>
     <loc>https://aamernabi.github.io/tags/java/</loc>
-    <lastmod>2024-03-26T21:25:32+05:30</lastmod>
+    <lastmod>2024-07-02T16:25:32+05:30</lastmod>
   </url><url>
-    <loc>https://aamernabi.github.io/posts/java-functional-interface/</loc>
-    <lastmod>2024-03-26T21:25:32+05:30</lastmod>
+    <loc>https://aamernabi.github.io/posts/java-sealed-interface/</loc>
+    <lastmod>2024-07-02T16:25:32+05:30</lastmod>
   </url><url>
     <loc>https://aamernabi.github.io/posts/</loc>
-    <lastmod>2024-03-26T21:25:32+05:30</lastmod>
+    <lastmod>2024-07-02T16:25:32+05:30</lastmod>
   </url><url>
     <loc>https://aamernabi.github.io/tags/</loc>
+    <lastmod>2024-07-02T16:25:32+05:30</lastmod>
+  </url><url>
+    <loc>https://aamernabi.github.io/posts/java-functional-interface/</loc>
     <lastmod>2024-03-26T21:25:32+05:30</lastmod>
   </url><url>
     <loc>https://aamernabi.github.io/posts/atomicinteger/</loc>

@@ -5,8 +5,129 @@
         <description>Recent content in Posts on Aamer Paul</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Tue, 26 Mar 2024 21:25:32 +0530</lastBuildDate>
+        <lastBuildDate>Tue, 02 Jul 2024 16:25:32 +0530</lastBuildDate>
         <atom:link href="https://aamernabi.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Java Sealed Interface</title>
+            <link>https://aamernabi.github.io/posts/java-sealed-interface/</link>
+            <pubDate>Tue, 02 Jul 2024 16:25:32 +0530</pubDate>
+            
+            <guid>https://aamernabi.github.io/posts/java-sealed-interface/</guid>
+            <description>&lt;p&gt;A &lt;strong&gt;sealed class&lt;/strong&gt; and &lt;strong&gt;sealed interface&lt;/strong&gt; is a feature introduced in Java 15 (as a preview) and officially released in Java 17.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Sealed classes&lt;/strong&gt; and &lt;strong&gt;interfaces&lt;/strong&gt; provide controlled inheritance of your class hierarchies.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h4 id=&#34;sealed-class&#34;&gt;Sealed class&lt;/h4&gt;
+&lt;p&gt;A &lt;strong&gt;sealed class&lt;/strong&gt; restricts which other classes can inherit from it. This provides better control over the class hierarchy and enhances maintainability, security, and optimization (e.g., for pattern matching).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Syntax&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;sealed&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Vehicle&lt;/span&gt; permits Car, Truck {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// class body&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Here, &lt;code&gt;Vehicle&lt;/code&gt; is a &lt;strong&gt;sealed class&lt;/strong&gt;, and only &lt;code&gt;Car&lt;/code&gt; and &lt;code&gt;Truck&lt;/code&gt; are allowed to extend it.&lt;/p&gt;</description>
+            <content type="html"><![CDATA[<p>A <strong>sealed class</strong> and <strong>sealed interface</strong> is a feature introduced in Java 15 (as a preview) and officially released in Java 17.</p>
+<blockquote>
+<p><strong>Sealed classes</strong> and <strong>interfaces</strong> provide controlled inheritance of your class hierarchies.</p></blockquote>
+<h4 id="sealed-class">Sealed class</h4>
+<p>A <strong>sealed class</strong> restricts which other classes can inherit from it. This provides better control over the class hierarchy and enhances maintainability, security, and optimization (e.g., for pattern matching).</p>
+<p><strong>Syntax</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Vehicle</span> permits Car, Truck {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// class body</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Here, <code>Vehicle</code> is a <strong>sealed class</strong>, and only <code>Car</code> and <code>Truck</code> are allowed to extend it.</p>
+<p>Subclasses must:</p>
+<ol>
+<li>
+<p>Be in the <strong>same module</strong> (or package if not using modules).</p>
+</li>
+<li>
+<p>Explicitly declare themselves as:</p>
+<ul>
+<li><code>final</code> (no further subclassing),</li>
+<li><code>sealed</code> (continue restricting inheritance),</li>
+<li>or <code>non-sealed</code> (removes restriction for further subclasses).</li>
+</ul>
+</li>
+</ol>
+<p><img src="/sealed-class-in-java.png" alt="image"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Car</span> <span style="color:#66d9ef">extends</span> Vehicle {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// No subclassing allowed</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> non<span style="color:#f92672">-</span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Truck</span> <span style="color:#66d9ef">extends</span> Vehicle {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Any class can extend Truck</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="sealed-interface">Sealed Interface</h4>
+<p>A <strong>sealed interface</strong> restricts which classes or interfaces can implement or extend it.</p>
+<p><strong>Syntax</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Vehicle</span> permits Car, Truck, TwoWheeler {
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">TwoWheeler</span> <span style="color:#66d9ef">extends</span> Vehicle permits Bike {
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">record</span> <span style="color:#a6e22e">Bike</span> (String engine) <span style="color:#66d9ef">implements</span> TwoWheeler {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>Here, <code>Vehicle</code> is a <strong>sealed interface</strong>, and only <code>Car</code>, <code>TwoWheeler</code> and <code>Truck</code> are allowed to implement/extend it.</p>
+<p><img src="/sealed-interface-in-java.png" alt="image"></p>
+<p>Subclasses must:</p>
+<ol>
+<li>
+<p>Be in the same module (or package if not using modules).</p>
+</li>
+<li>
+<p>Explicitly declare themselves as:</p>
+<ul>
+<li><code>final</code> (no further subclassing),</li>
+<li><code>sealed</code> (continue restricting inheritance),</li>
+<li>or <code>non-sealed</code> (removes restriction for further subclasses)</li>
+</ul>
+</li>
+</ol>
+<h4 id="example-with-enhanced-switch-example">Example (with enhanced switch example)</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Vehicle</span> permits Car, Truck, TwoWheeler {
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">record</span> <span style="color:#a6e22e">Car</span>(<span style="color:#66d9ef">int</span> noOfSeats) <span style="color:#66d9ef">implements</span> Vehicle {}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">record</span> <span style="color:#a6e22e">Truck</span>(<span style="color:#66d9ef">int</span> noOfSeats, <span style="color:#66d9ef">int</span> maxLoad) <span style="color:#66d9ef">implements</span> Vehicle {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">TwoWheeler</span> <span style="color:#66d9ef">extends</span> Vehicle permits Bike {
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">record</span> <span style="color:#a6e22e">Bike</span> (String engine) <span style="color:#66d9ef">implements</span> TwoWheeler {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Subclasses must:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Be in the same <span style="color:#a6e22e">module</span> (or <span style="color:#f92672">package</span> if not using modules).
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Explicitly declare themselves as:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">final</span> (no further subclassing),
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">sealed</span> (<span style="color:#66d9ef">continue</span> restricting inheritance),
+</span></span><span style="display:flex;"><span>or non<span style="color:#f92672">-</span><span style="color:#66d9ef">sealed</span> (removes restriction <span style="color:#66d9ef">for</span> further subclasses)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">VehicleProcessor</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> Vehicle vehicle;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  VehicleProcessor(Vehicle vehicle) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">vehicle</span> <span style="color:#f92672">=</span> vehicle;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">process</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Switch here is exhastive.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * The switch block must have clauses that deal with all possible values of the selector expression. 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Also, we don&#39;t need default here, if we specify all the possible input values;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
+</span></span><span style="display:flex;"><span>    String message <span style="color:#f92672">=</span> <span style="color:#66d9ef">switch</span> (<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">vehicle</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">case</span> Car(<span style="color:#66d9ef">int</span> noOfSeats) <span style="color:#f92672">-&gt;</span> <span style="color:#e6db74">&#34;Car with &#34;</span> <span style="color:#f92672">+</span> noOfSeats <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; seats&#34;</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">case</span> Truck(<span style="color:#66d9ef">int</span> noOfSeats, <span style="color:#66d9ef">int</span> maxLoad) <span style="color:#f92672">-&gt;</span> <span style="color:#e6db74">&#34;Truck with &#34;</span> <span style="color:#f92672">+</span> noOfSeats <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; seats, and max load &#34;</span> <span style="color:#f92672">+</span> maxLoad;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">case</span> TwoWheeler twoWheeler <span style="color:#f92672">-&gt;</span> <span style="color:#e6db74">&#34;It&#39;s two wheeler&#34;</span>;
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>    System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(message);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>]]></content>
+        </item>
         
         <item>
             <title>Java Functional Interface</title>
