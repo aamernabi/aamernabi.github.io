@@ -1,19 +1,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Posts on Aamer Paul</title>
-        <link>https://aamernabi.github.io/posts/</link>
+        <link>http://localhost:1313/posts/</link>
         <description>Recent content in Posts on Aamer Paul</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <lastBuildDate>Tue, 02 Jul 2024 16:25:32 +0530</lastBuildDate>
-        <atom:link href="https://aamernabi.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
         
         <item>
             <title>Java Sealed Interface</title>
-            <link>https://aamernabi.github.io/posts/java-sealed-interface/</link>
+            <link>http://localhost:1313/posts/java-sealed-interface/</link>
             <pubDate>Tue, 02 Jul 2024 16:25:32 +0530</pubDate>
             
-            <guid>https://aamernabi.github.io/posts/java-sealed-interface/</guid>
+            <guid>http://localhost:1313/posts/java-sealed-interface/</guid>
             <description>&lt;p&gt;A &lt;strong&gt;sealed class&lt;/strong&gt; and &lt;strong&gt;sealed interface&lt;/strong&gt; is a feature introduced in Java 15 (as a preview) and officially released in Java 17.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;Sealed classes&lt;/strong&gt; and &lt;strong&gt;interfaces&lt;/strong&gt; provide controlled inheritance of your class hierarchies.&lt;/p&gt;&lt;/blockquote&gt;
@@ -131,10 +131,10 @@
         
         <item>
             <title>Java Functional Interface</title>
-            <link>https://aamernabi.github.io/posts/java-functional-interface/</link>
+            <link>http://localhost:1313/posts/java-functional-interface/</link>
             <pubDate>Tue, 26 Mar 2024 21:25:32 +0530</pubDate>
             
-            <guid>https://aamernabi.github.io/posts/java-functional-interface/</guid>
+            <guid>http://localhost:1313/posts/java-functional-interface/</guid>
             <description>&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;Functional interfaces&lt;/strong&gt; in Java are interfaces that contain exactly one abstract method. They are also known as &lt;strong&gt;Single Abstract Method (SAM)&lt;/strong&gt; interfaces. It was introduced in Java 8.&lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;Example:&lt;/p&gt;
@@ -211,102 +211,240 @@
         </item>
         
         <item>
-            <title>AtomicInteger in Java</title>
-            <link>https://aamernabi.github.io/posts/atomicinteger/</link>
+            <title>A Deep Dive into the Java Stream API</title>
+            <link>http://localhost:1313/posts/deep-dive-into-java-stream-api/</link>
+            <pubDate>Mon, 07 Jun 2021 18:12:23 +0530</pubDate>
+            
+            <guid>http://localhost:1313/posts/deep-dive-into-java-stream-api/</guid>
+            <description>&lt;p&gt;The &lt;strong&gt;Stream API&lt;/strong&gt;, introduced in Java 8, is a powerful tool for processing sequences of elements. It provides a functional approach to working with collections and arrays, allowing for expressive and efficient data manipulation. Streams don&amp;rsquo;t store data; instead, they operate on a data source, such as a &lt;code&gt;Collection&lt;/code&gt; or an array, and enable aggregate operations.&lt;/p&gt;
+&lt;h2 id=&#34;core-concepts&#34;&gt;Core Concepts&lt;/h2&gt;
+&lt;p&gt;A stream pipeline consists of three parts:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;A source&lt;/strong&gt;: Where the stream originates from (e.g., a &lt;code&gt;List&lt;/code&gt;, &lt;code&gt;Set&lt;/code&gt;, or array).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Zero or more intermediate operations&lt;/strong&gt;: These transform the stream into another stream. Examples include &lt;code&gt;filter&lt;/code&gt;, &lt;code&gt;map&lt;/code&gt;, and &lt;code&gt;sorted&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;A terminal operation&lt;/strong&gt;: This produces a result or a side-effect, and triggers the execution of the pipeline. Examples include &lt;code&gt;forEach&lt;/code&gt;, &lt;code&gt;collect&lt;/code&gt;, and &lt;code&gt;reduce&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;One of the key features of streams is &lt;strong&gt;laziness&lt;/strong&gt;. Intermediate operations are not executed until a terminal operation is invoked. This allows the Stream API to optimize the execution of the pipeline.&lt;/p&gt;</description>
+            <content type="html"><![CDATA[<p>The <strong>Stream API</strong>, introduced in Java 8, is a powerful tool for processing sequences of elements. It provides a functional approach to working with collections and arrays, allowing for expressive and efficient data manipulation. Streams don&rsquo;t store data; instead, they operate on a data source, such as a <code>Collection</code> or an array, and enable aggregate operations.</p>
+<h2 id="core-concepts">Core Concepts</h2>
+<p>A stream pipeline consists of three parts:</p>
+<ol>
+<li><strong>A source</strong>: Where the stream originates from (e.g., a <code>List</code>, <code>Set</code>, or array).</li>
+<li><strong>Zero or more intermediate operations</strong>: These transform the stream into another stream. Examples include <code>filter</code>, <code>map</code>, and <code>sorted</code>.</li>
+<li><strong>A terminal operation</strong>: This produces a result or a side-effect, and triggers the execution of the pipeline. Examples include <code>forEach</code>, <code>collect</code>, and <code>reduce</code>.</li>
+</ol>
+<p>One of the key features of streams is <strong>laziness</strong>. Intermediate operations are not executed until a terminal operation is invoked. This allows the Stream API to optimize the execution of the pipeline.</p>
+<h2 id="creating-streams">Creating Streams</h2>
+<p>There are several ways to create a stream:</p>
+<h3 id="from-a-collection">From a Collection</h3>
+<p>You can create a stream from any <code>Collection</code> (e.g., <code>List</code>, <code>Set</code>) using the <code>stream()</code> method.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>List<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> names <span style="color:#f92672">=</span> Arrays.<span style="color:#a6e22e">asList</span>(<span style="color:#e6db74">&#34;Alice&#34;</span>, <span style="color:#e6db74">&#34;Bob&#34;</span>, <span style="color:#e6db74">&#34;Charlie&#34;</span>);
+</span></span><span style="display:flex;"><span>Stream<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> nameStream <span style="color:#f92672">=</span> names.<span style="color:#a6e22e">stream</span>();
+</span></span></code></pre></div><h3 id="from-an-array">From an Array</h3>
+<p>You can create a stream from an array using the <code>Arrays.stream()</code> method or <code>Stream.of()</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>String<span style="color:#f92672">[]</span> nameArray <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;Alice&#34;</span>, <span style="color:#e6db74">&#34;Bob&#34;</span>, <span style="color:#e6db74">&#34;Charlie&#34;</span>};
+</span></span><span style="display:flex;"><span>Stream<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> nameStreamFromArray <span style="color:#f92672">=</span> Arrays.<span style="color:#a6e22e">stream</span>(nameArray);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Stream<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> nameStreamFromOf <span style="color:#f92672">=</span> Stream.<span style="color:#a6e22e">of</span>(<span style="color:#e6db74">&#34;Alice&#34;</span>, <span style="color:#e6db74">&#34;Bob&#34;</span>, <span style="color:#e6db74">&#34;Charlie&#34;</span>);
+</span></span></code></pre></div><h3 id="from-a-range-of-numbers">From a Range of Numbers</h3>
+<p>The <code>IntStream</code>, <code>LongStream</code>, and <code>DoubleStream</code> interfaces provide methods for creating streams of primitive numeric types.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>IntStream intStream <span style="color:#f92672">=</span> IntStream.<span style="color:#a6e22e">range</span>(1, 5); <span style="color:#75715e">// 1, 2, 3, 4</span>
+</span></span><span style="display:flex;"><span>LongStream longStream <span style="color:#f92672">=</span> LongStream.<span style="color:#a6e22e">rangeClosed</span>(1, 5); <span style="color:#75715e">// 1, 2, 3, 4, 5</span>
+</span></span></code></pre></div><h3 id="using-streamiterate-and-streamgenerate">Using <code>Stream.iterate()</code> and <code>Stream.generate()</code></h3>
+<p>You can also create infinite streams using <code>iterate()</code> and <code>generate()</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Stream<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> evenNumbers <span style="color:#f92672">=</span> Stream.<span style="color:#a6e22e">iterate</span>(0, n <span style="color:#f92672">-&gt;</span> n <span style="color:#f92672">+</span> 2);
+</span></span><span style="display:flex;"><span>Stream<span style="color:#f92672">&lt;</span>Double<span style="color:#f92672">&gt;</span> randomNumbers <span style="color:#f92672">=</span> Stream.<span style="color:#a6e22e">generate</span>(Math::random);
+</span></span></code></pre></div><p>It&rsquo;s important to use <code>limit()</code> with infinite streams to prevent an infinite loop.</p>
+<h2 id="stream-operations">Stream Operations</h2>
+<p>Stream operations are divided into two categories: intermediate and terminal.</p>
+<h3 id="intermediate-operations">Intermediate Operations</h3>
+<p>Intermediate operations return a new stream and are always lazy.</p>
+<ul>
+<li>
+<p><strong><code>filter(Predicate&lt;T&gt;)</code></strong>: Returns a stream consisting of the elements of this stream that match the given predicate.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>List<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> names <span style="color:#f92672">=</span> Arrays.<span style="color:#a6e22e">asList</span>(<span style="color:#e6db74">&#34;Alice&#34;</span>, <span style="color:#e6db74">&#34;Bob&#34;</span>, <span style="color:#e6db74">&#34;Charlie&#34;</span>, <span style="color:#e6db74">&#34;Anna&#34;</span>);
+</span></span><span style="display:flex;"><span>names.<span style="color:#a6e22e">stream</span>()
+</span></span><span style="display:flex;"><span>     .<span style="color:#a6e22e">filter</span>(name <span style="color:#f92672">-&gt;</span> name.<span style="color:#a6e22e">startsWith</span>(<span style="color:#e6db74">&#34;A&#34;</span>))
+</span></span><span style="display:flex;"><span>     .<span style="color:#a6e22e">forEach</span>(System.<span style="color:#a6e22e">out</span>::println); <span style="color:#75715e">// Alice, Anna</span>
+</span></span></code></pre></div></li>
+<li>
+<p><strong><code>map(Function&lt;T, R&gt;)</code></strong>: Returns a stream consisting of the results of applying the given function to the elements of this stream.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>List<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> names <span style="color:#f92672">=</span> Arrays.<span style="color:#a6e22e">asList</span>(<span style="color:#e6db74">&#34;Alice&#34;</span>, <span style="color:#e6db74">&#34;Bob&#34;</span>, <span style="color:#e6db74">&#34;Charlie&#34;</span>);
+</span></span><span style="display:flex;"><span>names.<span style="color:#a6e22e">stream</span>()
+</span></span><span style="display:flex;"><span>     .<span style="color:#a6e22e">map</span>(String::length)
+</span></span><span style="display:flex;"><span>     .<span style="color:#a6e22e">forEach</span>(System.<span style="color:#a6e22e">out</span>::println); <span style="color:#75715e">// 5, 3, 7</span>
+</span></span></code></pre></div></li>
+<li>
+<p><strong><code>flatMap(Function&lt;T, Stream&lt;R&gt;&gt;)</code></strong>: Transforms each element of the stream into a stream of other objects and then flattens all the generated streams into a single stream.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>List<span style="color:#f92672">&lt;</span>List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;&gt;</span> listOfLists <span style="color:#f92672">=</span> Arrays.<span style="color:#a6e22e">asList</span>(
+</span></span><span style="display:flex;"><span>    Arrays.<span style="color:#a6e22e">asList</span>(1, 2),
+</span></span><span style="display:flex;"><span>    Arrays.<span style="color:#a6e22e">asList</span>(3, 4),
+</span></span><span style="display:flex;"><span>    Arrays.<span style="color:#a6e22e">asList</span>(5, 6)
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>listOfLists.<span style="color:#a6e22e">stream</span>()
+</span></span><span style="display:flex;"><span>           .<span style="color:#a6e22e">flatMap</span>(List::stream)
+</span></span><span style="display:flex;"><span>           .<span style="color:#a6e22e">forEach</span>(System.<span style="color:#a6e22e">out</span>::print); <span style="color:#75715e">// 123456</span>
+</span></span></code></pre></div></li>
+<li>
+<p><strong><code>distinct()</code></strong>: Returns a stream consisting of the distinct elements (according to <code>Object.equals(Object)</code>) of this stream.</p>
+</li>
+<li>
+<p><strong><code>sorted()</code></strong>: Returns a stream consisting of the elements of this stream, sorted according to natural order.</p>
+</li>
+<li>
+<p><strong><code>peek(Consumer&lt;T&gt;)</code></strong>: Returns a stream consisting of the elements of this stream, additionally performing the provided action on each element as elements are consumed from the resulting stream. This is useful for debugging.</p>
+</li>
+</ul>
+<h3 id="terminal-operations">Terminal Operations</h3>
+<p>Terminal operations trigger the stream processing and produce a result.</p>
+<ul>
+<li>
+<p><strong><code>forEach(Consumer&lt;T&gt;)</code></strong>: Performs an action for each element of this stream.</p>
+</li>
+<li>
+<p><strong><code>collect(Collector&lt;T, A, R&gt;)</code></strong>: Performs a mutable reduction operation on the elements of this stream using a <code>Collector</code>. This is one of the most powerful terminal operations.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>List<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> names <span style="color:#f92672">=</span> Arrays.<span style="color:#a6e22e">asList</span>(<span style="color:#e6db74">&#34;Alice&#34;</span>, <span style="color:#e6db74">&#34;Bob&#34;</span>, <span style="color:#e6db74">&#34;Charlie&#34;</span>);
+</span></span><span style="display:flex;"><span>List<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> upperCaseNames <span style="color:#f92672">=</span> names.<span style="color:#a6e22e">stream</span>()
+</span></span><span style="display:flex;"><span>                                   .<span style="color:#a6e22e">map</span>(String::toUpperCase)
+</span></span><span style="display:flex;"><span>                                   .<span style="color:#a6e22e">collect</span>(Collectors.<span style="color:#a6e22e">toList</span>());
+</span></span></code></pre></div></li>
+<li>
+<p><strong><code>reduce(T identity, BinaryOperator&lt;T&gt; accumulator)</code></strong>: Performs a reduction on the elements of this stream, using an initial value and an associative accumulation function.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> numbers <span style="color:#f92672">=</span> Arrays.<span style="color:#a6e22e">asList</span>(1, 2, 3, 4, 5);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> sum <span style="color:#f92672">=</span> numbers.<span style="color:#a6e22e">stream</span>().<span style="color:#a6e22e">reduce</span>(0, (a, b) <span style="color:#f92672">-&gt;</span> a <span style="color:#f92672">+</span> b); <span style="color:#75715e">// 15</span>
+</span></span></code></pre></div></li>
+<li>
+<p><strong><code>count()</code></strong>: Returns the count of elements in this stream.</p>
+</li>
+<li>
+<p><strong><code>anyMatch(Predicate&lt;T&gt;)</code></strong>, <strong><code>allMatch(Predicate&lt;T&gt;)</code></strong>, <strong><code>noneMatch(Predicate&lt;T&gt;)</code></strong>: These operations check if any, all, or no elements of this stream match the given predicate.</p>
+</li>
+<li>
+<p><strong><code>findFirst()</code></strong>, <strong><code>findAny()</code></strong>: Return an <code>Optional</code> describing the first element of this stream, or an arbitrary element of the stream, respectively.</p>
+</li>
+</ul>
+<h2 id="collectors">Collectors</h2>
+<p>The <code>Collectors</code> class provides a set of static factory methods for creating <code>Collector</code> instances.</p>
+<ul>
+<li><strong><code>toList()</code></strong>, <strong><code>toSet()</code></strong>, <strong><code>toMap()</code></strong>: Collect elements into a <code>List</code>, <code>Set</code>, or <code>Map</code>.</li>
+<li><strong><code>joining(CharSequence delimiter)</code></strong>: Joins the elements into a <code>String</code>.</li>
+<li><strong><code>groupingBy(Function&lt;T, K&gt;)</code></strong>: Groups elements according to a classification function.</li>
+<li><strong><code>partitioningBy(Predicate&lt;T&gt;)</code></strong>: Partitions elements into a <code>Map&lt;Boolean, List&lt;T&gt;&gt;</code> based on a predicate.</li>
+</ul>
+<h2 id="parallel-streams">Parallel Streams</h2>
+<p>You can easily create a parallel stream by calling the <code>parallelStream()</code> method on a collection or by calling the <code>parallel()</code> intermediate method on a stream. This can lead to significant performance improvements for large datasets, as the operations are performed concurrently.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> numbers <span style="color:#f92672">=</span> Arrays.<span style="color:#a6e22e">asList</span>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> sum <span style="color:#f92672">=</span> numbers.<span style="color:#a6e22e">parallelStream</span>()
+</span></span><span style="display:flex;"><span>                 .<span style="color:#a6e22e">mapToInt</span>(Integer::intValue)
+</span></span><span style="display:flex;"><span>                 .<span style="color:#a6e22e">sum</span>();
+</span></span></code></pre></div><p>However, be mindful of the overhead of parallelism. For small datasets or simple operations, a sequential stream might be faster.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The Java Stream API is a fundamental part of modern Java development. It enables you to write more concise, readable, and potentially more performant code for data processing. By understanding the core concepts of stream creation, intermediate operations, and terminal operations, you can leverage the full power of functional-style programming in Java.</p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>Thread-Safe Counters in Java: A Deep Dive into AtomicInteger</title>
+            <link>http://localhost:1313/posts/thread-safe_counters_in_java_atomicinteger/</link>
             <pubDate>Tue, 19 Jan 2021 10:41:26 +0530</pubDate>
             
-            <guid>https://aamernabi.github.io/posts/atomicinteger/</guid>
-            <description>&lt;blockquote&gt;
-&lt;p&gt;An &lt;strong&gt;AtomicInteger&lt;/strong&gt; in Java is a class from the &lt;code&gt;java.util.concurrent.atomic&lt;/code&gt; package that provides thread-safe operations on a single int value without using synchronization (i.e., synchronized blocks).&lt;/p&gt;&lt;/blockquote&gt;
-&lt;p&gt;AtomicInteger solves this by using low-level CPU operations (like compare-and-swap) to ensure updates are atomic.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;get()&lt;/code&gt;: Returns the current value&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;set(int newValue)&lt;/code&gt;: Sets the value&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;incrementAndGet()&lt;/code&gt;: Increments by 1, returns new value&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;getAndIncrement()&lt;/code&gt;: Returns current, then increments by 1&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;addAndGet(int delta)&lt;/code&gt;: Adds delta, returns new value&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;getAndSet(int value)&lt;/code&gt;: Sets to new value, returns old value&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;compareAndSet(expect, update)&lt;/code&gt;: Atomically updates if value matches &lt;code&gt;expect&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;why-do-we-need-atomicinteger&#34;&gt;Why do we need AtomicInteger?&lt;/h3&gt;
-&lt;p&gt;In multithreaded programs, incrementing or updating a simple int variable is not atomic — meaning, two threads
-might interfere with each other.&lt;/p&gt;</description>
-            <content type="html"><![CDATA[<blockquote>
-<p>An <strong>AtomicInteger</strong> in Java is a class from the <code>java.util.concurrent.atomic</code> package that provides thread-safe operations on a single int value without using synchronization (i.e., synchronized blocks).</p></blockquote>
-<p>AtomicInteger solves this by using low-level CPU operations (like compare-and-swap) to ensure updates are atomic.</p>
-<ul>
-<li><code>get()</code>: Returns the current value</li>
-<li><code>set(int newValue)</code>: Sets the value</li>
-<li><code>incrementAndGet()</code>: Increments by 1, returns new value</li>
-<li><code>getAndIncrement()</code>: Returns current, then increments by 1</li>
-<li><code>addAndGet(int delta)</code>: Adds delta, returns new value</li>
-<li><code>getAndSet(int value)</code>: Sets to new value, returns old value</li>
-<li><code>compareAndSet(expect, update)</code>: Atomically updates if value matches <code>expect</code></li>
-</ul>
-<h3 id="why-do-we-need-atomicinteger">Why do we need AtomicInteger?</h3>
-<p>In multithreaded programs, incrementing or updating a simple int variable is not atomic — meaning, two threads
-might interfere with each other.</p>
-<p>In below example, output may be different.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">nonAtomicExample</span>() <span style="color:#66d9ef">throws</span> InterruptedException {
-</span></span><span style="display:flex;"><span>  counter <span style="color:#f92672">=</span> 0;
-</span></span><span style="display:flex;"><span>  Runnable task <span style="color:#f92672">=</span> () <span style="color:#f92672">-&gt;</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> 10_000; i<span style="color:#f92672">++</span>) {
-</span></span><span style="display:flex;"><span>      counter<span style="color:#f92672">++</span>;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>  };
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  Thread<span style="color:#f92672">[]</span> threads <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">[</span>10<span style="color:#f92672">]</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> 10; i<span style="color:#f92672">++</span>) {
-</span></span><span style="display:flex;"><span>    threads<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread(task);
-</span></span><span style="display:flex;"><span>    threads<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>.<span style="color:#a6e22e">start</span>();
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (Thread thread : threads) {
-</span></span><span style="display:flex;"><span>    thread.<span style="color:#a6e22e">join</span>();
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Final Counter (Expected 100000): &#34;</span> <span style="color:#f92672">+</span> counter);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>This happens because <code>counter++</code> is not atomic. It&rsquo;s really 3 operations:</p>
+            <guid>http://localhost:1313/posts/thread-safe_counters_in_java_atomicinteger/</guid>
+            <description>&lt;p&gt;When building multithreaded applications in Java, ensuring data integrity is crucial. A common challenge arises when multiple threads need to update a shared counter. Without proper synchronization, you can encounter race conditions, leading to incorrect results. This is where &lt;code&gt;AtomicInteger&lt;/code&gt; comes to the rescue.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;AtomicInteger&lt;/code&gt; is a class from the &lt;code&gt;java.util.concurrent.atomic&lt;/code&gt; package that provides a thread-safe way to perform atomic operations on an integer value. Unlike traditional locking mechanisms (e.g., &lt;code&gt;synchronized&lt;/code&gt; blocks), &lt;code&gt;AtomicInteger&lt;/code&gt; uses low-level hardware instructions to achieve thread safety with higher performance.&lt;/p&gt;</description>
+            <content type="html"><![CDATA[<p>When building multithreaded applications in Java, ensuring data integrity is crucial. A common challenge arises when multiple threads need to update a shared counter. Without proper synchronization, you can encounter race conditions, leading to incorrect results. This is where <code>AtomicInteger</code> comes to the rescue.</p>
+<p><code>AtomicInteger</code> is a class from the <code>java.util.concurrent.atomic</code> package that provides a thread-safe way to perform atomic operations on an integer value. Unlike traditional locking mechanisms (e.g., <code>synchronized</code> blocks), <code>AtomicInteger</code> uses low-level hardware instructions to achieve thread safety with higher performance.</p>
+<h3 id="the-problem-race-conditions-with-standard-integers">The Problem: Race Conditions with Standard Integers</h3>
+<p>In a multithreaded environment, incrementing a simple <code>int</code> variable is not an atomic operation. The seemingly simple <code>counter++</code> operation involves three distinct steps:</p>
 <ol>
-<li>Read the value of counter</li>
-<li>Increment it</li>
-<li>Write it back</li>
+<li><strong>Read:</strong> Read the current value of the counter.</li>
+<li><strong>Modify:</strong> Increment the value.</li>
+<li><strong>Write:</strong> Write the updated value back to the counter.</li>
 </ol>
-<p>If two threads read the value at the same time, both might increment the same original value — causing lost updates.</p>
-<h3 id="atomicinteger-example">AtomicInteger Example:</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>  <span style="color:#75715e">/**
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   * Here, incrementAndGet() ensures that the read-modify-write operation is atomic, using low-level hardware
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   * instructions (CAS - compare and swap) under the hood.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   */</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">atomicExample</span>() <span style="color:#66d9ef">throws</span> InterruptedException {
-</span></span><span style="display:flex;"><span>    Runnable task <span style="color:#f92672">=</span> () <span style="color:#f92672">-&gt;</span> {
-</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> 10_000; i<span style="color:#f92672">++</span>) {
-</span></span><span style="display:flex;"><span>        atomicCounter.<span style="color:#a6e22e">incrementAndGet</span>(); <span style="color:#75715e">// Atomic operation</span>
-</span></span><span style="display:flex;"><span>      }
-</span></span><span style="display:flex;"><span>    };
+<p>If two threads execute this operation simultaneously, they might both read the same initial value, increment it, and write back the same result. This leads to &ldquo;lost updates&rdquo; and an incorrect final value.</p>
+<h4 id="non-atomic-example">Non-Atomic Example</h4>
+<p>The following code demonstrates this problem. We start ten threads, and each thread increments a shared counter 10,000 times. We expect the final value to be 100,000, but the actual result is often lower due to race conditions.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.concurrent.atomic.AtomicInteger;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    Thread<span style="color:#f92672">[]</span> threads <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">[</span>10<span style="color:#f92672">]</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> 10; i<span style="color:#f92672">++</span>) {
-</span></span><span style="display:flex;"><span>      threads<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread(task);
-</span></span><span style="display:flex;"><span>      threads<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>.<span style="color:#a6e22e">start</span>();
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CounterExample</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> counter <span style="color:#f92672">=</span> 0;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> AtomicInteger atomicCounter <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> AtomicInteger(0);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) <span style="color:#66d9ef">throws</span> InterruptedException {
+</span></span><span style="display:flex;"><span>        nonAtomicExample();
+</span></span><span style="display:flex;"><span>        atomicExample();
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (Thread thread : threads) {
-</span></span><span style="display:flex;"><span>      thread.<span style="color:#a6e22e">join</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">nonAtomicExample</span>() <span style="color:#66d9ef">throws</span> InterruptedException {
+</span></span><span style="display:flex;"><span>        counter <span style="color:#f92672">=</span> 0;
+</span></span><span style="display:flex;"><span>        Runnable task <span style="color:#f92672">=</span> () <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> 10_000; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>                counter<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        Thread<span style="color:#f92672">[]</span> threads <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">[</span>10<span style="color:#f92672">]</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> 10; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>            threads<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread(task);
+</span></span><span style="display:flex;"><span>            threads<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>.<span style="color:#a6e22e">start</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (Thread thread : threads) {
+</span></span><span style="display:flex;"><span>            thread.<span style="color:#a6e22e">join</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Non-Atomic Final Counter: &#34;</span> <span style="color:#f92672">+</span> counter);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Final Counter (Expected 100000): &#34;</span> <span style="color:#f92672">+</span> atomicCounter.<span style="color:#a6e22e">get</span>());
-</span></span><span style="display:flex;"><span>  }
-</span></span></code></pre></div>]]></content>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">atomicExample</span>() <span style="color:#66d9ef">throws</span> InterruptedException {
+</span></span><span style="display:flex;"><span>        atomicCounter.<span style="color:#a6e22e">set</span>(0);
+</span></span><span style="display:flex;"><span>        Runnable task <span style="color:#f92672">=</span> () <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> 10_000; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>                atomicCounter.<span style="color:#a6e22e">incrementAndGet</span>(); <span style="color:#75715e">// Atomic operation</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        Thread<span style="color:#f92672">[]</span> threads <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">[</span>10<span style="color:#f92672">]</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> 10; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>            threads<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread(task);
+</span></span><span style="display:flex;"><span>            threads<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>.<span style="color:#a6e22e">start</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (Thread thread : threads) {
+</span></span><span style="display:flex;"><span>            thread.<span style="color:#a6e22e">join</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Atomic Final Counter: &#34;</span> <span style="color:#f92672">+</span> atomicCounter.<span style="color:#a6e22e">get</span>());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="the-solution-atomicinteger">The Solution: <code>AtomicInteger</code></h3>
+<p><code>AtomicInteger</code> solves this problem by providing atomic methods for updating the integer value. These methods use a hardware-level mechanism called <strong>Compare-and-Swap (CAS)</strong>.</p>
+<h4 id="how-compare-and-swap-cas-works">How Compare-and-Swap (CAS) Works</h4>
+<p>CAS is an atomic instruction that compares the contents of a memory location with a given value and, only if they are the same, modifies the contents of that memory location to a new given value. This is done as a single atomic operation.</p>
+<p>The <code>incrementAndGet()</code> method, for example, uses CAS to ensure that the read-modify-write operation is atomic. It repeatedly tries to update the value until it succeeds, preventing race conditions.</p>
+<h3 id="common-atomicinteger-methods">Common <code>AtomicInteger</code> Methods</h3>
+<p>Here are some of the most commonly used methods in <code>AtomicInteger</code>:</p>
+<ul>
+<li><code>get()</code>: Returns the current value.</li>
+<li><code>set(int newValue)</code>: Sets the value to <code>newValue</code>.</li>
+<li><code>incrementAndGet()</code>: Atomically increments the current value by one and returns the new value.</li>
+<li><code>getAndIncrement()</code>: Atomically increments the current value by one and returns the old value.</li>
+<li><code>decrementAndGet()</code>: Atomically decrements the current value by one and returns the new value.</li>
+<li><code>getAndDecrement()</code>: Atomically decrements the current value by one and returns the old value.</li>
+<li><code>addAndGet(int delta)</code>: Atomically adds the given value to the current value and returns the new value.</li>
+<li><code>getAndSet(int newValue)</code>: Atomically sets to the given value and returns the old value.</li>
+<li><code>compareAndSet(int expect, int update)</code>: Atomically sets the value to <code>update</code> if the current value is equal to <code>expect</code>, and returns <code>true</code> if successful.</li>
+</ul>
+<p>By using <code>AtomicInteger</code>, you can ensure the correctness of your multithreaded code without the performance overhead of traditional synchronization.</p>
+]]></content>
         </item>
         
         <item>
             <title>Blocking Queue in Java</title>
-            <link>https://aamernabi.github.io/posts/java-blocking-queue/</link>
+            <link>http://localhost:1313/posts/java-blocking-queue/</link>
             <pubDate>Mon, 27 Jul 2020 20:09:10 +0530</pubDate>
             
-            <guid>https://aamernabi.github.io/posts/java-blocking-queue/</guid>
+            <guid>http://localhost:1313/posts/java-blocking-queue/</guid>
             <description>&lt;blockquote&gt;
 &lt;p&gt;A &lt;code&gt;BlockingQueue&lt;/code&gt; in Java is a &lt;code&gt;thread-safe queue&lt;/code&gt; that supports operations that wait for the queue to become non-empty when retrieving an element (for consuming), and wait for space to become available in the queue when storing an element (for producing).&lt;/p&gt;&lt;/blockquote&gt;
 &lt;h3 id=&#34;why-do-we-need-blockingqueue&#34;&gt;Why do we need &lt;code&gt;BlockingQueue&lt;/code&gt;?&lt;/h3&gt;
@@ -385,10 +523,10 @@ take() blocks the caller if the queue is empty:</p>
         
         <item>
             <title>Completable Future in Java</title>
-            <link>https://aamernabi.github.io/posts/java-completable-future/</link>
+            <link>http://localhost:1313/posts/java-completable-future/</link>
             <pubDate>Mon, 27 Jul 2020 12:09:10 +0530</pubDate>
             
-            <guid>https://aamernabi.github.io/posts/java-completable-future/</guid>
+            <guid>http://localhost:1313/posts/java-completable-future/</guid>
             <description>&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;&lt;code&gt;CompletableFuture&lt;/code&gt;&lt;/strong&gt; is a class introduced in &lt;strong&gt;Java 8&lt;/strong&gt; that represents a future result of an &lt;strong&gt;asynchronous computation&lt;/strong&gt;, just like &lt;code&gt;Future&lt;/code&gt; — but with &lt;strong&gt;more power&lt;/strong&gt;.&lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;It allows us to:&lt;/p&gt;
@@ -527,10 +665,10 @@ take() blocks the caller if the queue is empty:</p>
         
         <item>
             <title>hashcode() in Java</title>
-            <link>https://aamernabi.github.io/posts/java-hashcode/</link>
+            <link>http://localhost:1313/posts/java-hashcode/</link>
             <pubDate>Sun, 26 Jul 2020 23:03:02 +0530</pubDate>
             
-            <guid>https://aamernabi.github.io/posts/java-hashcode/</guid>
+            <guid>http://localhost:1313/posts/java-hashcode/</guid>
             <description>&lt;blockquote&gt;
 &lt;p&gt;The &lt;code&gt;hashCode()&lt;/code&gt; method provides a way to quickly categorize and retrieve objects by generating a unique (or at least well-distributed) integer for each object. It is part of the Object class, so every class in Java inherits it.&lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;The &lt;code&gt;hashCode()&lt;/code&gt; is a native method and returns the integer hash code value of the object.&lt;/p&gt;
@@ -616,10 +754,10 @@ the map may store them both — which is wrong behavior for a set.</p>
         
         <item>
             <title>Fail-fast iterator and Fail-safe iterator</title>
-            <link>https://aamernabi.github.io/posts/fail-fast_and_fail-safe_iterator/</link>
+            <link>http://localhost:1313/posts/fail-fast_and_fail-safe_iterator/</link>
             <pubDate>Mon, 20 Jul 2020 15:44:00 +0530</pubDate>
             
-            <guid>https://aamernabi.github.io/posts/fail-fast_and_fail-safe_iterator/</guid>
+            <guid>http://localhost:1313/posts/fail-fast_and_fail-safe_iterator/</guid>
             <description>&lt;h4 id=&#34;fail-fast-iterator&#34;&gt;Fail-fast iterator&lt;/h4&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Fail-Fast iterators immediately throw &lt;strong&gt;ConcurrentModificationException&lt;/strong&gt; if there is &lt;em&gt;&lt;strong&gt;structural modification&lt;/strong&gt;&lt;/em&gt; of

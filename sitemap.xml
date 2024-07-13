@@ -2,42 +2,60 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://aamernabi.github.io/</loc>
+    <loc>http://localhost:1313/</loc>
     <lastmod>2024-07-02T16:25:32+05:30</lastmod>
   </url><url>
-    <loc>https://aamernabi.github.io/tags/java/</loc>
+    <loc>http://localhost:1313/tags/java/</loc>
     <lastmod>2024-07-02T16:25:32+05:30</lastmod>
   </url><url>
-    <loc>https://aamernabi.github.io/posts/java-sealed-interface/</loc>
+    <loc>http://localhost:1313/posts/java-sealed-interface/</loc>
     <lastmod>2024-07-02T16:25:32+05:30</lastmod>
   </url><url>
-    <loc>https://aamernabi.github.io/posts/</loc>
+    <loc>http://localhost:1313/posts/</loc>
     <lastmod>2024-07-02T16:25:32+05:30</lastmod>
   </url><url>
-    <loc>https://aamernabi.github.io/tags/</loc>
+    <loc>http://localhost:1313/tags/</loc>
     <lastmod>2024-07-02T16:25:32+05:30</lastmod>
   </url><url>
-    <loc>https://aamernabi.github.io/posts/java-functional-interface/</loc>
+    <loc>http://localhost:1313/posts/java-functional-interface/</loc>
     <lastmod>2024-03-26T21:25:32+05:30</lastmod>
   </url><url>
-    <loc>https://aamernabi.github.io/posts/atomicinteger/</loc>
+    <loc>http://localhost:1313/posts/deep-dive-into-java-stream-api/</loc>
+    <lastmod>2021-06-07T18:12:23+05:30</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/java8/</loc>
+    <lastmod>2021-06-07T18:12:23+05:30</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/streams/</loc>
+    <lastmod>2021-06-07T18:12:23+05:30</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/atomicinteger/</loc>
     <lastmod>2021-01-19T10:41:26+05:30</lastmod>
   </url><url>
-    <loc>https://aamernabi.github.io/posts/java-blocking-queue/</loc>
+    <loc>http://localhost:1313/tags/concurrency/</loc>
+    <lastmod>2021-01-19T10:41:26+05:30</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/multithreading/</loc>
+    <lastmod>2021-01-19T10:41:26+05:30</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/thread-safe_counters_in_java_atomicinteger/</loc>
+    <lastmod>2021-01-19T10:41:26+05:30</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/java-blocking-queue/</loc>
     <lastmod>2020-07-27T20:09:10+05:30</lastmod>
   </url><url>
-    <loc>https://aamernabi.github.io/posts/java-completable-future/</loc>
+    <loc>http://localhost:1313/posts/java-completable-future/</loc>
     <lastmod>2020-07-27T12:09:10+05:30</lastmod>
   </url><url>
-    <loc>https://aamernabi.github.io/posts/java-hashcode/</loc>
+    <loc>http://localhost:1313/posts/java-hashcode/</loc>
     <lastmod>2020-07-26T23:03:02+05:30</lastmod>
   </url><url>
-    <loc>https://aamernabi.github.io/posts/fail-fast_and_fail-safe_iterator/</loc>
+    <loc>http://localhost:1313/posts/fail-fast_and_fail-safe_iterator/</loc>
     <lastmod>2020-07-20T15:44:00+05:30</lastmod>
   </url><url>
-    <loc>https://aamernabi.github.io/about/</loc>
+    <loc>http://localhost:1313/about/</loc>
     <lastmod>2020-07-18T14:40:14+05:30</lastmod>
   </url><url>
-    <loc>https://aamernabi.github.io/categories/</loc>
+    <loc>http://localhost:1313/categories/</loc>
   </url>
 </urlset>

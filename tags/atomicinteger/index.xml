@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Atomicinteger on Aamer Paul</title>
+    <link>http://localhost:1313/tags/atomicinteger/</link>
+    <description>Recent content in Atomicinteger on Aamer Paul</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 19 Jan 2021 10:41:26 +0530</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/atomicinteger/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Thread-Safe Counters in Java: A Deep Dive into AtomicInteger</title>
+      <link>http://localhost:1313/posts/thread-safe_counters_in_java_atomicinteger/</link>
+      <pubDate>Tue, 19 Jan 2021 10:41:26 +0530</pubDate>
+      <guid>http://localhost:1313/posts/thread-safe_counters_in_java_atomicinteger/</guid>
+      <description>&lt;p&gt;When building multithreaded applications in Java, ensuring data integrity is crucial. A common challenge arises when multiple threads need to update a shared counter. Without proper synchronization, you can encounter race conditions, leading to incorrect results. This is where &lt;code&gt;AtomicInteger&lt;/code&gt; comes to the rescue.&lt;/p&gt;&#xA;&lt;p&gt;&lt;code&gt;AtomicInteger&lt;/code&gt; is a class from the &lt;code&gt;java.util.concurrent.atomic&lt;/code&gt; package that provides a thread-safe way to perform atomic operations on an integer value. Unlike traditional locking mechanisms (e.g., &lt;code&gt;synchronized&lt;/code&gt; blocks), &lt;code&gt;AtomicInteger&lt;/code&gt; uses low-level hardware instructions to achieve thread safety with higher performance.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
