@@ -1,19 +1,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Posts on Aamer Paul</title>
-        <link>http://localhost:1313/posts/</link>
+        <link>https://aamernabi.github.io/posts/</link>
         <description>Recent content in Posts on Aamer Paul</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <lastBuildDate>Tue, 02 Jul 2024 16:25:32 +0530</lastBuildDate>
-        <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://aamernabi.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
         
         <item>
             <title>Java Sealed Interface</title>
-            <link>http://localhost:1313/posts/java-sealed-interface/</link>
+            <link>https://aamernabi.github.io/posts/java-sealed-interface/</link>
             <pubDate>Tue, 02 Jul 2024 16:25:32 +0530</pubDate>
             
-            <guid>http://localhost:1313/posts/java-sealed-interface/</guid>
+            <guid>https://aamernabi.github.io/posts/java-sealed-interface/</guid>
             <description>&lt;p&gt;A &lt;strong&gt;sealed class&lt;/strong&gt; and &lt;strong&gt;sealed interface&lt;/strong&gt; is a feature introduced in Java 15 (as a preview) and officially released in Java 17.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;Sealed classes&lt;/strong&gt; and &lt;strong&gt;interfaces&lt;/strong&gt; provide controlled inheritance of your class hierarchies.&lt;/p&gt;&lt;/blockquote&gt;
@@ -131,10 +131,10 @@
         
         <item>
             <title>Java Functional Interface</title>
-            <link>http://localhost:1313/posts/java-functional-interface/</link>
+            <link>https://aamernabi.github.io/posts/java-functional-interface/</link>
             <pubDate>Tue, 26 Mar 2024 21:25:32 +0530</pubDate>
             
-            <guid>http://localhost:1313/posts/java-functional-interface/</guid>
+            <guid>https://aamernabi.github.io/posts/java-functional-interface/</guid>
             <description>&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;Functional interfaces&lt;/strong&gt; in Java are interfaces that contain exactly one abstract method. They are also known as &lt;strong&gt;Single Abstract Method (SAM)&lt;/strong&gt; interfaces. It was introduced in Java 8.&lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;Example:&lt;/p&gt;
@@ -212,10 +212,10 @@
         
         <item>
             <title>A Deep Dive into the Java Stream API</title>
-            <link>http://localhost:1313/posts/deep-dive-into-java-stream-api/</link>
+            <link>https://aamernabi.github.io/posts/deep-dive-into-java-stream-api/</link>
             <pubDate>Mon, 07 Jun 2021 18:12:23 +0530</pubDate>
             
-            <guid>http://localhost:1313/posts/deep-dive-into-java-stream-api/</guid>
+            <guid>https://aamernabi.github.io/posts/deep-dive-into-java-stream-api/</guid>
             <description>&lt;p&gt;The &lt;strong&gt;Stream API&lt;/strong&gt;, introduced in Java 8, is a powerful tool for processing sequences of elements. It provides a functional approach to working with collections and arrays, allowing for expressive and efficient data manipulation. Streams don&amp;rsquo;t store data; instead, they operate on a data source, such as a &lt;code&gt;Collection&lt;/code&gt; or an array, and enable aggregate operations.&lt;/p&gt;
 &lt;h2 id=&#34;core-concepts&#34;&gt;Core Concepts&lt;/h2&gt;
 &lt;p&gt;A stream pipeline consists of three parts:&lt;/p&gt;
@@ -345,10 +345,10 @@
         
         <item>
             <title>Thread-Safe Counters in Java: A Deep Dive into AtomicInteger</title>
-            <link>http://localhost:1313/posts/thread-safe_counters_in_java_atomicinteger/</link>
+            <link>https://aamernabi.github.io/posts/thread-safe_counters_in_java_atomicinteger/</link>
             <pubDate>Tue, 19 Jan 2021 10:41:26 +0530</pubDate>
             
-            <guid>http://localhost:1313/posts/thread-safe_counters_in_java_atomicinteger/</guid>
+            <guid>https://aamernabi.github.io/posts/thread-safe_counters_in_java_atomicinteger/</guid>
             <description>&lt;p&gt;When building multithreaded applications in Java, ensuring data integrity is crucial. A common challenge arises when multiple threads need to update a shared counter. Without proper synchronization, you can encounter race conditions, leading to incorrect results. This is where &lt;code&gt;AtomicInteger&lt;/code&gt; comes to the rescue.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;AtomicInteger&lt;/code&gt; is a class from the &lt;code&gt;java.util.concurrent.atomic&lt;/code&gt; package that provides a thread-safe way to perform atomic operations on an integer value. Unlike traditional locking mechanisms (e.g., &lt;code&gt;synchronized&lt;/code&gt; blocks), &lt;code&gt;AtomicInteger&lt;/code&gt; uses low-level hardware instructions to achieve thread safety with higher performance.&lt;/p&gt;</description>
             <content type="html"><![CDATA[<p>When building multithreaded applications in Java, ensuring data integrity is crucial. A common challenge arises when multiple threads need to update a shared counter. Without proper synchronization, you can encounter race conditions, leading to incorrect results. This is where <code>AtomicInteger</code> comes to the rescue.</p>
@@ -441,10 +441,10 @@
         
         <item>
             <title>Blocking Queue in Java</title>
-            <link>http://localhost:1313/posts/java-blocking-queue/</link>
+            <link>https://aamernabi.github.io/posts/java-blocking-queue/</link>
             <pubDate>Mon, 27 Jul 2020 20:09:10 +0530</pubDate>
             
-            <guid>http://localhost:1313/posts/java-blocking-queue/</guid>
+            <guid>https://aamernabi.github.io/posts/java-blocking-queue/</guid>
             <description>&lt;blockquote&gt;
 &lt;p&gt;A &lt;code&gt;BlockingQueue&lt;/code&gt; in Java is a &lt;code&gt;thread-safe queue&lt;/code&gt; that supports operations that wait for the queue to become non-empty when retrieving an element (for consuming), and wait for space to become available in the queue when storing an element (for producing).&lt;/p&gt;&lt;/blockquote&gt;
 &lt;h3 id=&#34;why-do-we-need-blockingqueue&#34;&gt;Why do we need &lt;code&gt;BlockingQueue&lt;/code&gt;?&lt;/h3&gt;
@@ -523,10 +523,10 @@ take() blocks the caller if the queue is empty:</p>
         
         <item>
             <title>Completable Future in Java</title>
-            <link>http://localhost:1313/posts/java-completable-future/</link>
+            <link>https://aamernabi.github.io/posts/java-completable-future/</link>
             <pubDate>Mon, 27 Jul 2020 12:09:10 +0530</pubDate>
             
-            <guid>http://localhost:1313/posts/java-completable-future/</guid>
+            <guid>https://aamernabi.github.io/posts/java-completable-future/</guid>
             <description>&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;&lt;code&gt;CompletableFuture&lt;/code&gt;&lt;/strong&gt; is a class introduced in &lt;strong&gt;Java 8&lt;/strong&gt; that represents a future result of an &lt;strong&gt;asynchronous computation&lt;/strong&gt;, just like &lt;code&gt;Future&lt;/code&gt; — but with &lt;strong&gt;more power&lt;/strong&gt;.&lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;It allows us to:&lt;/p&gt;
@@ -665,10 +665,10 @@ take() blocks the caller if the queue is empty:</p>
         
         <item>
             <title>hashcode() in Java</title>
-            <link>http://localhost:1313/posts/java-hashcode/</link>
+            <link>https://aamernabi.github.io/posts/java-hashcode/</link>
             <pubDate>Sun, 26 Jul 2020 23:03:02 +0530</pubDate>
             
-            <guid>http://localhost:1313/posts/java-hashcode/</guid>
+            <guid>https://aamernabi.github.io/posts/java-hashcode/</guid>
             <description>&lt;blockquote&gt;
 &lt;p&gt;The &lt;code&gt;hashCode()&lt;/code&gt; method provides a way to quickly categorize and retrieve objects by generating a unique (or at least well-distributed) integer for each object. It is part of the Object class, so every class in Java inherits it.&lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;The &lt;code&gt;hashCode()&lt;/code&gt; is a native method and returns the integer hash code value of the object.&lt;/p&gt;
@@ -754,10 +754,10 @@ the map may store them both — which is wrong behavior for a set.</p>
         
         <item>
             <title>Fail-fast iterator and Fail-safe iterator</title>
-            <link>http://localhost:1313/posts/fail-fast_and_fail-safe_iterator/</link>
+            <link>https://aamernabi.github.io/posts/fail-fast_and_fail-safe_iterator/</link>
             <pubDate>Mon, 20 Jul 2020 15:44:00 +0530</pubDate>
             
-            <guid>http://localhost:1313/posts/fail-fast_and_fail-safe_iterator/</guid>
+            <guid>https://aamernabi.github.io/posts/fail-fast_and_fail-safe_iterator/</guid>
             <description>&lt;h4 id=&#34;fail-fast-iterator&#34;&gt;Fail-fast iterator&lt;/h4&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Fail-Fast iterators immediately throw &lt;strong&gt;ConcurrentModificationException&lt;/strong&gt; if there is &lt;em&gt;&lt;strong&gt;structural modification&lt;/strong&gt;&lt;/em&gt; of

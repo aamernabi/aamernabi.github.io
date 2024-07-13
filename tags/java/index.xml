@@ -2,66 +2,66 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Java on Aamer Paul</title>
-    <link>http://localhost:1313/tags/java/</link>
+    <link>https://aamernabi.github.io/tags/java/</link>
     <description>Recent content in Java on Aamer Paul</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 02 Jul 2024 16:25:32 +0530</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://aamernabi.github.io/tags/java/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Java Sealed Interface</title>
-      <link>http://localhost:1313/posts/java-sealed-interface/</link>
+      <link>https://aamernabi.github.io/posts/java-sealed-interface/</link>
       <pubDate>Tue, 02 Jul 2024 16:25:32 +0530</pubDate>
-      <guid>http://localhost:1313/posts/java-sealed-interface/</guid>
+      <guid>https://aamernabi.github.io/posts/java-sealed-interface/</guid>
       <description>&lt;p&gt;A &lt;strong&gt;sealed class&lt;/strong&gt; and &lt;strong&gt;sealed interface&lt;/strong&gt; is a feature introduced in Java 15 (as a preview) and officially released in Java 17.&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Sealed classes&lt;/strong&gt; and &lt;strong&gt;interfaces&lt;/strong&gt; provide controlled inheritance of your class hierarchies.&lt;/p&gt;&lt;/blockquote&gt;&#xA;&lt;h4 id=&#34;sealed-class&#34;&gt;Sealed class&lt;/h4&gt;&#xA;&lt;p&gt;A &lt;strong&gt;sealed class&lt;/strong&gt; restricts which other classes can inherit from it. This provides better control over the class hierarchy and enhances maintainability, security, and optimization (e.g., for pattern matching).&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Syntax&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;sealed&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Vehicle&lt;/span&gt; permits Car, Truck {&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// class body&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Here, &lt;code&gt;Vehicle&lt;/code&gt; is a &lt;strong&gt;sealed class&lt;/strong&gt;, and only &lt;code&gt;Car&lt;/code&gt; and &lt;code&gt;Truck&lt;/code&gt; are allowed to extend it.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Java Functional Interface</title>
-      <link>http://localhost:1313/posts/java-functional-interface/</link>
+      <link>https://aamernabi.github.io/posts/java-functional-interface/</link>
       <pubDate>Tue, 26 Mar 2024 21:25:32 +0530</pubDate>
-      <guid>http://localhost:1313/posts/java-functional-interface/</guid>
+      <guid>https://aamernabi.github.io/posts/java-functional-interface/</guid>
       <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Functional interfaces&lt;/strong&gt; in Java are interfaces that contain exactly one abstract method. They are also known as &lt;strong&gt;Single Abstract Method (SAM)&lt;/strong&gt; interfaces. It was introduced in Java 8.&lt;/p&gt;&lt;/blockquote&gt;&#xA;&lt;p&gt;Example:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@FunctionalInterface&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;MyFunctionalInterface&lt;/span&gt; {&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;doSomething&lt;/span&gt;(String message); &lt;span style=&#34;color:#75715e&#34;&gt;// Single abstract method&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;(String&lt;span style=&#34;color:#f92672&#34;&gt;[]&lt;/span&gt; args) {&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  MyFunctionalInterface myLambda &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (msg) &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; System.&lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;println&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Lambda says: &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; msg);&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  myLambda.&lt;span style=&#34;color:#a6e22e&#34;&gt;doSomething&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hello World&amp;#34;&lt;/span&gt;);&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;consumer-predicate-function-and-supplier&#34;&gt;Consumer, Predicate, Function, and Supplier&lt;/h3&gt;&#xA;&lt;p&gt;&lt;code&gt;Consumer&lt;/code&gt;, &lt;code&gt;Predicate&lt;/code&gt;, &lt;code&gt;Function&lt;/code&gt;, and &lt;code&gt;Supplier&lt;/code&gt; are key functional interfaces introduced in Java 8 as part of the &lt;code&gt;java.util.function&lt;/code&gt; package. They are widely used in lambda expressions and the Stream API.&lt;/p&gt;</description>
     </item>
     <item>
       <title>A Deep Dive into the Java Stream API</title>
-      <link>http://localhost:1313/posts/deep-dive-into-java-stream-api/</link>
+      <link>https://aamernabi.github.io/posts/deep-dive-into-java-stream-api/</link>
       <pubDate>Mon, 07 Jun 2021 18:12:23 +0530</pubDate>
-      <guid>http://localhost:1313/posts/deep-dive-into-java-stream-api/</guid>
+      <guid>https://aamernabi.github.io/posts/deep-dive-into-java-stream-api/</guid>
       <description>&lt;p&gt;The &lt;strong&gt;Stream API&lt;/strong&gt;, introduced in Java 8, is a powerful tool for processing sequences of elements. It provides a functional approach to working with collections and arrays, allowing for expressive and efficient data manipulation. Streams don&amp;rsquo;t store data; instead, they operate on a data source, such as a &lt;code&gt;Collection&lt;/code&gt; or an array, and enable aggregate operations.&lt;/p&gt;&#xA;&lt;h2 id=&#34;core-concepts&#34;&gt;Core Concepts&lt;/h2&gt;&#xA;&lt;p&gt;A stream pipeline consists of three parts:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;strong&gt;A source&lt;/strong&gt;: Where the stream originates from (e.g., a &lt;code&gt;List&lt;/code&gt;, &lt;code&gt;Set&lt;/code&gt;, or array).&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Zero or more intermediate operations&lt;/strong&gt;: These transform the stream into another stream. Examples include &lt;code&gt;filter&lt;/code&gt;, &lt;code&gt;map&lt;/code&gt;, and &lt;code&gt;sorted&lt;/code&gt;.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;A terminal operation&lt;/strong&gt;: This produces a result or a side-effect, and triggers the execution of the pipeline. Examples include &lt;code&gt;forEach&lt;/code&gt;, &lt;code&gt;collect&lt;/code&gt;, and &lt;code&gt;reduce&lt;/code&gt;.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;One of the key features of streams is &lt;strong&gt;laziness&lt;/strong&gt;. Intermediate operations are not executed until a terminal operation is invoked. This allows the Stream API to optimize the execution of the pipeline.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Thread-Safe Counters in Java: A Deep Dive into AtomicInteger</title>
-      <link>http://localhost:1313/posts/thread-safe_counters_in_java_atomicinteger/</link>
+      <link>https://aamernabi.github.io/posts/thread-safe_counters_in_java_atomicinteger/</link>
       <pubDate>Tue, 19 Jan 2021 10:41:26 +0530</pubDate>
-      <guid>http://localhost:1313/posts/thread-safe_counters_in_java_atomicinteger/</guid>
+      <guid>https://aamernabi.github.io/posts/thread-safe_counters_in_java_atomicinteger/</guid>
       <description>&lt;p&gt;When building multithreaded applications in Java, ensuring data integrity is crucial. A common challenge arises when multiple threads need to update a shared counter. Without proper synchronization, you can encounter race conditions, leading to incorrect results. This is where &lt;code&gt;AtomicInteger&lt;/code&gt; comes to the rescue.&lt;/p&gt;&#xA;&lt;p&gt;&lt;code&gt;AtomicInteger&lt;/code&gt; is a class from the &lt;code&gt;java.util.concurrent.atomic&lt;/code&gt; package that provides a thread-safe way to perform atomic operations on an integer value. Unlike traditional locking mechanisms (e.g., &lt;code&gt;synchronized&lt;/code&gt; blocks), &lt;code&gt;AtomicInteger&lt;/code&gt; uses low-level hardware instructions to achieve thread safety with higher performance.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Blocking Queue in Java</title>
-      <link>http://localhost:1313/posts/java-blocking-queue/</link>
+      <link>https://aamernabi.github.io/posts/java-blocking-queue/</link>
       <pubDate>Mon, 27 Jul 2020 20:09:10 +0530</pubDate>
-      <guid>http://localhost:1313/posts/java-blocking-queue/</guid>
+      <guid>https://aamernabi.github.io/posts/java-blocking-queue/</guid>
       <description>&lt;blockquote&gt;&#xA;&lt;p&gt;A &lt;code&gt;BlockingQueue&lt;/code&gt; in Java is a &lt;code&gt;thread-safe queue&lt;/code&gt; that supports operations that wait for the queue to become non-empty when retrieving an element (for consuming), and wait for space to become available in the queue when storing an element (for producing).&lt;/p&gt;&lt;/blockquote&gt;&#xA;&lt;h3 id=&#34;why-do-we-need-blockingqueue&#34;&gt;Why do we need &lt;code&gt;BlockingQueue&lt;/code&gt;?&lt;/h3&gt;&#xA;&lt;p&gt;In multi-threaded applications:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Producers&lt;/strong&gt; add data to a queue.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Consumers&lt;/strong&gt; remove data from the queue.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Instead of manually managing thread synchronization (with &lt;code&gt;wait()&lt;/code&gt; and &lt;code&gt;notify()&lt;/code&gt;), &lt;code&gt;BlockingQueue&lt;/code&gt;:&lt;/p&gt;</description>
     </item>
     <item>
       <title>Completable Future in Java</title>
-      <link>http://localhost:1313/posts/java-completable-future/</link>
+      <link>https://aamernabi.github.io/posts/java-completable-future/</link>
       <pubDate>Mon, 27 Jul 2020 12:09:10 +0530</pubDate>
-      <guid>http://localhost:1313/posts/java-completable-future/</guid>
+      <guid>https://aamernabi.github.io/posts/java-completable-future/</guid>
       <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;&lt;code&gt;CompletableFuture&lt;/code&gt;&lt;/strong&gt; is a class introduced in &lt;strong&gt;Java 8&lt;/strong&gt; that represents a future result of an &lt;strong&gt;asynchronous computation&lt;/strong&gt;, just like &lt;code&gt;Future&lt;/code&gt; — but with &lt;strong&gt;more power&lt;/strong&gt;.&lt;/p&gt;&lt;/blockquote&gt;&#xA;&lt;p&gt;It allows us to:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Run tasks asynchronously&lt;/li&gt;&#xA;&lt;li&gt;Chain multiple tasks together&lt;/li&gt;&#xA;&lt;li&gt;Handle results or errors when they arrive&lt;/li&gt;&#xA;&lt;li&gt;Avoid &lt;strong&gt;blocking&lt;/strong&gt; the main thread&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;It implements both &lt;code&gt;Future&amp;lt;T&amp;gt;&lt;/code&gt; and &lt;code&gt;CompletionStage&amp;lt;T&amp;gt;&lt;/code&gt;, offering a much richer API for building asynchronous, non-blocking, and highly composable workflows.&lt;/p&gt;&#xA;&lt;h4 id=&#34;features&#34;&gt;Features&lt;/h4&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;strong&gt;Non-Blocking:&lt;/strong&gt; It provides methods like &lt;code&gt;thenApply()&lt;/code&gt;, &lt;code&gt;thenAccept()&lt;/code&gt;, and &lt;code&gt;thenRun()&lt;/code&gt; that allow you to define actions to be taken when the result is available without blocking the main thread.&lt;/p&gt;</description>
     </item>
     <item>
       <title>hashcode() in Java</title>
-      <link>http://localhost:1313/posts/java-hashcode/</link>
+      <link>https://aamernabi.github.io/posts/java-hashcode/</link>
       <pubDate>Sun, 26 Jul 2020 23:03:02 +0530</pubDate>
-      <guid>http://localhost:1313/posts/java-hashcode/</guid>
+      <guid>https://aamernabi.github.io/posts/java-hashcode/</guid>
       <description>&lt;blockquote&gt;&#xA;&lt;p&gt;The &lt;code&gt;hashCode()&lt;/code&gt; method provides a way to quickly categorize and retrieve objects by generating a unique (or at least well-distributed) integer for each object. It is part of the Object class, so every class in Java inherits it.&lt;/p&gt;&lt;/blockquote&gt;&#xA;&lt;p&gt;The &lt;code&gt;hashCode()&lt;/code&gt; is a native method and returns the integer hash code value of the object.&lt;/p&gt;&#xA;&lt;p&gt;A hash code is an integer value that is generated by the &lt;code&gt;hashCode()&lt;/code&gt; method. It’s used primarily in hash-based&#xA;collections like:&lt;/p&gt;</description>
     </item>
     <item>
       <title>Fail-fast iterator and Fail-safe iterator</title>
-      <link>http://localhost:1313/posts/fail-fast_and_fail-safe_iterator/</link>
+      <link>https://aamernabi.github.io/posts/fail-fast_and_fail-safe_iterator/</link>
       <pubDate>Mon, 20 Jul 2020 15:44:00 +0530</pubDate>
-      <guid>http://localhost:1313/posts/fail-fast_and_fail-safe_iterator/</guid>
+      <guid>https://aamernabi.github.io/posts/fail-fast_and_fail-safe_iterator/</guid>
       <description>&lt;h4 id=&#34;fail-fast-iterator&#34;&gt;Fail-fast iterator&lt;/h4&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;Fail-Fast iterators immediately throw &lt;strong&gt;ConcurrentModificationException&lt;/strong&gt; if there is &lt;em&gt;&lt;strong&gt;structural modification&lt;/strong&gt;&lt;/em&gt; of&#xA;the collection.&lt;/p&gt;&lt;/blockquote&gt;&#xA;&lt;p&gt;A fail-fast iterator in Java is designed to immediately throw a&lt;code&gt;ConcurrentModificationException&lt;/code&gt;if the collection it is&#xA;iterating over is structurally modified (elements added or removed) while the iteration is in progress, except when&#xA;modification is done through the iterator&amp;rsquo;s own&lt;code&gt;remove()&lt;/code&gt;method. This behavior helps in detecting concurrent&#xA;modification issues early, preventing potential data corruption or unexpected behavior.&lt;/p&gt;</description>
     </item>
   </channel>
