@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pattern Matching on Aamer Paul</title>
+    <link>https://aamernabi.github.io/tags/pattern-matching/</link>
+    <description>Recent content in Pattern Matching on Aamer Paul</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 02 Jul 2024 16:25:32 +0530</lastBuildDate>
+    <atom:link href="https://aamernabi.github.io/tags/pattern-matching/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Controlling Inheritance with Java&#39;s Sealed Classes and Interfaces</title>
+      <link>https://aamernabi.github.io/posts/java-sealed-interface/</link>
+      <pubDate>Tue, 02 Jul 2024 16:25:32 +0530</pubDate>
+      <guid>https://aamernabi.github.io/posts/java-sealed-interface/</guid>
+      <description>&lt;p&gt;Introduced as a standard feature in Java 17, &lt;strong&gt;sealed classes&lt;/strong&gt; and &lt;strong&gt;sealed interfaces&lt;/strong&gt; give you precise control over your class hierarchies. By declaring a class or interface as &lt;code&gt;sealed&lt;/code&gt;, you can restrict which other classes or interfaces are allowed to extend or implement it.&lt;/p&gt;&#xA;&lt;p&gt;This feature is a powerful tool for domain modeling, enhancing security, and working with pattern matching in &lt;code&gt;switch&lt;/code&gt; expressions.&lt;/p&gt;&#xA;&lt;h2 id=&#34;what-are-sealed-classes&#34;&gt;What are Sealed Classes?&lt;/h2&gt;&#xA;&lt;p&gt;A &lt;strong&gt;sealed class&lt;/strong&gt; restricts which other classes can inherit from it. This provides better control over the class hierarchy, making your code more robust and maintainable.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

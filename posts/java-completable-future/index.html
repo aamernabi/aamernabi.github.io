@@ -6,12 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="">
-<meta name="description" content=" CompletableFuture is a class introduced in Java 8 that represents a future result of an asynchronous computation, just like Future — but with more power.
-It allows us to:
-Run tasks asynchronously Chain multiple tasks together Handle results or errors when they arrive Avoid blocking the main thread It implements both Future&lt;T&gt; and CompletionStage&lt;T&gt;, offering a much richer API for building asynchronous, non-blocking, and highly composable workflows.
-Features Non-Blocking: It provides methods like thenApply(), thenAccept(), and thenRun() that allow you to define actions to be taken when the result is available without blocking the main thread.
+<meta name="description" content="Introduced in Java 8, CompletableFuture is a powerful class for asynchronous programming. It extends the traditional Future interface with a rich set of features for composing, combining, and handling asynchronous tasks, enabling you to write non-blocking, highly concurrent applications with ease.
+Why CompletableFuture? Before CompletableFuture, Java&rsquo;s Future was limited. You could start an asynchronous task, but you had to block your main thread using get() to retrieve the result. This defeated the purpose of non-blocking code.
 " />
-<meta name="keywords" content=", java" />
+<meta name="keywords" content=", java, concurrency, java8" />
 <meta name="robots" content="noodp" />
 <meta name="theme-color" content="" />
 <link rel="canonical" href="https://aamernabi.github.io/posts/java-completable-future/" />
@@ -19,7 +17,7 @@ Features Non-Blocking: It provides methods like thenApply(), thenAccept(), and t
 
     <title>
         
-            Completable Future in Java :: Aamer Paul 
+            Mastering Asynchronous Programming with Java&#39;s CompletableFuture :: Aamer Paul 
         
     </title>
 
@@ -43,22 +41,18 @@ Features Non-Blocking: It provides methods like thenApply(), thenAccept(), and t
 
 
 
-  <meta itemprop="name" content="Completable Future in Java">
-  <meta itemprop="description" content="CompletableFuture is a class introduced in Java 8 that represents a future result of an asynchronous computation, just like Future — but with more power.
-It allows us to:
-Run tasks asynchronously Chain multiple tasks together Handle results or errors when they arrive Avoid blocking the main thread It implements both Future&lt;T&gt; and CompletionStage&lt;T&gt;, offering a much richer API for building asynchronous, non-blocking, and highly composable workflows.
-Features Non-Blocking: It provides methods like thenApply(), thenAccept(), and thenRun() that allow you to define actions to be taken when the result is available without blocking the main thread.">
+  <meta itemprop="name" content="Mastering Asynchronous Programming with Java&#39;s CompletableFuture">
+  <meta itemprop="description" content="Introduced in Java 8, CompletableFuture is a powerful class for asynchronous programming. It extends the traditional Future interface with a rich set of features for composing, combining, and handling asynchronous tasks, enabling you to write non-blocking, highly concurrent applications with ease.
+Why CompletableFuture? Before CompletableFuture, Java’s Future was limited. You could start an asynchronous task, but you had to block your main thread using get() to retrieve the result. This defeated the purpose of non-blocking code.">
   <meta itemprop="datePublished" content="2020-07-27T12:09:10+05:30">
   <meta itemprop="dateModified" content="2020-07-27T12:09:10+05:30">
-  <meta itemprop="wordCount" content="444">
-  <meta itemprop="keywords" content="Java">
+  <meta itemprop="wordCount" content="590">
+  <meta itemprop="keywords" content="Java,Concurrency,Java8">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Completable Future in Java">
-  <meta name="twitter:description" content="CompletableFuture is a class introduced in Java 8 that represents a future result of an asynchronous computation, just like Future — but with more power.
-It allows us to:
-Run tasks asynchronously Chain multiple tasks together Handle results or errors when they arrive Avoid blocking the main thread It implements both Future&lt;T&gt; and CompletionStage&lt;T&gt;, offering a much richer API for building asynchronous, non-blocking, and highly composable workflows.
-Features Non-Blocking: It provides methods like thenApply(), thenAccept(), and thenRun() that allow you to define actions to be taken when the result is available without blocking the main thread.">
+  <meta name="twitter:title" content="Mastering Asynchronous Programming with Java&#39;s CompletableFuture">
+  <meta name="twitter:description" content="Introduced in Java 8, CompletableFuture is a powerful class for asynchronous programming. It extends the traditional Future interface with a rich set of features for composing, combining, and handling asynchronous tasks, enabling you to write non-blocking, highly concurrent applications with ease.
+Why CompletableFuture? Before CompletableFuture, Java’s Future was limited. You could start an asynchronous task, but you had to block your main thread using get() to retrieve the result. This defeated the purpose of non-blocking code.">
 
 
 
@@ -144,42 +138,44 @@ Features Non-Blocking: It provides methods like thenApply(), thenAccept(), and t
 
     <article>
       <h1 class="post-title">
-        <a href="https://aamernabi.github.io/posts/java-completable-future/">Completable Future in Java</a>
+        <a href="https://aamernabi.github.io/posts/java-completable-future/">Mastering Asynchronous Programming with Java&rsquo;s CompletableFuture</a>
       </h1>
 
       
 
       
+        <hr />
+        <aside id="toc">
+          <div class="toc-title">Table of Contents</div>
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-completablefuture">Why <code>CompletableFuture</code>?</a></li>
+    <li><a href="#core-features-of-completablefuture">Core Features of <code>CompletableFuture</code></a></li>
+    <li><a href="#key-methods-of-completablefuture">Key Methods of <code>CompletableFuture</code></a></li>
+    <li><a href="#how-does-completablefuture-work">How Does <code>CompletableFuture</code> Work?</a></li>
+    <li><a href="#practical-example">Practical Example</a></li>
+  </ul>
+</nav>
+        </aside>
+        <hr />
 
       
 
       <div class="post-content">
-        <blockquote>
-<p><strong><code>CompletableFuture</code></strong> is a class introduced in <strong>Java 8</strong> that represents a future result of an <strong>asynchronous computation</strong>, just like <code>Future</code> — but with <strong>more power</strong>.</p></blockquote>
-<p>It allows us to:</p>
+        <p>Introduced in Java 8, <code>CompletableFuture</code> is a powerful class for asynchronous programming. It extends the traditional <code>Future</code> interface with a rich set of features for composing, combining, and handling asynchronous tasks, enabling you to write non-blocking, highly concurrent applications with ease.</p>
+<h2 id="why-completablefuture">Why <code>CompletableFuture</code>?</h2>
+<p>Before <code>CompletableFuture</code>, Java&rsquo;s <code>Future</code> was limited. You could start an asynchronous task, but you had to block your main thread using <code>get()</code> to retrieve the result. This defeated the purpose of non-blocking code.</p>
+<p><code>CompletableFuture</code> solves this by providing a <strong>non-blocking, callback-based approach</strong>. It allows you to chain tasks together, so that a subsequent task automatically executes when the previous one completes, without ever blocking your main thread.</p>
+<h2 id="core-features-of-completablefuture">Core Features of <code>CompletableFuture</code></h2>
 <ul>
-<li>Run tasks asynchronously</li>
-<li>Chain multiple tasks together</li>
-<li>Handle results or errors when they arrive</li>
-<li>Avoid <strong>blocking</strong> the main thread</li>
+<li><strong>Asynchronous Execution</strong>: Run tasks in the background without blocking the caller thread, typically using a <code>ForkJoinPool</code> or a custom <code>Executor</code>.</li>
+<li><strong>Composability and Chaining</strong>: Chain multiple asynchronous operations together using methods like <code>thenApply()</code>, <code>thenAccept()</code>, and <code>thenCompose()</code>.</li>
+<li><strong>Powerful Combination</strong>: Combine the results of multiple <code>CompletableFutures</code> using <code>thenCombine()</code>, <code>allOf()</code>, or <code>anyOf()</code>.</li>
+<li><strong>Robust Exception Handling</strong>: Handle exceptions gracefully within the asynchronous pipeline using methods like <code>exceptionally()</code> and <code>handle()</code>.</li>
+<li><strong>Explicit Completion</strong>: Programmatically complete a future with a result or an exception, giving you more control over its lifecycle.</li>
 </ul>
-<p>It implements both <code>Future&lt;T&gt;</code> and <code>CompletionStage&lt;T&gt;</code>, offering a much richer API for building asynchronous, non-blocking, and highly composable workflows.</p>
-<h4 id="features">Features</h4>
-<ul>
-<li>
-<p><strong>Non-Blocking:</strong> It provides methods like <code>thenApply()</code>, <code>thenAccept()</code>, and <code>thenRun()</code> that allow you to define actions to be taken when the result is available without blocking the main thread.</p>
-</li>
-<li>
-<p><strong>Powerful Composition:</strong> Offers methods like <code>thenCompose()</code>, <code>thenCombine()</code>, and <code>allOf()</code> for chaining and combining multiple asynchronous operations.</p>
-</li>
-<li>
-<p><strong>Enhanced Exception Handling:</strong> Includes mechanisms for handling exceptions that occur during asynchronous operations, making it more robust.</p>
-</li>
-<li>
-<p><strong>Explicit Completion:</strong> Allows you to complete a CompletableFuture programmatically, even if the underlying computation hasn&rsquo;t finished, enabling scenarios where results can be provided prematurely.</p>
-</li>
-</ul>
-<h4 id="methods-of-completablefuture">Methods of CompletableFuture</h4>
+<h2 id="key-methods-of-completablefuture">Key Methods of <code>CompletableFuture</code></h2>
+<p>Here&rsquo;s a look at some of the most commonly used methods:</p>
 <table>
   <thead>
       <tr>
@@ -198,82 +194,80 @@ Features Non-Blocking: It provides methods like thenApply(), thenAccept(), and t
       </tr>
       <tr>
           <td><code>thenApply(Function)</code></td>
-          <td>Transforms the result of a computation.</td>
+          <td>Transforms the result of a <code>CompletableFuture</code> when it completes.</td>
       </tr>
       <tr>
           <td><code>thenAccept(Consumer)</code></td>
-          <td>Consumes the result of a computation.</td>
+          <td>Consumes the result of a <code>CompletableFuture</code> when it completes.</td>
       </tr>
       <tr>
           <td><code>thenRun(Runnable)</code></td>
-          <td>Runs a task after the future is completed.</td>
+          <td>Executes a <code>Runnable</code> after a <code>CompletableFuture</code> completes.</td>
       </tr>
       <tr>
           <td><code>thenCombine()</code></td>
-          <td>Combines two futures when both are done.</td>
+          <td>Combines the results of two <code>CompletableFutures</code> when both are done.</td>
       </tr>
       <tr>
           <td><code>exceptionally(Function)</code></td>
-          <td>Provides a fallback result in case of an error.</td>
+          <td>Provides a fallback value in case of an exception.</td>
       </tr>
       <tr>
           <td><code>join()</code></td>
-          <td>Waits for completion and returns the result (throws unchecked exception).</td>
+          <td>Waits for the computation to complete and returns the result (throws an unchecked exception).</td>
       </tr>
       <tr>
           <td><code>get()</code></td>
-          <td>Similar to <code>join()</code> but throws checked exceptions.</td>
+          <td>Similar to <code>join()</code>, but throws checked exceptions.</td>
       </tr>
   </tbody>
 </table>
-<h4 id="how-does-completablefuture-work">How Does <code>CompletableFuture</code> Work?</h4>
+<h2 id="how-does-completablefuture-work">How Does <code>CompletableFuture</code> Work?</h2>
 <ol>
-<li>
-<p><strong>Runs Tasks Asynchronously</strong></p>
-<ul>
-<li>When you call methods like <code>supplyAsync()</code>, <code>runAsync()</code>, etc., <code>CompletableFuture</code> schedules your task to run on a <strong>different thread</strong> (usually from the ForkJoinPool or a custom executor).</li>
-<li>This means your main thread <strong>doesn’t block</strong> and can keep doing other things.</li>
-</ul>
-</li>
-<li>
-<p><strong>Supports Chaining and Callbacks</strong></p>
-<ul>
-<li>You can attach <strong>callbacks</strong> to run <strong>after</strong> the first task completes, using methods like <code>thenApply()</code>, <code>thenAccept()</code>, <code>thenRun()</code>.</li>
-<li>Each callback gets triggered <strong>only when the previous task finishes</strong>, forming a chain of asynchronous steps.</li>
-</ul>
-</li>
-<li>
-<p><strong>Handles Results and Exceptions</strong></p>
-<ul>
-<li><code>CompletableFuture</code> keeps track of the result or exception internally.</li>
-<li>When a task completes, it stores the <strong>result</strong> or <strong>exception</strong> and automatically calls any dependent callbacks.</li>
-<li>If an exception occurs, you can handle it with methods like <code>exceptionally()</code> or <code>handle()</code> without blocking.</li>
-</ul>
-</li>
-<li>
-<p><strong>Combines Multiple Futures</strong></p>
-<ul>
-<li>It allows you to combine multiple <code>CompletableFutures</code> using methods like <code>thenCombine()</code>, <code>allOf()</code>, <code>anyOf()</code>.</li>
-<li>This helps coordinate many async tasks and proceed when all or any are done.</li>
-</ul>
-</li>
+<li><strong>Asynchronous Task Execution</strong>: When you call <code>supplyAsync()</code> or <code>runAsync()</code>, the task is submitted to a thread pool (by default, the <code>ForkJoinPool.commonPool()</code>). Your main thread is free to continue its work.</li>
+<li><strong>Callback Chaining</strong>: You can attach callbacks using methods like <code>thenApply()</code> or <code>thenAccept()</code>. These callbacks are registered and will be executed only when the preceding task finishes.</li>
+<li><strong>Result and Exception Handling</strong>: The <code>CompletableFuture</code> object holds the state of the computation (e.g., pending, completed with a result, or completed with an exception). When a task finishes, it triggers the execution of any dependent callbacks.</li>
+<li><strong>Combining Futures</strong>: Methods like <code>allOf()</code> and <code>anyOf()</code> allow you to coordinate multiple asynchronous tasks, enabling you to proceed when all or any of them have completed.</li>
 </ol>
-<h4 id="example">Example</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">example</span>() {
-</span></span><span style="display:flex;"><span>    CompletableFuture<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> future <span style="color:#f92672">=</span> CompletableFuture.<span style="color:#a6e22e">supplyAsync</span>(() <span style="color:#f92672">-&gt;</span> {
-</span></span><span style="display:flex;"><span>            delay(1000);
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;Hello&#34;</span>;
-</span></span><span style="display:flex;"><span>        })
-</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">thenApply</span>(result <span style="color:#f92672">-&gt;</span> result <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; World!&#34;</span>);
+<h2 id="practical-example">Practical Example</h2>
+<p>Let&rsquo;s see <code>CompletableFuture</code> in action with a simple example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.concurrent.CompletableFuture;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.concurrent.TimeUnit;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    future.<span style="color:#a6e22e">thenRun</span>(() <span style="color:#f92672">-&gt;</span> System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;thenRun : thread = &#34;</span> <span style="color:#f92672">+</span> Thread.<span style="color:#a6e22e">currentThread</span>().<span style="color:#a6e22e">getName</span>()));
-</span></span><span style="display:flex;"><span>    future.<span style="color:#a6e22e">thenAccept</span>(result <span style="color:#f92672">-&gt;</span> {
-</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;thenAccept : thread = &#34;</span> <span style="color:#f92672">+</span> Thread.<span style="color:#a6e22e">currentThread</span>().<span style="color:#a6e22e">getName</span>());
-</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Result = &#34;</span> <span style="color:#f92672">+</span> result);
-</span></span><span style="display:flex;"><span>    });
-</span></span><span style="display:flex;"><span>    future.<span style="color:#a6e22e">join</span>();
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CompletableFutureExample</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        CompletableFuture<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> future <span style="color:#f92672">=</span> CompletableFuture.<span style="color:#a6e22e">supplyAsync</span>(() <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Simulate a long-running task</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>                TimeUnit.<span style="color:#a6e22e">SECONDS</span>.<span style="color:#a6e22e">sleep</span>(1);
+</span></span><span style="display:flex;"><span>            } <span style="color:#66d9ef">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IllegalStateException(e);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;Hello&#34;</span>;
+</span></span><span style="display:flex;"><span>        }).<span style="color:#a6e22e">thenApply</span>(result <span style="color:#f92672">-&gt;</span> result <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; World!&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Attach a callback to consume the final result</span>
+</span></span><span style="display:flex;"><span>        future.<span style="color:#a6e22e">thenAccept</span>(result <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Result: &#34;</span> <span style="color:#f92672">+</span> result);
+</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;This is executed in thread: &#34;</span> <span style="color:#f92672">+</span> Thread.<span style="color:#a6e22e">currentThread</span>().<span style="color:#a6e22e">getName</span>());
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;This is printed immediately from the main thread.&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Wait for the future to complete to see the output</span>
+</span></span><span style="display:flex;"><span>        future.<span style="color:#a6e22e">join</span>();
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div>
+</span></span></code></pre></div><p>In this example:</p>
+<ol>
+<li><code>supplyAsync()</code> starts a background task.</li>
+<li><code>thenApply()</code> chains another task to transform the result.</li>
+<li><code>thenAccept()</code> registers a final callback to print the result.</li>
+<li>The main thread prints its message immediately and then calls <code>join()</code> to wait for the asynchronous pipeline to finish before exiting.</li>
+</ol>
+<p>By leveraging <code>CompletableFuture</code>, you can build sophisticated, non-blocking, and highly efficient applications in Java.</p>
+
       </div>
     </article>
 
@@ -285,6 +279,8 @@ Features Non-Blocking: It provides methods like thenApply(), thenAccept(), and t
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
 
         <span class="tag"><a href="https://aamernabi.github.io/tags/java/">java</a></span>
+        <span class="tag"><a href="https://aamernabi.github.io/tags/concurrency/">concurrency</a></span>
+        <span class="tag"><a href="https://aamernabi.github.io/tags/java8/">java8</a></span>
         
     </p>
 
@@ -298,7 +294,7 @@ Features Non-Blocking: It provides methods like thenApply(), thenAccept(), and t
           <line x1="16" y1="17" x2="8" y2="17"></line>
           <polyline points="10 9 9 9 8 9"></polyline>
         </svg>
-        444 Words
+        590 Words
       </p>
 
       <p>
@@ -337,7 +333,7 @@ Features Non-Blocking: It provides methods like thenApply(), thenAccept(), and t
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=Completable%20Future%20in%20Java&amp;caption=Completable%20Future%20in%20Java&amp;canonicalUrl=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-completable-future%2f" target="_blank" rel="noopener" aria-label="" title="Share on tumblr">
+<a class="resp-sharing-button__link" href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=Mastering%20Asynchronous%20Programming%20with%20Java%27s%20CompletableFuture&amp;caption=Mastering%20Asynchronous%20Programming%20with%20Java%27s%20CompletableFuture&amp;canonicalUrl=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-completable-future%2f" target="_blank" rel="noopener" aria-label="" title="Share on tumblr">
   <div class="resp-sharing-button resp-sharing-button--tumblr resp-sharing-button--small">
     <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.563 24c-5.093 0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941 0 9.999 0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.374-4.156 1.404h-.178l.011.002z"/></svg>
@@ -346,7 +342,7 @@ Features Non-Blocking: It provides methods like thenApply(), thenAccept(), and t
 </a>
 
 
-<a class="resp-sharing-button__link" href="mailto:?subject=Completable%20Future%20in%20Java&amp;body=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-completable-future%2f" target="_self" rel="noopener" aria-label="" title="Share via email">
+<a class="resp-sharing-button__link" href="mailto:?subject=Mastering%20Asynchronous%20Programming%20with%20Java%27s%20CompletableFuture&amp;body=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-completable-future%2f" target="_self" rel="noopener" aria-label="" title="Share via email">
   <div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
     </div>
@@ -354,7 +350,7 @@ Features Non-Blocking: It provides methods like thenApply(), thenAccept(), and t
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://pinterest.com/pin/create/button/?url=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-completable-future%2f&amp;media=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-completable-future%2f;description=Completable%20Future%20in%20Java" target="_blank" rel="noopener" aria-label="" title="Share on pinterest">
+<a class="resp-sharing-button__link" href="https://pinterest.com/pin/create/button/?url=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-completable-future%2f&amp;media=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-completable-future%2f;description=Mastering%20Asynchronous%20Programming%20with%20Java%27s%20CompletableFuture" target="_blank" rel="noopener" aria-label="" title="Share on pinterest">
   <div class="resp-sharing-button resp-sharing-button--pinterest resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/></svg>
     </div>
@@ -362,7 +358,7 @@ Features Non-Blocking: It provides methods like thenApply(), thenAccept(), and t
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-completable-future%2f&amp;title=Completable%20Future%20in%20Java&amp;summary=Completable%20Future%20in%20Java&amp;source=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-completable-future%2f" target="_blank" rel="noopener" aria-label="" title="Share on linkedin">
+<a class="resp-sharing-button__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-completable-future%2f&amp;title=Mastering%20Asynchronous%20Programming%20with%20Java%27s%20CompletableFuture&amp;summary=Mastering%20Asynchronous%20Programming%20with%20Java%27s%20CompletableFuture&amp;source=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-completable-future%2f" target="_blank" rel="noopener" aria-label="" title="Share on linkedin">
   <div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
     </div>
@@ -370,7 +366,7 @@ Features Non-Blocking: It provides methods like thenApply(), thenAccept(), and t
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-completable-future%2f&amp;resubmit=true&amp;title=Completable%20Future%20in%20Java" target="_blank" rel="noopener" aria-label="" title="Share on reddit">
+<a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-completable-future%2f&amp;resubmit=true&amp;title=Mastering%20Asynchronous%20Programming%20with%20Java%27s%20CompletableFuture" target="_blank" rel="noopener" aria-label="" title="Share on reddit">
   <div class="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
     </div>
@@ -378,7 +374,7 @@ Features Non-Blocking: It provides methods like thenApply(), thenAccept(), and t
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://www.xing.com/app/user?op=share;url=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-completable-future%2f;title=Completable%20Future%20in%20Java" target="_blank" rel="noopener" aria-label="" title="Share on xing">
+<a class="resp-sharing-button__link" href="https://www.xing.com/app/user?op=share;url=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-completable-future%2f;title=Mastering%20Asynchronous%20Programming%20with%20Java%27s%20CompletableFuture" target="_blank" rel="noopener" aria-label="" title="Share on xing">
   <div class="resp-sharing-button resp-sharing-button--xing resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.188 0c-.517 0-.741.325-.927.66 0 0-7.455 13.224-7.702 13.657.015.024 4.919 9.023 4.919 9.023.17.308.436.66.967.66h3.454c.211 0 .375-.078.463-.22.089-.151.089-.346-.009-.536l-4.879-8.916c-.004-.006-.004-.016 0-.022L22.139.756c.095-.191.097-.387.006-.535C22.056.078 21.894 0 21.686 0h-3.498zM3.648 4.74c-.211 0-.385.074-.473.216-.09.149-.078.339.02.531l2.34 4.05c.004.01.004.016 0 .021L1.86 16.051c-.099.188-.093.381 0 .529.085.142.239.234.45.234h3.461c.518 0 .766-.348.945-.667l3.734-6.609-2.378-4.155c-.172-.315-.434-.659-.962-.659H3.648v.016z"/></svg>
     </div>
@@ -386,7 +382,7 @@ Features Non-Blocking: It provides methods like thenApply(), thenAccept(), and t
 </a>
 
 
-<a class="resp-sharing-button__link" href="whatsapp://send?text=Completable%20Future%20in%20Java%20https%3a%2f%2faamernabi.github.io%2fposts%2fjava-completable-future%2f" target="_blank" rel="noopener" aria-label="" title="Share on whatsapp">
+<a class="resp-sharing-button__link" href="whatsapp://send?text=Mastering%20Asynchronous%20Programming%20with%20Java%27s%20CompletableFuture%20https%3a%2f%2faamernabi.github.io%2fposts%2fjava-completable-future%2f" target="_blank" rel="noopener" aria-label="" title="Share on whatsapp">
   <div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
     </div>
@@ -394,7 +390,7 @@ Features Non-Blocking: It provides methods like thenApply(), thenAccept(), and t
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-completable-future%2f&amp;t=Completable%20Future%20in%20Java" target="_blank" rel="noopener" aria-label="" title="Share on hacker news">
+<a class="resp-sharing-button__link" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-completable-future%2f&amp;t=Mastering%20Asynchronous%20Programming%20with%20Java%27s%20CompletableFuture" target="_blank" rel="noopener" aria-label="" title="Share on hacker news">
   <div class="resp-sharing-button resp-sharing-button--hackernews resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
 			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"/></svg>
     </div>
@@ -402,7 +398,7 @@ Features Non-Blocking: It provides methods like thenApply(), thenAccept(), and t
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://telegram.me/share/url?text=Completable%20Future%20in%20Java&amp;url=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-completable-future%2f" target="_blank" rel="noopener" aria-label="" title="Share on telegram">
+<a class="resp-sharing-button__link" href="https://telegram.me/share/url?text=Mastering%20Asynchronous%20Programming%20with%20Java%27s%20CompletableFuture&amp;url=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-completable-future%2f" target="_blank" rel="noopener" aria-label="" title="Share on telegram">
   <div class="resp-sharing-button resp-sharing-button--telegram resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
     </div>
@@ -420,7 +416,7 @@ Features Non-Blocking: It provides methods like thenApply(), thenAccept(), and t
             <span class="button previous">
                 <a href="https://aamernabi.github.io/posts/java-blocking-queue/">
                     <span class="button__icon">←</span>
-                    <span class="button__text">Blocking Queue in Java</span>
+                    <span class="button__text">A Deep Dive into Java&#39;s BlockingQueue</span>
                 </a>
             </span>
             
@@ -428,7 +424,7 @@ Features Non-Blocking: It provides methods like thenApply(), thenAccept(), and t
             
             <span class="button next">
                 <a href="https://aamernabi.github.io/posts/java-hashcode/">
-                    <span class="button__text">hashcode() in Java</span>
+                    <span class="button__text">Understanding Java&#39;s hashCode() and equals() Contract</span>
                     <span class="button__icon">→</span>
                 </a>
             </span>

@@ -15,5 +15,19 @@
       <guid>https://aamernabi.github.io/posts/thread-safe_counters_in_java_atomicinteger/</guid>
       <description>&lt;p&gt;When building multithreaded applications in Java, ensuring data integrity is crucial. A common challenge arises when multiple threads need to update a shared counter. Without proper synchronization, you can encounter race conditions, leading to incorrect results. This is where &lt;code&gt;AtomicInteger&lt;/code&gt; comes to the rescue.&lt;/p&gt;&#xA;&lt;p&gt;&lt;code&gt;AtomicInteger&lt;/code&gt; is a class from the &lt;code&gt;java.util.concurrent.atomic&lt;/code&gt; package that provides a thread-safe way to perform atomic operations on an integer value. Unlike traditional locking mechanisms (e.g., &lt;code&gt;synchronized&lt;/code&gt; blocks), &lt;code&gt;AtomicInteger&lt;/code&gt; uses low-level hardware instructions to achieve thread safety with higher performance.&lt;/p&gt;</description>
     </item>
+    <item>
+      <title>A Deep Dive into Java&#39;s BlockingQueue</title>
+      <link>https://aamernabi.github.io/posts/java-blocking-queue/</link>
+      <pubDate>Mon, 27 Jul 2020 20:09:10 +0530</pubDate>
+      <guid>https://aamernabi.github.io/posts/java-blocking-queue/</guid>
+      <description>&lt;p&gt;A &lt;code&gt;BlockingQueue&lt;/code&gt; in Java is a thread-safe queue that simplifies concurrency management by providing blocking operations. It&amp;rsquo;s a crucial tool for building robust multi-threaded applications, especially for implementing producer-consumer scenarios.&lt;/p&gt;&#xA;&lt;h2 id=&#34;why-do-we-need-blockingqueue&#34;&gt;Why Do We Need &lt;code&gt;BlockingQueue&lt;/code&gt;?&lt;/h2&gt;&#xA;&lt;p&gt;In multi-threaded applications, it&amp;rsquo;s common to have a scenario where one or more threads (Producers) are generating data, and one or more other threads (Consumers) are processing that data. This is known as the &lt;strong&gt;producer-consumer problem&lt;/strong&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Mastering Asynchronous Programming with Java&#39;s CompletableFuture</title>
+      <link>https://aamernabi.github.io/posts/java-completable-future/</link>
+      <pubDate>Mon, 27 Jul 2020 12:09:10 +0530</pubDate>
+      <guid>https://aamernabi.github.io/posts/java-completable-future/</guid>
+      <description>&lt;p&gt;Introduced in Java 8, &lt;code&gt;CompletableFuture&lt;/code&gt; is a powerful class for asynchronous programming. It extends the traditional &lt;code&gt;Future&lt;/code&gt; interface with a rich set of features for composing, combining, and handling asynchronous tasks, enabling you to write non-blocking, highly concurrent applications with ease.&lt;/p&gt;&#xA;&lt;h2 id=&#34;why-completablefuture&#34;&gt;Why &lt;code&gt;CompletableFuture&lt;/code&gt;?&lt;/h2&gt;&#xA;&lt;p&gt;Before &lt;code&gt;CompletableFuture&lt;/code&gt;, Java&amp;rsquo;s &lt;code&gt;Future&lt;/code&gt; was limited. You could start an asynchronous task, but you had to block your main thread using &lt;code&gt;get()&lt;/code&gt; to retrieve the result. This defeated the purpose of non-blocking code.&lt;/p&gt;</description>
+    </item>
   </channel>
 </rss>

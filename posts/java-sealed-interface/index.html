@@ -6,13 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="">
-<meta name="description" content="A sealed class and sealed interface is a feature introduced in Java 15 (as a preview) and officially released in Java 17.
-Sealed classes and interfaces provide controlled inheritance of your class hierarchies.
-Sealed class A sealed class restricts which other classes can inherit from it. This provides better control over the class hierarchy and enhances maintainability, security, and optimization (e.g., for pattern matching).
-Syntax
-public sealed class Vehicle permits Car, Truck { // class body } Here, Vehicle is a sealed class, and only Car and Truck are allowed to extend it.
+<meta name="description" content="Introduced as a standard feature in Java 17, sealed classes and sealed interfaces give you precise control over your class hierarchies. By declaring a class or interface as sealed, you can restrict which other classes or interfaces are allowed to extend or implement it.
+This feature is a powerful tool for domain modeling, enhancing security, and working with pattern matching in switch expressions.
+What are Sealed Classes? A sealed class restricts which other classes can inherit from it. This provides better control over the class hierarchy, making your code more robust and maintainable.
 " />
-<meta name="keywords" content=", java" />
+<meta name="keywords" content=", java, java17, pattern matching" />
 <meta name="robots" content="noodp" />
 <meta name="theme-color" content="" />
 <link rel="canonical" href="https://aamernabi.github.io/posts/java-sealed-interface/" />
@@ -20,7 +18,7 @@ public sealed class Vehicle permits Car, Truck { // class body } Here, Vehicle i
 
     <title>
         
-            Java Sealed Interface :: Aamer Paul 
+            Controlling Inheritance with Java&#39;s Sealed Classes and Interfaces :: Aamer Paul 
         
     </title>
 
@@ -44,24 +42,20 @@ public sealed class Vehicle permits Car, Truck { // class body } Here, Vehicle i
 
 
 
-  <meta itemprop="name" content="Java Sealed Interface">
-  <meta itemprop="description" content="A sealed class and sealed interface is a feature introduced in Java 15 (as a preview) and officially released in Java 17.
-Sealed classes and interfaces provide controlled inheritance of your class hierarchies.
-Sealed class A sealed class restricts which other classes can inherit from it. This provides better control over the class hierarchy and enhances maintainability, security, and optimization (e.g., for pattern matching).
-Syntax
-public sealed class Vehicle permits Car, Truck { // class body } Here, Vehicle is a sealed class, and only Car and Truck are allowed to extend it.">
+  <meta itemprop="name" content="Controlling Inheritance with Java&#39;s Sealed Classes and Interfaces">
+  <meta itemprop="description" content="Introduced as a standard feature in Java 17, sealed classes and sealed interfaces give you precise control over your class hierarchies. By declaring a class or interface as sealed, you can restrict which other classes or interfaces are allowed to extend or implement it.
+This feature is a powerful tool for domain modeling, enhancing security, and working with pattern matching in switch expressions.
+What are Sealed Classes? A sealed class restricts which other classes can inherit from it. This provides better control over the class hierarchy, making your code more robust and maintainable.">
   <meta itemprop="datePublished" content="2024-07-02T16:25:32+05:30">
   <meta itemprop="dateModified" content="2024-07-02T16:25:32+05:30">
-  <meta itemprop="wordCount" content="424">
-  <meta itemprop="keywords" content="Java">
+  <meta itemprop="wordCount" content="651">
+  <meta itemprop="keywords" content="Java,Java17,Pattern Matching">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Java Sealed Interface">
-  <meta name="twitter:description" content="A sealed class and sealed interface is a feature introduced in Java 15 (as a preview) and officially released in Java 17.
-Sealed classes and interfaces provide controlled inheritance of your class hierarchies.
-Sealed class A sealed class restricts which other classes can inherit from it. This provides better control over the class hierarchy and enhances maintainability, security, and optimization (e.g., for pattern matching).
-Syntax
-public sealed class Vehicle permits Car, Truck { // class body } Here, Vehicle is a sealed class, and only Car and Truck are allowed to extend it.">
+  <meta name="twitter:title" content="Controlling Inheritance with Java&#39;s Sealed Classes and Interfaces">
+  <meta name="twitter:description" content="Introduced as a standard feature in Java 17, sealed classes and sealed interfaces give you precise control over your class hierarchies. By declaring a class or interface as sealed, you can restrict which other classes or interfaces are allowed to extend or implement it.
+This feature is a powerful tool for domain modeling, enhancing security, and working with pattern matching in switch expressions.
+What are Sealed Classes? A sealed class restricts which other classes can inherit from it. This provides better control over the class hierarchy, making your code more robust and maintainable.">
 
 
 
@@ -139,7 +133,7 @@ public sealed class Vehicle permits Car, Truck { // class body } Here, Vehicle i
           <circle cx="12" cy="12" r="10"></circle>
           <polyline points="12 6 12 12 16 14"></polyline>
         </svg>
-        2 minutes
+        4 minutes
 
         
       </p>
@@ -147,119 +141,134 @@ public sealed class Vehicle permits Car, Truck { // class body } Here, Vehicle i
 
     <article>
       <h1 class="post-title">
-        <a href="https://aamernabi.github.io/posts/java-sealed-interface/">Java Sealed Interface</a>
+        <a href="https://aamernabi.github.io/posts/java-sealed-interface/">Controlling Inheritance with Java&rsquo;s Sealed Classes and Interfaces</a>
       </h1>
 
       
 
       
+        <hr />
+        <aside id="toc">
+          <div class="toc-title">Table of Contents</div>
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#what-are-sealed-classes">What are Sealed Classes?</a>
+      <ul>
+        <li><a href="#rules-for-subclasses">Rules for Subclasses</a></li>
+      </ul>
+    </li>
+    <li><a href="#what-are-sealed-interfaces">What are Sealed Interfaces?</a>
+      <ul>
+        <li><a href="#rules-for-implementers">Rules for Implementers</a></li>
+      </ul>
+    </li>
+    <li><a href="#sealed-types-and-pattern-matching">Sealed Types and Pattern Matching</a>
+      <ul>
+        <li><a href="#example-with-an-enhanced-switch">Example with an Enhanced <code>switch</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#key-benefits-of-sealed-types">Key Benefits of Sealed Types</a></li>
+  </ul>
+</nav>
+        </aside>
+        <hr />
 
       
 
       <div class="post-content">
-        <p>A <strong>sealed class</strong> and <strong>sealed interface</strong> is a feature introduced in Java 15 (as a preview) and officially released in Java 17.</p>
-<blockquote>
-<p><strong>Sealed classes</strong> and <strong>interfaces</strong> provide controlled inheritance of your class hierarchies.</p></blockquote>
-<h4 id="sealed-class">Sealed class</h4>
-<p>A <strong>sealed class</strong> restricts which other classes can inherit from it. This provides better control over the class hierarchy and enhances maintainability, security, and optimization (e.g., for pattern matching).</p>
-<p><strong>Syntax</strong></p>
+        <p>Introduced as a standard feature in Java 17, <strong>sealed classes</strong> and <strong>sealed interfaces</strong> give you precise control over your class hierarchies. By declaring a class or interface as <code>sealed</code>, you can restrict which other classes or interfaces are allowed to extend or implement it.</p>
+<p>This feature is a powerful tool for domain modeling, enhancing security, and working with pattern matching in <code>switch</code> expressions.</p>
+<h2 id="what-are-sealed-classes">What are Sealed Classes?</h2>
+<p>A <strong>sealed class</strong> restricts which other classes can inherit from it. This provides better control over the class hierarchy, making your code more robust and maintainable.</p>
+<p><strong>Syntax:</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Vehicle</span> permits Car, Truck {
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// class body</span>
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>Here, <code>Vehicle</code> is a <strong>sealed class</strong>, and only <code>Car</code> and <code>Truck</code> are allowed to extend it.</p>
-<p>Subclasses must:</p>
+</span></span></code></pre></div><p>In this example, <code>Vehicle</code> is a sealed class, and only <code>Car</code> and <code>Truck</code> are permitted to extend it.</p>
+<h3 id="rules-for-subclasses">Rules for Subclasses</h3>
+<p>Any class that extends a sealed class must:</p>
 <ol>
-<li>
-<p>Be in the <strong>same module</strong> (or package if not using modules).</p>
-</li>
-<li>
-<p>Explicitly declare themselves as:</p>
+<li>Be listed in the <code>permits</code> clause of the sealed class.</li>
+<li>Be in the same module or package as the sealed class.</li>
+<li>Explicitly declare itself as either:
 <ul>
-<li><code>final</code> (no further subclassing),</li>
-<li><code>sealed</code> (continue restricting inheritance),</li>
-<li>or <code>non-sealed</code> (removes restriction for further subclasses).</li>
+<li><code>final</code>: Cannot be extended further.</li>
+<li><code>sealed</code>: Can be extended, but only by the classes it permits.</li>
+<li><code>non-sealed</code>: Removes the sealing restriction, allowing any class to extend it.</li>
 </ul>
 </li>
 </ol>
+<p><strong>Example Hierarchy:</strong></p>
 <p><img src="/sealed-class-in-java.png" alt="image"></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Car</span> <span style="color:#66d9ef">extends</span> Vehicle {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// No subclassing allowed</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// Car is final and cannot be extended</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Car</span> <span style="color:#66d9ef">extends</span> Vehicle {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Truck is non-sealed, so any class can extend it</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> non<span style="color:#f92672">-</span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Truck</span> <span style="color:#66d9ef">extends</span> Vehicle {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Any class can extend Truck</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...</span>
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h4 id="sealed-interface">Sealed Interface</h4>
-<p>A <strong>sealed interface</strong> restricts which classes or interfaces can implement or extend it.</p>
-<p><strong>Syntax</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Vehicle</span> permits Car, Truck, TwoWheeler {
+</span></span></code></pre></div><h2 id="what-are-sealed-interfaces">What are Sealed Interfaces?</h2>
+<p>Similarly, a <strong>sealed interface</strong> restricts which classes or interfaces can implement or extend it.</p>
+<p><strong>Syntax:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Shape</span> permits Circle, Rectangle, Square {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// interface body</span>
 </span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">TwoWheeler</span> <span style="color:#66d9ef">extends</span> Vehicle permits Bike {
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">record</span> <span style="color:#a6e22e">Bike</span> (String engine) <span style="color:#66d9ef">implements</span> TwoWheeler {}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>...
-</span></span></code></pre></div><p>Here, <code>Vehicle</code> is a <strong>sealed interface</strong>, and only <code>Car</code>, <code>TwoWheeler</code> and <code>Truck</code> are allowed to implement/extend it.</p>
+</span></span></code></pre></div><p>Here, only <code>Circle</code>, <code>Rectangle</code>, and <code>Square</code> are allowed to implement the <code>Shape</code> interface.</p>
+<h3 id="rules-for-implementers">Rules for Implementers</h3>
+<p>The same rules for subclasses of sealed classes apply to classes that implement a sealed interface. They must be <code>final</code>, <code>sealed</code>, or <code>non-sealed</code>.</p>
+<p><strong>Example Hierarchy:</strong></p>
 <p><img src="/sealed-interface-in-java.png" alt="image"></p>
-<p>Subclasses must:</p>
-<ol>
-<li>
-<p>Be in the same module (or package if not using modules).</p>
-</li>
-<li>
-<p>Explicitly declare themselves as:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Circle</span> <span style="color:#66d9ef">implements</span> Shape { <span style="color:#75715e">/* ... */</span> }
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Rectangle</span> <span style="color:#66d9ef">implements</span> Shape { <span style="color:#75715e">/* ... */</span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// A record is implicitly final</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">record</span> <span style="color:#a6e22e">Square</span>(<span style="color:#66d9ef">int</span> side) <span style="color:#66d9ef">implements</span> Shape { <span style="color:#75715e">/* ... */</span> }
+</span></span></code></pre></div><h2 id="sealed-types-and-pattern-matching">Sealed Types and Pattern Matching</h2>
+<p>One of the biggest benefits of sealed types is how they enhance <strong>pattern matching</strong> in <code>switch</code> expressions. When you switch over a sealed type, the compiler knows all the permitted subtypes. This allows it to perform an <strong>exhaustive check</strong>, ensuring that you have handled all possible cases.</p>
+<p>If you cover all the permitted subtypes, you don&rsquo;t need a <code>default</code> clause, which makes your code safer and more readable.</p>
+<h3 id="example-with-an-enhanced-switch">Example with an Enhanced <code>switch</code></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Vehicle</span> permits Car, Truck, Bike {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Car</span> <span style="color:#66d9ef">implements</span> Vehicle {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getNumberOfSeats</span>() { <span style="color:#66d9ef">return</span> 4; }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Truck</span> <span style="color:#66d9ef">implements</span> Vehicle {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getLoadCapacity</span>() { <span style="color:#66d9ef">return</span> 5000; }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">record</span> <span style="color:#a6e22e">Bike</span>(String type) <span style="color:#66d9ef">implements</span> Vehicle {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">VehicleProcessor</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> String <span style="color:#a6e22e">processVehicle</span>(Vehicle vehicle) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// The switch is exhaustive because Vehicle is sealed.</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// No default case is needed.</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">switch</span> (vehicle) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">case</span> Car c <span style="color:#f92672">-&gt;</span> <span style="color:#e6db74">&#34;Processing a car with &#34;</span> <span style="color:#f92672">+</span> c.<span style="color:#a6e22e">getNumberOfSeats</span>() <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; seats.&#34;</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">case</span> Truck t <span style="color:#f92672">-&gt;</span> <span style="color:#e6db74">&#34;Processing a truck with a load capacity of &#34;</span> <span style="color:#f92672">+</span> t.<span style="color:#a6e22e">getLoadCapacity</span>() <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; kg.&#34;</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">case</span> Bike b <span style="color:#f92672">-&gt;</span> <span style="color:#e6db74">&#34;Processing a &#34;</span> <span style="color:#f92672">+</span> b.<span style="color:#a6e22e">type</span>() <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; bike.&#34;</span>;
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(processVehicle(<span style="color:#66d9ef">new</span> Car()));
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(processVehicle(<span style="color:#66d9ef">new</span> Truck()));
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(processVehicle(<span style="color:#66d9ef">new</span> Bike(<span style="color:#e6db74">&#34;Mountain&#34;</span>)));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>If a new subtype were added to the <code>Vehicle</code> interface&rsquo;s <code>permits</code> list, the compiler would flag the <code>switch</code> expression as an error until it is updated to handle the new type.</p>
+<h2 id="key-benefits-of-sealed-types">Key Benefits of Sealed Types</h2>
 <ul>
-<li><code>final</code> (no further subclassing),</li>
-<li><code>sealed</code> (continue restricting inheritance),</li>
-<li>or <code>non-sealed</code> (removes restriction for further subclasses)</li>
+<li><strong>Controlled Inheritance</strong>: Prevents unintended extensions, making your class hierarchy predictable.</li>
+<li><strong>Enhanced Security</strong>: Restricts who can implement sensitive APIs.</li>
+<li><strong>Improved Readability</strong>: Clearly defines the intended inheritance structure.</li>
+<li><strong>Exhaustive Compiler Checks</strong>: Enables exhaustive checks in <code>switch</code> expressions, eliminating the need for a <code>default</code> case and reducing bugs.</li>
+<li><strong>Precise Domain Modeling</strong>: Helps create more accurate and explicit domain models.</li>
+<li><strong>Better Maintainability</strong>: Makes code easier to understand, refactor, and evolve.</li>
 </ul>
-</li>
-</ol>
-<h4 id="example-with-enhanced-switch-example">Example (with enhanced switch example)</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Vehicle</span> permits Car, Truck, TwoWheeler {
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">record</span> <span style="color:#a6e22e">Car</span>(<span style="color:#66d9ef">int</span> noOfSeats) <span style="color:#66d9ef">implements</span> Vehicle {}
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">record</span> <span style="color:#a6e22e">Truck</span>(<span style="color:#66d9ef">int</span> noOfSeats, <span style="color:#66d9ef">int</span> maxLoad) <span style="color:#66d9ef">implements</span> Vehicle {}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">TwoWheeler</span> <span style="color:#66d9ef">extends</span> Vehicle permits Bike {
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">record</span> <span style="color:#a6e22e">Bike</span> (String engine) <span style="color:#66d9ef">implements</span> TwoWheeler {}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>Subclasses must:
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>Be in the same <span style="color:#a6e22e">module</span> (or <span style="color:#f92672">package</span> if not using modules).
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>Explicitly declare themselves as:
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">final</span> (no further subclassing),
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">sealed</span> (<span style="color:#66d9ef">continue</span> restricting inheritance),
-</span></span><span style="display:flex;"><span>or non<span style="color:#f92672">-</span><span style="color:#66d9ef">sealed</span> (removes restriction <span style="color:#66d9ef">for</span> further subclasses)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">VehicleProcessor</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> Vehicle vehicle;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  VehicleProcessor(Vehicle vehicle) {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">vehicle</span> <span style="color:#f92672">=</span> vehicle;
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">process</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Switch here is exhastive.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * The switch block must have clauses that deal with all possible values of the selector expression. 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Also, we don&#39;t need default here, if we specify all the possible input values;
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
-</span></span><span style="display:flex;"><span>    String message <span style="color:#f92672">=</span> <span style="color:#66d9ef">switch</span> (<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">vehicle</span>) {
-</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">case</span> Car(<span style="color:#66d9ef">int</span> noOfSeats) <span style="color:#f92672">-&gt;</span> <span style="color:#e6db74">&#34;Car with &#34;</span> <span style="color:#f92672">+</span> noOfSeats <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; seats&#34;</span>;
-</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">case</span> Truck(<span style="color:#66d9ef">int</span> noOfSeats, <span style="color:#66d9ef">int</span> maxLoad) <span style="color:#f92672">-&gt;</span> <span style="color:#e6db74">&#34;Truck with &#34;</span> <span style="color:#f92672">+</span> noOfSeats <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; seats, and max load &#34;</span> <span style="color:#f92672">+</span> maxLoad;
-</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">case</span> TwoWheeler twoWheeler <span style="color:#f92672">-&gt;</span> <span style="color:#e6db74">&#34;It&#39;s two wheeler&#34;</span>;
-</span></span><span style="display:flex;"><span>    };
-</span></span><span style="display:flex;"><span>    System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(message);
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div>
+
       </div>
     </article>
 
@@ -271,6 +280,8 @@ public sealed class Vehicle permits Car, Truck { // class body } Here, Vehicle i
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
 
         <span class="tag"><a href="https://aamernabi.github.io/tags/java/">java</a></span>
+        <span class="tag"><a href="https://aamernabi.github.io/tags/java17/">java17</a></span>
+        <span class="tag"><a href="https://aamernabi.github.io/tags/pattern-matching/">pattern matching</a></span>
         
     </p>
 
@@ -284,7 +295,7 @@ public sealed class Vehicle permits Car, Truck { // class body } Here, Vehicle i
           <line x1="16" y1="17" x2="8" y2="17"></line>
           <polyline points="10 9 9 9 8 9"></polyline>
         </svg>
-        424 Words
+        651 Words
       </p>
 
       <p>
@@ -323,7 +334,7 @@ public sealed class Vehicle permits Car, Truck { // class body } Here, Vehicle i
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=Java%20Sealed%20Interface&amp;caption=Java%20Sealed%20Interface&amp;canonicalUrl=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-sealed-interface%2f" target="_blank" rel="noopener" aria-label="" title="Share on tumblr">
+<a class="resp-sharing-button__link" href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=Controlling%20Inheritance%20with%20Java%27s%20Sealed%20Classes%20and%20Interfaces&amp;caption=Controlling%20Inheritance%20with%20Java%27s%20Sealed%20Classes%20and%20Interfaces&amp;canonicalUrl=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-sealed-interface%2f" target="_blank" rel="noopener" aria-label="" title="Share on tumblr">
   <div class="resp-sharing-button resp-sharing-button--tumblr resp-sharing-button--small">
     <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.563 24c-5.093 0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941 0 9.999 0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.374-4.156 1.404h-.178l.011.002z"/></svg>
@@ -332,7 +343,7 @@ public sealed class Vehicle permits Car, Truck { // class body } Here, Vehicle i
 </a>
 
 
-<a class="resp-sharing-button__link" href="mailto:?subject=Java%20Sealed%20Interface&amp;body=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-sealed-interface%2f" target="_self" rel="noopener" aria-label="" title="Share via email">
+<a class="resp-sharing-button__link" href="mailto:?subject=Controlling%20Inheritance%20with%20Java%27s%20Sealed%20Classes%20and%20Interfaces&amp;body=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-sealed-interface%2f" target="_self" rel="noopener" aria-label="" title="Share via email">
   <div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
     </div>
@@ -340,7 +351,7 @@ public sealed class Vehicle permits Car, Truck { // class body } Here, Vehicle i
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://pinterest.com/pin/create/button/?url=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-sealed-interface%2f&amp;media=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-sealed-interface%2f;description=Java%20Sealed%20Interface" target="_blank" rel="noopener" aria-label="" title="Share on pinterest">
+<a class="resp-sharing-button__link" href="https://pinterest.com/pin/create/button/?url=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-sealed-interface%2f&amp;media=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-sealed-interface%2f;description=Controlling%20Inheritance%20with%20Java%27s%20Sealed%20Classes%20and%20Interfaces" target="_blank" rel="noopener" aria-label="" title="Share on pinterest">
   <div class="resp-sharing-button resp-sharing-button--pinterest resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/></svg>
     </div>
@@ -348,7 +359,7 @@ public sealed class Vehicle permits Car, Truck { // class body } Here, Vehicle i
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-sealed-interface%2f&amp;title=Java%20Sealed%20Interface&amp;summary=Java%20Sealed%20Interface&amp;source=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-sealed-interface%2f" target="_blank" rel="noopener" aria-label="" title="Share on linkedin">
+<a class="resp-sharing-button__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-sealed-interface%2f&amp;title=Controlling%20Inheritance%20with%20Java%27s%20Sealed%20Classes%20and%20Interfaces&amp;summary=Controlling%20Inheritance%20with%20Java%27s%20Sealed%20Classes%20and%20Interfaces&amp;source=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-sealed-interface%2f" target="_blank" rel="noopener" aria-label="" title="Share on linkedin">
   <div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
     </div>
@@ -356,7 +367,7 @@ public sealed class Vehicle permits Car, Truck { // class body } Here, Vehicle i
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-sealed-interface%2f&amp;resubmit=true&amp;title=Java%20Sealed%20Interface" target="_blank" rel="noopener" aria-label="" title="Share on reddit">
+<a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-sealed-interface%2f&amp;resubmit=true&amp;title=Controlling%20Inheritance%20with%20Java%27s%20Sealed%20Classes%20and%20Interfaces" target="_blank" rel="noopener" aria-label="" title="Share on reddit">
   <div class="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
     </div>
@@ -364,7 +375,7 @@ public sealed class Vehicle permits Car, Truck { // class body } Here, Vehicle i
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://www.xing.com/app/user?op=share;url=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-sealed-interface%2f;title=Java%20Sealed%20Interface" target="_blank" rel="noopener" aria-label="" title="Share on xing">
+<a class="resp-sharing-button__link" href="https://www.xing.com/app/user?op=share;url=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-sealed-interface%2f;title=Controlling%20Inheritance%20with%20Java%27s%20Sealed%20Classes%20and%20Interfaces" target="_blank" rel="noopener" aria-label="" title="Share on xing">
   <div class="resp-sharing-button resp-sharing-button--xing resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.188 0c-.517 0-.741.325-.927.66 0 0-7.455 13.224-7.702 13.657.015.024 4.919 9.023 4.919 9.023.17.308.436.66.967.66h3.454c.211 0 .375-.078.463-.22.089-.151.089-.346-.009-.536l-4.879-8.916c-.004-.006-.004-.016 0-.022L22.139.756c.095-.191.097-.387.006-.535C22.056.078 21.894 0 21.686 0h-3.498zM3.648 4.74c-.211 0-.385.074-.473.216-.09.149-.078.339.02.531l2.34 4.05c.004.01.004.016 0 .021L1.86 16.051c-.099.188-.093.381 0 .529.085.142.239.234.45.234h3.461c.518 0 .766-.348.945-.667l3.734-6.609-2.378-4.155c-.172-.315-.434-.659-.962-.659H3.648v.016z"/></svg>
     </div>
@@ -372,7 +383,7 @@ public sealed class Vehicle permits Car, Truck { // class body } Here, Vehicle i
 </a>
 
 
-<a class="resp-sharing-button__link" href="whatsapp://send?text=Java%20Sealed%20Interface%20https%3a%2f%2faamernabi.github.io%2fposts%2fjava-sealed-interface%2f" target="_blank" rel="noopener" aria-label="" title="Share on whatsapp">
+<a class="resp-sharing-button__link" href="whatsapp://send?text=Controlling%20Inheritance%20with%20Java%27s%20Sealed%20Classes%20and%20Interfaces%20https%3a%2f%2faamernabi.github.io%2fposts%2fjava-sealed-interface%2f" target="_blank" rel="noopener" aria-label="" title="Share on whatsapp">
   <div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
     </div>
@@ -380,7 +391,7 @@ public sealed class Vehicle permits Car, Truck { // class body } Here, Vehicle i
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-sealed-interface%2f&amp;t=Java%20Sealed%20Interface" target="_blank" rel="noopener" aria-label="" title="Share on hacker news">
+<a class="resp-sharing-button__link" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-sealed-interface%2f&amp;t=Controlling%20Inheritance%20with%20Java%27s%20Sealed%20Classes%20and%20Interfaces" target="_blank" rel="noopener" aria-label="" title="Share on hacker news">
   <div class="resp-sharing-button resp-sharing-button--hackernews resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
 			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"/></svg>
     </div>
@@ -388,7 +399,7 @@ public sealed class Vehicle permits Car, Truck { // class body } Here, Vehicle i
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://telegram.me/share/url?text=Java%20Sealed%20Interface&amp;url=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-sealed-interface%2f" target="_blank" rel="noopener" aria-label="" title="Share on telegram">
+<a class="resp-sharing-button__link" href="https://telegram.me/share/url?text=Controlling%20Inheritance%20with%20Java%27s%20Sealed%20Classes%20and%20Interfaces&amp;url=https%3a%2f%2faamernabi.github.io%2fposts%2fjava-sealed-interface%2f" target="_blank" rel="noopener" aria-label="" title="Share on telegram">
   <div class="resp-sharing-button resp-sharing-button--telegram resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
     </div>
@@ -407,7 +418,7 @@ public sealed class Vehicle permits Car, Truck { // class body } Here, Vehicle i
             
             <span class="button next">
                 <a href="https://aamernabi.github.io/posts/java-functional-interface/">
-                    <span class="button__text">Java Functional Interface</span>
+                    <span class="button__text">Understanding Functional Interfaces in Java</span>
                     <span class="button__icon">→</span>
                 </a>
             </span>

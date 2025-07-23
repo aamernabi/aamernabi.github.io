@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Functional Programming on Aamer Paul</title>
+    <link>https://aamernabi.github.io/tags/functional-programming/</link>
+    <description>Recent content in Functional Programming on Aamer Paul</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 26 Mar 2024 21:25:32 +0530</lastBuildDate>
+    <atom:link href="https://aamernabi.github.io/tags/functional-programming/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Understanding Functional Interfaces in Java</title>
+      <link>https://aamernabi.github.io/posts/java-functional-interface/</link>
+      <pubDate>Tue, 26 Mar 2024 21:25:32 +0530</pubDate>
+      <guid>https://aamernabi.github.io/posts/java-functional-interface/</guid>
+      <description>&lt;p&gt;A &lt;strong&gt;functional interface&lt;/strong&gt; in Java is an interface that contains exactly one abstract method. Introduced in Java 8, they are the backbone of lambda expressions and the Stream API, enabling a more functional style of programming. They are also known as &lt;strong&gt;Single Abstract Method (SAM)&lt;/strong&gt; interfaces.&lt;/p&gt;&#xA;&lt;p&gt;To ensure an interface is a functional interface, you can use the &lt;code&gt;@FunctionalInterface&lt;/code&gt; annotation. The compiler will then trigger an error if the interface does not meet the requirements.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

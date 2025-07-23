@@ -9,205 +9,207 @@
         <atom:link href="https://aamernabi.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
         
         <item>
-            <title>Java Sealed Interface</title>
+            <title>Controlling Inheritance with Java&#39;s Sealed Classes and Interfaces</title>
             <link>https://aamernabi.github.io/posts/java-sealed-interface/</link>
             <pubDate>Tue, 02 Jul 2024 16:25:32 +0530</pubDate>
             
             <guid>https://aamernabi.github.io/posts/java-sealed-interface/</guid>
-            <description>&lt;p&gt;A &lt;strong&gt;sealed class&lt;/strong&gt; and &lt;strong&gt;sealed interface&lt;/strong&gt; is a feature introduced in Java 15 (as a preview) and officially released in Java 17.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Sealed classes&lt;/strong&gt; and &lt;strong&gt;interfaces&lt;/strong&gt; provide controlled inheritance of your class hierarchies.&lt;/p&gt;&lt;/blockquote&gt;
-&lt;h4 id=&#34;sealed-class&#34;&gt;Sealed class&lt;/h4&gt;
-&lt;p&gt;A &lt;strong&gt;sealed class&lt;/strong&gt; restricts which other classes can inherit from it. This provides better control over the class hierarchy and enhances maintainability, security, and optimization (e.g., for pattern matching).&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Syntax&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;sealed&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Vehicle&lt;/span&gt; permits Car, Truck {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// class body&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Here, &lt;code&gt;Vehicle&lt;/code&gt; is a &lt;strong&gt;sealed class&lt;/strong&gt;, and only &lt;code&gt;Car&lt;/code&gt; and &lt;code&gt;Truck&lt;/code&gt; are allowed to extend it.&lt;/p&gt;</description>
-            <content type="html"><![CDATA[<p>A <strong>sealed class</strong> and <strong>sealed interface</strong> is a feature introduced in Java 15 (as a preview) and officially released in Java 17.</p>
-<blockquote>
-<p><strong>Sealed classes</strong> and <strong>interfaces</strong> provide controlled inheritance of your class hierarchies.</p></blockquote>
-<h4 id="sealed-class">Sealed class</h4>
-<p>A <strong>sealed class</strong> restricts which other classes can inherit from it. This provides better control over the class hierarchy and enhances maintainability, security, and optimization (e.g., for pattern matching).</p>
-<p><strong>Syntax</strong></p>
+            <description>&lt;p&gt;Introduced as a standard feature in Java 17, &lt;strong&gt;sealed classes&lt;/strong&gt; and &lt;strong&gt;sealed interfaces&lt;/strong&gt; give you precise control over your class hierarchies. By declaring a class or interface as &lt;code&gt;sealed&lt;/code&gt;, you can restrict which other classes or interfaces are allowed to extend or implement it.&lt;/p&gt;
+&lt;p&gt;This feature is a powerful tool for domain modeling, enhancing security, and working with pattern matching in &lt;code&gt;switch&lt;/code&gt; expressions.&lt;/p&gt;
+&lt;h2 id=&#34;what-are-sealed-classes&#34;&gt;What are Sealed Classes?&lt;/h2&gt;
+&lt;p&gt;A &lt;strong&gt;sealed class&lt;/strong&gt; restricts which other classes can inherit from it. This provides better control over the class hierarchy, making your code more robust and maintainable.&lt;/p&gt;</description>
+            <content type="html"><![CDATA[<p>Introduced as a standard feature in Java 17, <strong>sealed classes</strong> and <strong>sealed interfaces</strong> give you precise control over your class hierarchies. By declaring a class or interface as <code>sealed</code>, you can restrict which other classes or interfaces are allowed to extend or implement it.</p>
+<p>This feature is a powerful tool for domain modeling, enhancing security, and working with pattern matching in <code>switch</code> expressions.</p>
+<h2 id="what-are-sealed-classes">What are Sealed Classes?</h2>
+<p>A <strong>sealed class</strong> restricts which other classes can inherit from it. This provides better control over the class hierarchy, making your code more robust and maintainable.</p>
+<p><strong>Syntax:</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Vehicle</span> permits Car, Truck {
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// class body</span>
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>Here, <code>Vehicle</code> is a <strong>sealed class</strong>, and only <code>Car</code> and <code>Truck</code> are allowed to extend it.</p>
-<p>Subclasses must:</p>
+</span></span></code></pre></div><p>In this example, <code>Vehicle</code> is a sealed class, and only <code>Car</code> and <code>Truck</code> are permitted to extend it.</p>
+<h3 id="rules-for-subclasses">Rules for Subclasses</h3>
+<p>Any class that extends a sealed class must:</p>
 <ol>
-<li>
-<p>Be in the <strong>same module</strong> (or package if not using modules).</p>
-</li>
-<li>
-<p>Explicitly declare themselves as:</p>
+<li>Be listed in the <code>permits</code> clause of the sealed class.</li>
+<li>Be in the same module or package as the sealed class.</li>
+<li>Explicitly declare itself as either:
 <ul>
-<li><code>final</code> (no further subclassing),</li>
-<li><code>sealed</code> (continue restricting inheritance),</li>
-<li>or <code>non-sealed</code> (removes restriction for further subclasses).</li>
+<li><code>final</code>: Cannot be extended further.</li>
+<li><code>sealed</code>: Can be extended, but only by the classes it permits.</li>
+<li><code>non-sealed</code>: Removes the sealing restriction, allowing any class to extend it.</li>
 </ul>
 </li>
 </ol>
+<p><strong>Example Hierarchy:</strong></p>
 <p><img src="/sealed-class-in-java.png" alt="image"></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Car</span> <span style="color:#66d9ef">extends</span> Vehicle {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// No subclassing allowed</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// Car is final and cannot be extended</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Car</span> <span style="color:#66d9ef">extends</span> Vehicle {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Truck is non-sealed, so any class can extend it</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> non<span style="color:#f92672">-</span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Truck</span> <span style="color:#66d9ef">extends</span> Vehicle {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Any class can extend Truck</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...</span>
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h4 id="sealed-interface">Sealed Interface</h4>
-<p>A <strong>sealed interface</strong> restricts which classes or interfaces can implement or extend it.</p>
-<p><strong>Syntax</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Vehicle</span> permits Car, Truck, TwoWheeler {
+</span></span></code></pre></div><h2 id="what-are-sealed-interfaces">What are Sealed Interfaces?</h2>
+<p>Similarly, a <strong>sealed interface</strong> restricts which classes or interfaces can implement or extend it.</p>
+<p><strong>Syntax:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Shape</span> permits Circle, Rectangle, Square {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// interface body</span>
 </span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">TwoWheeler</span> <span style="color:#66d9ef">extends</span> Vehicle permits Bike {
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">record</span> <span style="color:#a6e22e">Bike</span> (String engine) <span style="color:#66d9ef">implements</span> TwoWheeler {}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>...
-</span></span></code></pre></div><p>Here, <code>Vehicle</code> is a <strong>sealed interface</strong>, and only <code>Car</code>, <code>TwoWheeler</code> and <code>Truck</code> are allowed to implement/extend it.</p>
+</span></span></code></pre></div><p>Here, only <code>Circle</code>, <code>Rectangle</code>, and <code>Square</code> are allowed to implement the <code>Shape</code> interface.</p>
+<h3 id="rules-for-implementers">Rules for Implementers</h3>
+<p>The same rules for subclasses of sealed classes apply to classes that implement a sealed interface. They must be <code>final</code>, <code>sealed</code>, or <code>non-sealed</code>.</p>
+<p><strong>Example Hierarchy:</strong></p>
 <p><img src="/sealed-interface-in-java.png" alt="image"></p>
-<p>Subclasses must:</p>
-<ol>
-<li>
-<p>Be in the same module (or package if not using modules).</p>
-</li>
-<li>
-<p>Explicitly declare themselves as:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Circle</span> <span style="color:#66d9ef">implements</span> Shape { <span style="color:#75715e">/* ... */</span> }
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Rectangle</span> <span style="color:#66d9ef">implements</span> Shape { <span style="color:#75715e">/* ... */</span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// A record is implicitly final</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">record</span> <span style="color:#a6e22e">Square</span>(<span style="color:#66d9ef">int</span> side) <span style="color:#66d9ef">implements</span> Shape { <span style="color:#75715e">/* ... */</span> }
+</span></span></code></pre></div><h2 id="sealed-types-and-pattern-matching">Sealed Types and Pattern Matching</h2>
+<p>One of the biggest benefits of sealed types is how they enhance <strong>pattern matching</strong> in <code>switch</code> expressions. When you switch over a sealed type, the compiler knows all the permitted subtypes. This allows it to perform an <strong>exhaustive check</strong>, ensuring that you have handled all possible cases.</p>
+<p>If you cover all the permitted subtypes, you don&rsquo;t need a <code>default</code> clause, which makes your code safer and more readable.</p>
+<h3 id="example-with-an-enhanced-switch">Example with an Enhanced <code>switch</code></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Vehicle</span> permits Car, Truck, Bike {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Car</span> <span style="color:#66d9ef">implements</span> Vehicle {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getNumberOfSeats</span>() { <span style="color:#66d9ef">return</span> 4; }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Truck</span> <span style="color:#66d9ef">implements</span> Vehicle {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getLoadCapacity</span>() { <span style="color:#66d9ef">return</span> 5000; }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">record</span> <span style="color:#a6e22e">Bike</span>(String type) <span style="color:#66d9ef">implements</span> Vehicle {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">VehicleProcessor</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> String <span style="color:#a6e22e">processVehicle</span>(Vehicle vehicle) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// The switch is exhaustive because Vehicle is sealed.</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// No default case is needed.</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">switch</span> (vehicle) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">case</span> Car c <span style="color:#f92672">-&gt;</span> <span style="color:#e6db74">&#34;Processing a car with &#34;</span> <span style="color:#f92672">+</span> c.<span style="color:#a6e22e">getNumberOfSeats</span>() <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; seats.&#34;</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">case</span> Truck t <span style="color:#f92672">-&gt;</span> <span style="color:#e6db74">&#34;Processing a truck with a load capacity of &#34;</span> <span style="color:#f92672">+</span> t.<span style="color:#a6e22e">getLoadCapacity</span>() <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; kg.&#34;</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">case</span> Bike b <span style="color:#f92672">-&gt;</span> <span style="color:#e6db74">&#34;Processing a &#34;</span> <span style="color:#f92672">+</span> b.<span style="color:#a6e22e">type</span>() <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; bike.&#34;</span>;
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(processVehicle(<span style="color:#66d9ef">new</span> Car()));
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(processVehicle(<span style="color:#66d9ef">new</span> Truck()));
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(processVehicle(<span style="color:#66d9ef">new</span> Bike(<span style="color:#e6db74">&#34;Mountain&#34;</span>)));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>If a new subtype were added to the <code>Vehicle</code> interface&rsquo;s <code>permits</code> list, the compiler would flag the <code>switch</code> expression as an error until it is updated to handle the new type.</p>
+<h2 id="key-benefits-of-sealed-types">Key Benefits of Sealed Types</h2>
 <ul>
-<li><code>final</code> (no further subclassing),</li>
-<li><code>sealed</code> (continue restricting inheritance),</li>
-<li>or <code>non-sealed</code> (removes restriction for further subclasses)</li>
+<li><strong>Controlled Inheritance</strong>: Prevents unintended extensions, making your class hierarchy predictable.</li>
+<li><strong>Enhanced Security</strong>: Restricts who can implement sensitive APIs.</li>
+<li><strong>Improved Readability</strong>: Clearly defines the intended inheritance structure.</li>
+<li><strong>Exhaustive Compiler Checks</strong>: Enables exhaustive checks in <code>switch</code> expressions, eliminating the need for a <code>default</code> case and reducing bugs.</li>
+<li><strong>Precise Domain Modeling</strong>: Helps create more accurate and explicit domain models.</li>
+<li><strong>Better Maintainability</strong>: Makes code easier to understand, refactor, and evolve.</li>
 </ul>
-</li>
-</ol>
-<h4 id="example-with-enhanced-switch-example">Example (with enhanced switch example)</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Vehicle</span> permits Car, Truck, TwoWheeler {
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">record</span> <span style="color:#a6e22e">Car</span>(<span style="color:#66d9ef">int</span> noOfSeats) <span style="color:#66d9ef">implements</span> Vehicle {}
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">record</span> <span style="color:#a6e22e">Truck</span>(<span style="color:#66d9ef">int</span> noOfSeats, <span style="color:#66d9ef">int</span> maxLoad) <span style="color:#66d9ef">implements</span> Vehicle {}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">TwoWheeler</span> <span style="color:#66d9ef">extends</span> Vehicle permits Bike {
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">record</span> <span style="color:#a6e22e">Bike</span> (String engine) <span style="color:#66d9ef">implements</span> TwoWheeler {}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>Subclasses must:
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>Be in the same <span style="color:#a6e22e">module</span> (or <span style="color:#f92672">package</span> if not using modules).
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>Explicitly declare themselves as:
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">final</span> (no further subclassing),
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">sealed</span> (<span style="color:#66d9ef">continue</span> restricting inheritance),
-</span></span><span style="display:flex;"><span>or non<span style="color:#f92672">-</span><span style="color:#66d9ef">sealed</span> (removes restriction <span style="color:#66d9ef">for</span> further subclasses)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">VehicleProcessor</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> Vehicle vehicle;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  VehicleProcessor(Vehicle vehicle) {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">vehicle</span> <span style="color:#f92672">=</span> vehicle;
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">process</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Switch here is exhastive.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * The switch block must have clauses that deal with all possible values of the selector expression. 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     * Also, we don&#39;t need default here, if we specify all the possible input values;
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">     */</span>
-</span></span><span style="display:flex;"><span>    String message <span style="color:#f92672">=</span> <span style="color:#66d9ef">switch</span> (<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">vehicle</span>) {
-</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">case</span> Car(<span style="color:#66d9ef">int</span> noOfSeats) <span style="color:#f92672">-&gt;</span> <span style="color:#e6db74">&#34;Car with &#34;</span> <span style="color:#f92672">+</span> noOfSeats <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; seats&#34;</span>;
-</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">case</span> Truck(<span style="color:#66d9ef">int</span> noOfSeats, <span style="color:#66d9ef">int</span> maxLoad) <span style="color:#f92672">-&gt;</span> <span style="color:#e6db74">&#34;Truck with &#34;</span> <span style="color:#f92672">+</span> noOfSeats <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; seats, and max load &#34;</span> <span style="color:#f92672">+</span> maxLoad;
-</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">case</span> TwoWheeler twoWheeler <span style="color:#f92672">-&gt;</span> <span style="color:#e6db74">&#34;It&#39;s two wheeler&#34;</span>;
-</span></span><span style="display:flex;"><span>    };
-</span></span><span style="display:flex;"><span>    System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(message);
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div>]]></content>
+]]></content>
         </item>
         
         <item>
-            <title>Java Functional Interface</title>
+            <title>Understanding Functional Interfaces in Java</title>
             <link>https://aamernabi.github.io/posts/java-functional-interface/</link>
             <pubDate>Tue, 26 Mar 2024 21:25:32 +0530</pubDate>
             
             <guid>https://aamernabi.github.io/posts/java-functional-interface/</guid>
-            <description>&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Functional interfaces&lt;/strong&gt; in Java are interfaces that contain exactly one abstract method. They are also known as &lt;strong&gt;Single Abstract Method (SAM)&lt;/strong&gt; interfaces. It was introduced in Java 8.&lt;/p&gt;&lt;/blockquote&gt;
-&lt;p&gt;Example:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@FunctionalInterface&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;MyFunctionalInterface&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;doSomething&lt;/span&gt;(String message); &lt;span style=&#34;color:#75715e&#34;&gt;// Single abstract method&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;(String&lt;span style=&#34;color:#f92672&#34;&gt;[]&lt;/span&gt; args) {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  MyFunctionalInterface myLambda &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (msg) &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; System.&lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;println&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Lambda says: &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; msg);
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  myLambda.&lt;span style=&#34;color:#a6e22e&#34;&gt;doSomething&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hello World&amp;#34;&lt;/span&gt;);
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;consumer-predicate-function-and-supplier&#34;&gt;Consumer, Predicate, Function, and Supplier&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;Consumer&lt;/code&gt;, &lt;code&gt;Predicate&lt;/code&gt;, &lt;code&gt;Function&lt;/code&gt;, and &lt;code&gt;Supplier&lt;/code&gt; are key functional interfaces introduced in Java 8 as part of the &lt;code&gt;java.util.function&lt;/code&gt; package. They are widely used in lambda expressions and the Stream API.&lt;/p&gt;</description>
-            <content type="html"><![CDATA[<blockquote>
-<p><strong>Functional interfaces</strong> in Java are interfaces that contain exactly one abstract method. They are also known as <strong>Single Abstract Method (SAM)</strong> interfaces. It was introduced in Java 8.</p></blockquote>
-<p>Example:</p>
+            <description>&lt;p&gt;A &lt;strong&gt;functional interface&lt;/strong&gt; in Java is an interface that contains exactly one abstract method. Introduced in Java 8, they are the backbone of lambda expressions and the Stream API, enabling a more functional style of programming. They are also known as &lt;strong&gt;Single Abstract Method (SAM)&lt;/strong&gt; interfaces.&lt;/p&gt;
+&lt;p&gt;To ensure an interface is a functional interface, you can use the &lt;code&gt;@FunctionalInterface&lt;/code&gt; annotation. The compiler will then trigger an error if the interface does not meet the requirements.&lt;/p&gt;</description>
+            <content type="html"><![CDATA[<p>A <strong>functional interface</strong> in Java is an interface that contains exactly one abstract method. Introduced in Java 8, they are the backbone of lambda expressions and the Stream API, enabling a more functional style of programming. They are also known as <strong>Single Abstract Method (SAM)</strong> interfaces.</p>
+<p>To ensure an interface is a functional interface, you can use the <code>@FunctionalInterface</code> annotation. The compiler will then trigger an error if the interface does not meet the requirements.</p>
+<p>Here&rsquo;s a simple example:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@FunctionalInterface</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">MyFunctionalInterface</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">doSomething</span>(String message); <span style="color:#75715e">// Single abstract method</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">execute</span>(String message); <span style="color:#75715e">// The single abstract method</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
-</span></span><span style="display:flex;"><span>  MyFunctionalInterface myLambda <span style="color:#f92672">=</span> (msg) <span style="color:#f92672">-&gt;</span> System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Lambda says: &#34;</span> <span style="color:#f92672">+</span> msg);
-</span></span><span style="display:flex;"><span>  myLambda.<span style="color:#a6e22e">doSomething</span>(<span style="color:#e6db74">&#34;Hello World&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FunctionalInterfaceExample</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Using a lambda expression to implement the interface</span>
+</span></span><span style="display:flex;"><span>        MyFunctionalInterface myLambda <span style="color:#f92672">=</span> (msg) <span style="color:#f92672">-&gt;</span> System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Executing: &#34;</span> <span style="color:#f92672">+</span> msg);
+</span></span><span style="display:flex;"><span>        myLambda.<span style="color:#a6e22e">execute</span>(<span style="color:#e6db74">&#34;Hello, Functional World!&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="consumer-predicate-function-and-supplier">Consumer, Predicate, Function, and Supplier</h3>
-<p><code>Consumer</code>, <code>Predicate</code>, <code>Function</code>, and <code>Supplier</code> are key functional interfaces introduced in Java 8 as part of the <code>java.util.function</code> package. They are widely used in lambda expressions and the Stream API.</p>
-<h4 id="1-consumer">1. <strong>Consumer<!-- raw HTML omitted --></strong></h4>
-<p>Performs an operation on a given input <strong>without returning a result</strong>.</p>
+</span></span></code></pre></div><h2 id="core-functional-interfaces-in-javautilfunction">Core Functional Interfaces in <code>java.util.function</code></h2>
+<p>Java 8 introduced a set of standard functional interfaces in the <code>java.util.function</code> package. These are widely used and cover most common use cases. Let&rsquo;s explore the four main ones.</p>
+<h3 id="1-consumert">1. <code>Consumer&lt;T&gt;</code></h3>
+<p>A <code>Consumer</code> &ldquo;consumes&rdquo; an input value and performs an operation on it without returning any result.</p>
 <ul>
-<li><strong>Signature</strong>: <code>void accept(T t)</code></li>
-<li><strong>Use case</strong>: Printing, logging, modifying data.</li>
+<li><strong>Abstract Method</strong>: <code>void accept(T t)</code></li>
+<li><strong>Use Case</strong>: Ideal for operations with side effects, such as printing to the console, logging, or modifying an object.</li>
 </ul>
 <p><strong>Example:</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
-</span></span><span style="display:flex;"><span>  Consumer<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> printer <span style="color:#f92672">=</span> s <span style="color:#f92672">-&gt;</span> System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(s);
-</span></span><span style="display:flex;"><span>  printer.<span style="color:#a6e22e">accept</span>(<span style="color:#e6db74">&#34;Hello, world!&#34;</span>);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.function.Consumer;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.Arrays;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.List;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ConsumerExample</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        Consumer<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> printer <span style="color:#f92672">=</span> s <span style="color:#f92672">-&gt;</span> System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(s);
+</span></span><span style="display:flex;"><span>        List<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> names <span style="color:#f92672">=</span> Arrays.<span style="color:#a6e22e">asList</span>(<span style="color:#e6db74">&#34;Alice&#34;</span>, <span style="color:#e6db74">&#34;Bob&#34;</span>, <span style="color:#e6db74">&#34;Charlie&#34;</span>);
+</span></span><span style="display:flex;"><span>        names.<span style="color:#a6e22e">forEach</span>(printer); <span style="color:#75715e">// Prints each name</span>
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h4 id="2-predicate">2. <strong>Predicate<!-- raw HTML omitted --></strong></h4>
-<p>Evaluates a condition on input and <strong>returns a boolean</strong>.</p>
+</span></span></code></pre></div><h3 id="2-predicatet">2. <code>Predicate&lt;T&gt;</code></h3>
+<p>A <code>Predicate</code> evaluates a condition on an input value and returns a <code>boolean</code> result.</p>
 <ul>
-<li><strong>Signature</strong>: <code>boolean test(T t)</code></li>
-<li><strong>Use case</strong>: Filtering, validation, conditional checks.</li>
+<li><strong>Abstract Method</strong>: <code>boolean test(T t)</code></li>
+<li><strong>Use Case</strong>: Perfect for filtering data, validation, and conditional checks. It&rsquo;s heavily used in the Stream API&rsquo;s <code>filter()</code> method.</li>
 </ul>
 <p><strong>Example:</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
-</span></span><span style="display:flex;"><span>  Predicate<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> isLongerThan5 <span style="color:#f92672">=</span> s <span style="color:#f92672">-&gt;</span> s.<span style="color:#a6e22e">length</span>() <span style="color:#f92672">&gt;</span> 5;
-</span></span><span style="display:flex;"><span>  System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(isLongerThan5.<span style="color:#a6e22e">test</span>(<span style="color:#e6db74">&#34;Hello&#34;</span>)); <span style="color:#75715e">// false</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.function.Predicate;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.stream.Stream;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PredicateExample</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        Predicate<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> isLongerThan5 <span style="color:#f92672">=</span> s <span style="color:#f92672">-&gt;</span> s.<span style="color:#a6e22e">length</span>() <span style="color:#f92672">&gt;</span> 5;
+</span></span><span style="display:flex;"><span>        Stream.<span style="color:#a6e22e">of</span>(<span style="color:#e6db74">&#34;Java&#34;</span>, <span style="color:#e6db74">&#34;Python&#34;</span>, <span style="color:#e6db74">&#34;JavaScript&#34;</span>)
+</span></span><span style="display:flex;"><span>              .<span style="color:#a6e22e">filter</span>(isLongerThan5)
+</span></span><span style="display:flex;"><span>              .<span style="color:#a6e22e">forEach</span>(System.<span style="color:#a6e22e">out</span>::println); <span style="color:#75715e">// Prints &#34;JavaScript&#34;</span>
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h4 id="3-functiont-r">3. <strong>Function&lt;T, R&gt;</strong></h4>
-<p>Takes an input and <strong>returns a result</strong>.</p>
+</span></span></code></pre></div><h3 id="3-functiont-r">3. <code>Function&lt;T, R&gt;</code></h3>
+<p>A <code>Function</code> takes an input of type <code>T</code> and produces a result of type <code>R</code>. It&rsquo;s used for transformation and mapping.</p>
 <ul>
-<li><strong>Signature</strong>: <code>R apply(T t)</code></li>
-<li><strong>Use case</strong>: Transformation, mapping, computing.</li>
+<li><strong>Abstract Method</strong>: <code>R apply(T t)</code></li>
+<li><strong>Use Case</strong>: Transforming one object into another, such as converting a <code>String</code> to its length or mapping a DTO to an entity.</li>
 </ul>
 <p><strong>Example:</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
-</span></span><span style="display:flex;"><span>  Function<span style="color:#f92672">&lt;</span>String, Integer<span style="color:#f92672">&gt;</span> stringLength <span style="color:#f92672">=</span> s <span style="color:#f92672">-&gt;</span> s.<span style="color:#a6e22e">length</span>();
-</span></span><span style="display:flex;"><span>  System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(stringLength.<span style="color:#a6e22e">apply</span>(<span style="color:#e6db74">&#34;Hello&#34;</span>)); <span style="color:#75715e">// 5</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.function.Function;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.stream.Stream;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FunctionExample</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        Function<span style="color:#f92672">&lt;</span>String, Integer<span style="color:#f92672">&gt;</span> stringLength <span style="color:#f92672">=</span> s <span style="color:#f92672">-&gt;</span> s.<span style="color:#a6e22e">length</span>();
+</span></span><span style="display:flex;"><span>        Stream.<span style="color:#a6e22e">of</span>(<span style="color:#e6db74">&#34;Apple&#34;</span>, <span style="color:#e6db74">&#34;Banana&#34;</span>, <span style="color:#e6db74">&#34;Cherry&#34;</span>)
+</span></span><span style="display:flex;"><span>              .<span style="color:#a6e22e">map</span>(stringLength)
+</span></span><span style="display:flex;"><span>              .<span style="color:#a6e22e">forEach</span>(System.<span style="color:#a6e22e">out</span>::println); <span style="color:#75715e">// Prints 5, 6, 6</span>
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h4 id="4-supplier">4. <strong>Supplier<!-- raw HTML omitted --></strong></h4>
-<p>Supplies a value <strong>without taking any input</strong>.</p>
+</span></span></code></pre></div><h3 id="4-suppliert">4. <code>Supplier&lt;T&gt;</code></h3>
+<p>A <code>Supplier</code> &ldquo;supplies&rdquo; a value of type <code>T</code> without taking any input.</p>
 <ul>
-<li><strong>Signature</strong>: <code>T get()</code></li>
-<li><strong>Use case</strong>: Object creation, lazy evaluation, random generation.</li>
+<li><strong>Abstract Method</strong>: <code>T get()</code></li>
+<li><strong>Use Case</strong>: Useful for lazy generation of values, such as creating new objects, generating random numbers, or providing default values.</li>
 </ul>
 <p><strong>Example:</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
-</span></span><span style="display:flex;"><span>  Supplier<span style="color:#f92672">&lt;</span>Double<span style="color:#f92672">&gt;</span> randomSupplier <span style="color:#f92672">=</span> () <span style="color:#f92672">-&gt;</span> Math.<span style="color:#a6e22e">random</span>();
-</span></span><span style="display:flex;"><span>  System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(randomSupplier.<span style="color:#a6e22e">get</span>());
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.function.Supplier;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.time.LocalDateTime;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SupplierExample</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        Supplier<span style="color:#f92672">&lt;</span>LocalDateTime<span style="color:#f92672">&gt;</span> currentTimeSupplier <span style="color:#f92672">=</span> () <span style="color:#f92672">-&gt;</span> LocalDateTime.<span style="color:#a6e22e">now</span>();
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(currentTimeSupplier.<span style="color:#a6e22e">get</span>()); <span style="color:#75715e">// Prints the current date and time</span>
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div>]]></content>
+</span></span></code></pre></div><p>By understanding and using these core functional interfaces, you can write more expressive, concise, and powerful Java code.</p>
+]]></content>
         </item>
         
         <item>
@@ -440,133 +442,109 @@
         </item>
         
         <item>
-            <title>Blocking Queue in Java</title>
+            <title>A Deep Dive into Java&#39;s BlockingQueue</title>
             <link>https://aamernabi.github.io/posts/java-blocking-queue/</link>
             <pubDate>Mon, 27 Jul 2020 20:09:10 +0530</pubDate>
             
             <guid>https://aamernabi.github.io/posts/java-blocking-queue/</guid>
-            <description>&lt;blockquote&gt;
-&lt;p&gt;A &lt;code&gt;BlockingQueue&lt;/code&gt; in Java is a &lt;code&gt;thread-safe queue&lt;/code&gt; that supports operations that wait for the queue to become non-empty when retrieving an element (for consuming), and wait for space to become available in the queue when storing an element (for producing).&lt;/p&gt;&lt;/blockquote&gt;
-&lt;h3 id=&#34;why-do-we-need-blockingqueue&#34;&gt;Why do we need &lt;code&gt;BlockingQueue&lt;/code&gt;?&lt;/h3&gt;
-&lt;p&gt;In multi-threaded applications:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Producers&lt;/strong&gt; add data to a queue.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Consumers&lt;/strong&gt; remove data from the queue.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Instead of manually managing thread synchronization (with &lt;code&gt;wait()&lt;/code&gt; and &lt;code&gt;notify()&lt;/code&gt;), &lt;code&gt;BlockingQueue&lt;/code&gt;:&lt;/p&gt;</description>
-            <content type="html"><![CDATA[<blockquote>
-<p>A <code>BlockingQueue</code> in Java is a <code>thread-safe queue</code> that supports operations that wait for the queue to become non-empty when retrieving an element (for consuming), and wait for space to become available in the queue when storing an element (for producing).</p></blockquote>
-<h3 id="why-do-we-need-blockingqueue">Why do we need <code>BlockingQueue</code>?</h3>
-<p>In multi-threaded applications:</p>
+            <description>&lt;p&gt;A &lt;code&gt;BlockingQueue&lt;/code&gt; in Java is a thread-safe queue that simplifies concurrency management by providing blocking operations. It&amp;rsquo;s a crucial tool for building robust multi-threaded applications, especially for implementing producer-consumer scenarios.&lt;/p&gt;
+&lt;h2 id=&#34;why-do-we-need-blockingqueue&#34;&gt;Why Do We Need &lt;code&gt;BlockingQueue&lt;/code&gt;?&lt;/h2&gt;
+&lt;p&gt;In multi-threaded applications, it&amp;rsquo;s common to have a scenario where one or more threads (Producers) are generating data, and one or more other threads (Consumers) are processing that data. This is known as the &lt;strong&gt;producer-consumer problem&lt;/strong&gt;.&lt;/p&gt;</description>
+            <content type="html"><![CDATA[<p>A <code>BlockingQueue</code> in Java is a thread-safe queue that simplifies concurrency management by providing blocking operations. It&rsquo;s a crucial tool for building robust multi-threaded applications, especially for implementing producer-consumer scenarios.</p>
+<h2 id="why-do-we-need-blockingqueue">Why Do We Need <code>BlockingQueue</code>?</h2>
+<p>In multi-threaded applications, it&rsquo;s common to have a scenario where one or more threads (Producers) are generating data, and one or more other threads (Consumers) are processing that data. This is known as the <strong>producer-consumer problem</strong>.</p>
+<p>A <code>BlockingQueue</code> elegantly solves this by providing a shared, thread-safe channel for communication. Instead of manually implementing complex synchronization logic with <code>wait()</code> and <code>notify()</code>, you can rely on the queue to handle it for you:</p>
 <ul>
-<li><strong>Producers</strong> add data to a queue.</li>
-<li><strong>Consumers</strong> remove data from the queue.</li>
+<li><strong>Blocks Producers:</strong> If the queue is full, any producer thread trying to add an element will be blocked until there is space available.</li>
+<li><strong>Blocks Consumers:</strong> If the queue is empty, any consumer thread trying to retrieve an element will be blocked until an item is available.</li>
 </ul>
-<p>Instead of manually managing thread synchronization (with <code>wait()</code> and <code>notify()</code>), <code>BlockingQueue</code>:</p>
-<ul>
-<li>Automatically <strong>blocks</strong> producers if the queue is full.</li>
-<li>Automatically <strong>blocks</strong> consumers if the queue is empty.</li>
-</ul>
-<p>This simplifies code and reduces the risk of concurrency bugs.</p>
-<p>The BlockingQueue acts as the coordinator between the producer and consumer threads, wrapping a list implementation together with thread signaling. The list contains a configurable number of elements that the producing threads fill with arbitrary data messages. On the other side, the consumer threads extract the messages in the order that they were enqueued and then process them. Coordination between the producers and consumers is necessary if they get out of sync, for example, if the producers hand off more messages than the consumers can handle. So BlockingQueue uses thread conditions to ensure that producers cannot enqueue new messages if the BlockingQueue list is full, and that consumers know when there are messages to fetch. Synchronization between the threads can be achieved with thread signaling, as Example: Consumer and Producer shows. But the BlockingQueue both blocks threads and signals the important state changes—i.e., the list is not full and the list is not empty.</p>
-<h3 id="example-producer-consumer-with-blockingqueue">Example: Producer-Consumer with BlockingQueue</h3>
-<p>The producer-consumer pattern implemented with the LinkedBlockingQueue-implementation is easily implemented by adding
-messages to the queue with put(), and removing them with take(), where put() blocks the caller if the queue is full, and
-take() blocks the caller if the queue is empty:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.concurrent.*;
+<p>This built-in mechanism simplifies code, reduces the risk of concurrency bugs like race conditions, and improves overall application stability.</p>
+<h2 id="the-producer-consumer-pattern-with-blockingqueue">The Producer-Consumer Pattern with <code>BlockingQueue</code></h2>
+<p>The producer-consumer pattern is a classic concurrency design pattern. <code>BlockingQueue</code> makes implementing it straightforward.</p>
+<p>Here’s a simple example using <code>LinkedBlockingQueue</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.concurrent.BlockingQueue;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.concurrent.LinkedBlockingQueue;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BlockingQueueExample</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
-</span></span><span style="display:flex;"><span>    BlockingQueue<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> queue <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LinkedBlockingQueue<span style="color:#f92672">&lt;&gt;</span>(5); <span style="color:#75715e">// Fixed size queue</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Producer thread</span>
-</span></span><span style="display:flex;"><span>    Thread producer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread(() <span style="color:#f92672">-&gt;</span> {
-</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">try</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 1; i <span style="color:#f92672">&lt;=</span> 10; i<span style="color:#f92672">++</span>) {
-</span></span><span style="display:flex;"><span>          String item <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Item &#34;</span> <span style="color:#f92672">+</span> i;
-</span></span><span style="display:flex;"><span>          System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Producing: &#34;</span> <span style="color:#f92672">+</span> item);
-</span></span><span style="display:flex;"><span>          queue.<span style="color:#a6e22e">put</span>(item);  <span style="color:#75715e">// blocks if queue is full</span>
-</span></span><span style="display:flex;"><span>          Thread.<span style="color:#a6e22e">sleep</span>(500);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>      } <span style="color:#66d9ef">catch</span> (InterruptedException e) {
-</span></span><span style="display:flex;"><span>        Thread.<span style="color:#a6e22e">currentThread</span>().<span style="color:#a6e22e">interrupt</span>();
-</span></span><span style="display:flex;"><span>      }
-</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// A queue with a fixed capacity of 5</span>
+</span></span><span style="display:flex;"><span>        BlockingQueue<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> queue <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LinkedBlockingQueue<span style="color:#f92672">&lt;&gt;</span>(5);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Consumer thread</span>
-</span></span><span style="display:flex;"><span>    Thread consumer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread(() <span style="color:#f92672">-&gt;</span> {
-</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">try</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 1; i <span style="color:#f92672">&lt;=</span> 10; i<span style="color:#f92672">++</span>) {
-</span></span><span style="display:flex;"><span>          String item <span style="color:#f92672">=</span> queue.<span style="color:#a6e22e">take</span>(); <span style="color:#75715e">// blocks if queue is empty</span>
-</span></span><span style="display:flex;"><span>          System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Consuming: &#34;</span> <span style="color:#f92672">+</span> item);
-</span></span><span style="display:flex;"><span>          Thread.<span style="color:#a6e22e">sleep</span>(1000);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>      } <span style="color:#66d9ef">catch</span> (InterruptedException e) {
-</span></span><span style="display:flex;"><span>        Thread.<span style="color:#a6e22e">currentThread</span>().<span style="color:#a6e22e">interrupt</span>();
-</span></span><span style="display:flex;"><span>      }
-</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Producer thread</span>
+</span></span><span style="display:flex;"><span>        Thread producer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread(() <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 1; i <span style="color:#f92672">&lt;=</span> 10; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>                    String item <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Item &#34;</span> <span style="color:#f92672">+</span> i;
+</span></span><span style="display:flex;"><span>                    System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Producing: &#34;</span> <span style="color:#f92672">+</span> item);
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">// put() blocks if the queue is full</span>
+</span></span><span style="display:flex;"><span>                    queue.<span style="color:#a6e22e">put</span>(item);
+</span></span><span style="display:flex;"><span>                    Thread.<span style="color:#a6e22e">sleep</span>(500); <span style="color:#75715e">// Simulate time taken to produce an item</span>
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            } <span style="color:#66d9ef">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>                Thread.<span style="color:#a6e22e">currentThread</span>().<span style="color:#a6e22e">interrupt</span>();
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        });
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    producer.<span style="color:#a6e22e">start</span>();
-</span></span><span style="display:flex;"><span>    consumer.<span style="color:#a6e22e">start</span>();
-</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Consumer thread</span>
+</span></span><span style="display:flex;"><span>        Thread consumer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread(() <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 1; i <span style="color:#f92672">&lt;=</span> 10; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">// take() blocks if the queue is empty</span>
+</span></span><span style="display:flex;"><span>                    String item <span style="color:#f92672">=</span> queue.<span style="color:#a6e22e">take</span>();
+</span></span><span style="display:flex;"><span>                    System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Consuming: &#34;</span> <span style="color:#f92672">+</span> item);
+</span></span><span style="display:flex;"><span>                    Thread.<span style="color:#a6e22e">sleep</span>(1000); <span style="color:#75715e">// Simulate time taken to consume an item</span>
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            } <span style="color:#66d9ef">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>                Thread.<span style="color:#a6e22e">currentThread</span>().<span style="color:#a6e22e">interrupt</span>();
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        producer.<span style="color:#a6e22e">start</span>();
+</span></span><span style="display:flex;"><span>        consumer.<span style="color:#a6e22e">start</span>();
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="implementations-of-blockingqueue">Implementations of <code>BlockingQueue</code>:</h3>
+</span></span></code></pre></div><p>In this example:</p>
 <ul>
-<li><code>ArrayBlockingQueue</code>: Bounded, backed by an array</li>
-<li><code>LinkedBlockingQueue</code>: Optional capacity limit, uses linked nodes</li>
-<li><code>PriorityBlockingQueue</code>: Elements are ordered using priority</li>
-<li><code>DelayQueue</code>: Elements become available after a delay</li>
-<li><code>SynchronousQueue</code>: No internal capacity — handoff queue</li>
+<li>The <code>producer</code> adds items to the queue. If the queue reaches its capacity of 5, the <code>put()</code> call will block until the consumer takes an item.</li>
+<li>The <code>consumer</code> removes items. If the queue is empty, the <code>take()</code> call will block until the producer adds an item.</li>
 </ul>
+<h2 id="common-blockingqueue-implementations">Common <code>BlockingQueue</code> Implementations</h2>
+<p>Java provides several implementations of the <code>BlockingQueue</code> interface, each suited for different use cases:</p>
+<ul>
+<li><strong><code>ArrayBlockingQueue</code></strong>: A bounded queue backed by an array. It&rsquo;s efficient but has a fixed capacity.</li>
+<li><strong><code>LinkedBlockingQueue</code></strong>: An optionally bounded queue backed by linked nodes. It offers higher throughput than <code>ArrayBlockingQueue</code> but can consume more memory.</li>
+<li><strong><code>PriorityBlockingQueue</code></strong>: An unbounded queue where elements are ordered based on their natural ordering or a custom <code>Comparator</code>.</li>
+<li><strong><code>DelayQueue</code></strong>: An unbounded queue where elements can only be taken when their specified delay has expired.</li>
+<li><strong><code>SynchronousQueue</code></strong>: A queue with no internal capacity. Each <code>put()</code> operation must wait for a corresponding <code>take()</code> operation, making it ideal for handoff scenarios.</li>
+</ul>
+<p>By choosing the right implementation, you can tailor the behavior of your concurrent application to your specific needs.</p>
 ]]></content>
         </item>
         
         <item>
-            <title>Completable Future in Java</title>
+            <title>Mastering Asynchronous Programming with Java&#39;s CompletableFuture</title>
             <link>https://aamernabi.github.io/posts/java-completable-future/</link>
             <pubDate>Mon, 27 Jul 2020 12:09:10 +0530</pubDate>
             
             <guid>https://aamernabi.github.io/posts/java-completable-future/</guid>
-            <description>&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;&lt;code&gt;CompletableFuture&lt;/code&gt;&lt;/strong&gt; is a class introduced in &lt;strong&gt;Java 8&lt;/strong&gt; that represents a future result of an &lt;strong&gt;asynchronous computation&lt;/strong&gt;, just like &lt;code&gt;Future&lt;/code&gt; — but with &lt;strong&gt;more power&lt;/strong&gt;.&lt;/p&gt;&lt;/blockquote&gt;
-&lt;p&gt;It allows us to:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Run tasks asynchronously&lt;/li&gt;
-&lt;li&gt;Chain multiple tasks together&lt;/li&gt;
-&lt;li&gt;Handle results or errors when they arrive&lt;/li&gt;
-&lt;li&gt;Avoid &lt;strong&gt;blocking&lt;/strong&gt; the main thread&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;It implements both &lt;code&gt;Future&amp;lt;T&amp;gt;&lt;/code&gt; and &lt;code&gt;CompletionStage&amp;lt;T&amp;gt;&lt;/code&gt;, offering a much richer API for building asynchronous, non-blocking, and highly composable workflows.&lt;/p&gt;
-&lt;h4 id=&#34;features&#34;&gt;Features&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Non-Blocking:&lt;/strong&gt; It provides methods like &lt;code&gt;thenApply()&lt;/code&gt;, &lt;code&gt;thenAccept()&lt;/code&gt;, and &lt;code&gt;thenRun()&lt;/code&gt; that allow you to define actions to be taken when the result is available without blocking the main thread.&lt;/p&gt;</description>
-            <content type="html"><![CDATA[<blockquote>
-<p><strong><code>CompletableFuture</code></strong> is a class introduced in <strong>Java 8</strong> that represents a future result of an <strong>asynchronous computation</strong>, just like <code>Future</code> — but with <strong>more power</strong>.</p></blockquote>
-<p>It allows us to:</p>
+            <description>&lt;p&gt;Introduced in Java 8, &lt;code&gt;CompletableFuture&lt;/code&gt; is a powerful class for asynchronous programming. It extends the traditional &lt;code&gt;Future&lt;/code&gt; interface with a rich set of features for composing, combining, and handling asynchronous tasks, enabling you to write non-blocking, highly concurrent applications with ease.&lt;/p&gt;
+&lt;h2 id=&#34;why-completablefuture&#34;&gt;Why &lt;code&gt;CompletableFuture&lt;/code&gt;?&lt;/h2&gt;
+&lt;p&gt;Before &lt;code&gt;CompletableFuture&lt;/code&gt;, Java&amp;rsquo;s &lt;code&gt;Future&lt;/code&gt; was limited. You could start an asynchronous task, but you had to block your main thread using &lt;code&gt;get()&lt;/code&gt; to retrieve the result. This defeated the purpose of non-blocking code.&lt;/p&gt;</description>
+            <content type="html"><![CDATA[<p>Introduced in Java 8, <code>CompletableFuture</code> is a powerful class for asynchronous programming. It extends the traditional <code>Future</code> interface with a rich set of features for composing, combining, and handling asynchronous tasks, enabling you to write non-blocking, highly concurrent applications with ease.</p>
+<h2 id="why-completablefuture">Why <code>CompletableFuture</code>?</h2>
+<p>Before <code>CompletableFuture</code>, Java&rsquo;s <code>Future</code> was limited. You could start an asynchronous task, but you had to block your main thread using <code>get()</code> to retrieve the result. This defeated the purpose of non-blocking code.</p>
+<p><code>CompletableFuture</code> solves this by providing a <strong>non-blocking, callback-based approach</strong>. It allows you to chain tasks together, so that a subsequent task automatically executes when the previous one completes, without ever blocking your main thread.</p>
+<h2 id="core-features-of-completablefuture">Core Features of <code>CompletableFuture</code></h2>
 <ul>
-<li>Run tasks asynchronously</li>
-<li>Chain multiple tasks together</li>
-<li>Handle results or errors when they arrive</li>
-<li>Avoid <strong>blocking</strong> the main thread</li>
+<li><strong>Asynchronous Execution</strong>: Run tasks in the background without blocking the caller thread, typically using a <code>ForkJoinPool</code> or a custom <code>Executor</code>.</li>
+<li><strong>Composability and Chaining</strong>: Chain multiple asynchronous operations together using methods like <code>thenApply()</code>, <code>thenAccept()</code>, and <code>thenCompose()</code>.</li>
+<li><strong>Powerful Combination</strong>: Combine the results of multiple <code>CompletableFutures</code> using <code>thenCombine()</code>, <code>allOf()</code>, or <code>anyOf()</code>.</li>
+<li><strong>Robust Exception Handling</strong>: Handle exceptions gracefully within the asynchronous pipeline using methods like <code>exceptionally()</code> and <code>handle()</code>.</li>
+<li><strong>Explicit Completion</strong>: Programmatically complete a future with a result or an exception, giving you more control over its lifecycle.</li>
 </ul>
-<p>It implements both <code>Future&lt;T&gt;</code> and <code>CompletionStage&lt;T&gt;</code>, offering a much richer API for building asynchronous, non-blocking, and highly composable workflows.</p>
-<h4 id="features">Features</h4>
-<ul>
-<li>
-<p><strong>Non-Blocking:</strong> It provides methods like <code>thenApply()</code>, <code>thenAccept()</code>, and <code>thenRun()</code> that allow you to define actions to be taken when the result is available without blocking the main thread.</p>
-</li>
-<li>
-<p><strong>Powerful Composition:</strong> Offers methods like <code>thenCompose()</code>, <code>thenCombine()</code>, and <code>allOf()</code> for chaining and combining multiple asynchronous operations.</p>
-</li>
-<li>
-<p><strong>Enhanced Exception Handling:</strong> Includes mechanisms for handling exceptions that occur during asynchronous operations, making it more robust.</p>
-</li>
-<li>
-<p><strong>Explicit Completion:</strong> Allows you to complete a CompletableFuture programmatically, even if the underlying computation hasn&rsquo;t finished, enabling scenarios where results can be provided prematurely.</p>
-</li>
-</ul>
-<h4 id="methods-of-completablefuture">Methods of CompletableFuture</h4>
+<h2 id="key-methods-of-completablefuture">Key Methods of <code>CompletableFuture</code></h2>
+<p>Here&rsquo;s a look at some of the most commonly used methods:</p>
 <table>
   <thead>
       <tr>
@@ -585,225 +563,315 @@ take() blocks the caller if the queue is empty:</p>
       </tr>
       <tr>
           <td><code>thenApply(Function)</code></td>
-          <td>Transforms the result of a computation.</td>
+          <td>Transforms the result of a <code>CompletableFuture</code> when it completes.</td>
       </tr>
       <tr>
           <td><code>thenAccept(Consumer)</code></td>
-          <td>Consumes the result of a computation.</td>
+          <td>Consumes the result of a <code>CompletableFuture</code> when it completes.</td>
       </tr>
       <tr>
           <td><code>thenRun(Runnable)</code></td>
-          <td>Runs a task after the future is completed.</td>
+          <td>Executes a <code>Runnable</code> after a <code>CompletableFuture</code> completes.</td>
       </tr>
       <tr>
           <td><code>thenCombine()</code></td>
-          <td>Combines two futures when both are done.</td>
+          <td>Combines the results of two <code>CompletableFutures</code> when both are done.</td>
       </tr>
       <tr>
           <td><code>exceptionally(Function)</code></td>
-          <td>Provides a fallback result in case of an error.</td>
+          <td>Provides a fallback value in case of an exception.</td>
       </tr>
       <tr>
           <td><code>join()</code></td>
-          <td>Waits for completion and returns the result (throws unchecked exception).</td>
+          <td>Waits for the computation to complete and returns the result (throws an unchecked exception).</td>
       </tr>
       <tr>
           <td><code>get()</code></td>
-          <td>Similar to <code>join()</code> but throws checked exceptions.</td>
+          <td>Similar to <code>join()</code>, but throws checked exceptions.</td>
       </tr>
   </tbody>
 </table>
-<h4 id="how-does-completablefuture-work">How Does <code>CompletableFuture</code> Work?</h4>
+<h2 id="how-does-completablefuture-work">How Does <code>CompletableFuture</code> Work?</h2>
 <ol>
-<li>
-<p><strong>Runs Tasks Asynchronously</strong></p>
-<ul>
-<li>When you call methods like <code>supplyAsync()</code>, <code>runAsync()</code>, etc., <code>CompletableFuture</code> schedules your task to run on a <strong>different thread</strong> (usually from the ForkJoinPool or a custom executor).</li>
-<li>This means your main thread <strong>doesn’t block</strong> and can keep doing other things.</li>
-</ul>
-</li>
-<li>
-<p><strong>Supports Chaining and Callbacks</strong></p>
-<ul>
-<li>You can attach <strong>callbacks</strong> to run <strong>after</strong> the first task completes, using methods like <code>thenApply()</code>, <code>thenAccept()</code>, <code>thenRun()</code>.</li>
-<li>Each callback gets triggered <strong>only when the previous task finishes</strong>, forming a chain of asynchronous steps.</li>
-</ul>
-</li>
-<li>
-<p><strong>Handles Results and Exceptions</strong></p>
-<ul>
-<li><code>CompletableFuture</code> keeps track of the result or exception internally.</li>
-<li>When a task completes, it stores the <strong>result</strong> or <strong>exception</strong> and automatically calls any dependent callbacks.</li>
-<li>If an exception occurs, you can handle it with methods like <code>exceptionally()</code> or <code>handle()</code> without blocking.</li>
-</ul>
-</li>
-<li>
-<p><strong>Combines Multiple Futures</strong></p>
-<ul>
-<li>It allows you to combine multiple <code>CompletableFutures</code> using methods like <code>thenCombine()</code>, <code>allOf()</code>, <code>anyOf()</code>.</li>
-<li>This helps coordinate many async tasks and proceed when all or any are done.</li>
-</ul>
-</li>
+<li><strong>Asynchronous Task Execution</strong>: When you call <code>supplyAsync()</code> or <code>runAsync()</code>, the task is submitted to a thread pool (by default, the <code>ForkJoinPool.commonPool()</code>). Your main thread is free to continue its work.</li>
+<li><strong>Callback Chaining</strong>: You can attach callbacks using methods like <code>thenApply()</code> or <code>thenAccept()</code>. These callbacks are registered and will be executed only when the preceding task finishes.</li>
+<li><strong>Result and Exception Handling</strong>: The <code>CompletableFuture</code> object holds the state of the computation (e.g., pending, completed with a result, or completed with an exception). When a task finishes, it triggers the execution of any dependent callbacks.</li>
+<li><strong>Combining Futures</strong>: Methods like <code>allOf()</code> and <code>anyOf()</code> allow you to coordinate multiple asynchronous tasks, enabling you to proceed when all or any of them have completed.</li>
 </ol>
-<h4 id="example">Example</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">example</span>() {
-</span></span><span style="display:flex;"><span>    CompletableFuture<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> future <span style="color:#f92672">=</span> CompletableFuture.<span style="color:#a6e22e">supplyAsync</span>(() <span style="color:#f92672">-&gt;</span> {
-</span></span><span style="display:flex;"><span>            delay(1000);
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;Hello&#34;</span>;
-</span></span><span style="display:flex;"><span>        })
-</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">thenApply</span>(result <span style="color:#f92672">-&gt;</span> result <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; World!&#34;</span>);
+<h2 id="practical-example">Practical Example</h2>
+<p>Let&rsquo;s see <code>CompletableFuture</code> in action with a simple example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.concurrent.CompletableFuture;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.concurrent.TimeUnit;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    future.<span style="color:#a6e22e">thenRun</span>(() <span style="color:#f92672">-&gt;</span> System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;thenRun : thread = &#34;</span> <span style="color:#f92672">+</span> Thread.<span style="color:#a6e22e">currentThread</span>().<span style="color:#a6e22e">getName</span>()));
-</span></span><span style="display:flex;"><span>    future.<span style="color:#a6e22e">thenAccept</span>(result <span style="color:#f92672">-&gt;</span> {
-</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;thenAccept : thread = &#34;</span> <span style="color:#f92672">+</span> Thread.<span style="color:#a6e22e">currentThread</span>().<span style="color:#a6e22e">getName</span>());
-</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Result = &#34;</span> <span style="color:#f92672">+</span> result);
-</span></span><span style="display:flex;"><span>    });
-</span></span><span style="display:flex;"><span>    future.<span style="color:#a6e22e">join</span>();
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CompletableFutureExample</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        CompletableFuture<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> future <span style="color:#f92672">=</span> CompletableFuture.<span style="color:#a6e22e">supplyAsync</span>(() <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Simulate a long-running task</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>                TimeUnit.<span style="color:#a6e22e">SECONDS</span>.<span style="color:#a6e22e">sleep</span>(1);
+</span></span><span style="display:flex;"><span>            } <span style="color:#66d9ef">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IllegalStateException(e);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;Hello&#34;</span>;
+</span></span><span style="display:flex;"><span>        }).<span style="color:#a6e22e">thenApply</span>(result <span style="color:#f92672">-&gt;</span> result <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; World!&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Attach a callback to consume the final result</span>
+</span></span><span style="display:flex;"><span>        future.<span style="color:#a6e22e">thenAccept</span>(result <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Result: &#34;</span> <span style="color:#f92672">+</span> result);
+</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;This is executed in thread: &#34;</span> <span style="color:#f92672">+</span> Thread.<span style="color:#a6e22e">currentThread</span>().<span style="color:#a6e22e">getName</span>());
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;This is printed immediately from the main thread.&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Wait for the future to complete to see the output</span>
+</span></span><span style="display:flex;"><span>        future.<span style="color:#a6e22e">join</span>();
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div>]]></content>
+</span></span></code></pre></div><p>In this example:</p>
+<ol>
+<li><code>supplyAsync()</code> starts a background task.</li>
+<li><code>thenApply()</code> chains another task to transform the result.</li>
+<li><code>thenAccept()</code> registers a final callback to print the result.</li>
+<li>The main thread prints its message immediately and then calls <code>join()</code> to wait for the asynchronous pipeline to finish before exiting.</li>
+</ol>
+<p>By leveraging <code>CompletableFuture</code>, you can build sophisticated, non-blocking, and highly efficient applications in Java.</p>
+]]></content>
         </item>
         
         <item>
-            <title>hashcode() in Java</title>
+            <title>Understanding Java&#39;s hashCode() and equals() Contract</title>
             <link>https://aamernabi.github.io/posts/java-hashcode/</link>
             <pubDate>Sun, 26 Jul 2020 23:03:02 +0530</pubDate>
             
             <guid>https://aamernabi.github.io/posts/java-hashcode/</guid>
-            <description>&lt;blockquote&gt;
-&lt;p&gt;The &lt;code&gt;hashCode()&lt;/code&gt; method provides a way to quickly categorize and retrieve objects by generating a unique (or at least well-distributed) integer for each object. It is part of the Object class, so every class in Java inherits it.&lt;/p&gt;&lt;/blockquote&gt;
-&lt;p&gt;The &lt;code&gt;hashCode()&lt;/code&gt; is a native method and returns the integer hash code value of the object.&lt;/p&gt;
-&lt;p&gt;A hash code is an integer value that is generated by the &lt;code&gt;hashCode()&lt;/code&gt; method. It’s used primarily in hash-based
-collections like:&lt;/p&gt;</description>
-            <content type="html"><![CDATA[<blockquote>
-<p>The <code>hashCode()</code> method provides a way to quickly categorize and retrieve objects by generating a unique (or at least well-distributed) integer for each object. It is part of the Object class, so every class in Java inherits it.</p></blockquote>
-<p>The <code>hashCode()</code> is a native method and returns the integer hash code value of the object.</p>
-<p>A hash code is an integer value that is generated by the <code>hashCode()</code> method. It’s used primarily in hash-based
-collections like:</p>
-<ul>
-<li><code>HashMap</code></li>
-<li><code>HashSet</code></li>
-<li><code>Hashtable</code></li>
-</ul>
-<h3 id="relationship-with-equals">Relationship with equals()</h3>
-<p>When you override <code>equals()</code>, you should also override <code>hashCode()</code>, to maintain the general contract:</p>
+            <description>&lt;p&gt;In Java, the &lt;code&gt;hashCode()&lt;/code&gt; method, inherited from the &lt;code&gt;Object&lt;/code&gt; class, plays a crucial role in the efficient functioning of hash-based collections like &lt;code&gt;HashMap&lt;/code&gt;, &lt;code&gt;HashSet&lt;/code&gt;, and &lt;code&gt;Hashtable&lt;/code&gt;. It generates an integer hash code value for an object, which is used to determine the &amp;ldquo;bucket&amp;rdquo; where the object should be stored.&lt;/p&gt;
+&lt;h2 id=&#34;the-hashcode-and-equals-contract&#34;&gt;The &lt;code&gt;hashCode()&lt;/code&gt; and &lt;code&gt;equals()&lt;/code&gt; Contract&lt;/h2&gt;
+&lt;p&gt;The most important concept to understand is the contract between &lt;code&gt;hashCode()&lt;/code&gt; and &lt;code&gt;equals()&lt;/code&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;If two objects are equal according to the &lt;code&gt;equals(Object)&lt;/code&gt; method, then calling the &lt;code&gt;hashCode()&lt;/code&gt; method on each of the two objects must produce the same integer result.&lt;/li&gt;
+&lt;li&gt;It is &lt;em&gt;not&lt;/em&gt; required that if two objects are unequal according to the &lt;code&gt;equals(Object)&lt;/code&gt; method, then calling the &lt;code&gt;hashCode()&lt;/code&gt; method on each of the two objects must produce distinct integer results. However, producing distinct hash codes for unequal objects may improve the performance of hash tables.&lt;/li&gt;
+&lt;/ol&gt;&lt;/blockquote&gt;
+&lt;p&gt;In simple terms: &lt;strong&gt;equal objects must have equal hash codes.&lt;/strong&gt;&lt;/p&gt;</description>
+            <content type="html"><![CDATA[<p>In Java, the <code>hashCode()</code> method, inherited from the <code>Object</code> class, plays a crucial role in the efficient functioning of hash-based collections like <code>HashMap</code>, <code>HashSet</code>, and <code>Hashtable</code>. It generates an integer hash code value for an object, which is used to determine the &ldquo;bucket&rdquo; where the object should be stored.</p>
+<h2 id="the-hashcode-and-equals-contract">The <code>hashCode()</code> and <code>equals()</code> Contract</h2>
+<p>The most important concept to understand is the contract between <code>hashCode()</code> and <code>equals()</code>:</p>
 <blockquote>
-<p>If two objects are equal according to the equals() method, they must have the same hash code.</p></blockquote>
-<p>If this rule is broken, collections like HashMap or HashSet won’t work correctly.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.Objects;
+<ol>
+<li>If two objects are equal according to the <code>equals(Object)</code> method, then calling the <code>hashCode()</code> method on each of the two objects must produce the same integer result.</li>
+<li>It is <em>not</em> required that if two objects are unequal according to the <code>equals(Object)</code> method, then calling the <code>hashCode()</code> method on each of the two objects must produce distinct integer results. However, producing distinct hash codes for unequal objects may improve the performance of hash tables.</li>
+</ol></blockquote>
+<p>In simple terms: <strong>equal objects must have equal hash codes.</strong></p>
+<p>If you override the <code>equals()</code> method, you <strong>must</strong> also override the <code>hashCode()</code> method to maintain this contract.</p>
+<h2 id="why-is-this-contract-so-important">Why is This Contract So Important?</h2>
+<p>Hash-based collections use an object&rsquo;s hash code to quickly locate it. Here&rsquo;s a simplified view of how <code>HashMap.put(key, value)</code> works:</p>
+<ol>
+<li>It calculates the <code>key</code>&rsquo;s hash code.</li>
+<li>It uses this hash code to find a bucket (an index in an internal array).</li>
+<li>If the bucket is empty, it stores the key-value pair there.</li>
+<li>If the bucket is not empty (a hash collision), it iterates through the existing entries in that bucket and uses the <code>equals()</code> method to check if the key already exists.</li>
+</ol>
+<p>If you break the contract, these collections will behave incorrectly.</p>
+<h3 id="example-breaking-the-contract">Example: Breaking the Contract</h3>
+<p>Let&rsquo;s see what happens when we override <code>equals()</code> but not <code>hashCode()</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.HashMap;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.Map;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.Objects;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Person</span> {
-</span></span><span style="display:flex;"><span>  String name;
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">int</span> age;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Product</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String id;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Person</span>(String name, <span style="color:#66d9ef">int</span> age) {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> name;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">age</span> <span style="color:#f92672">=</span> age;
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Override equals</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Override</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">equals</span>(Object o) {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">this</span> <span style="color:#f92672">==</span> o) <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>(o <span style="color:#66d9ef">instanceof</span> Person)) <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
-</span></span><span style="display:flex;"><span>    Person person <span style="color:#f92672">=</span> (Person) o;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> age <span style="color:#f92672">==</span> person.<span style="color:#a6e22e">age</span> <span style="color:#f92672">&amp;&amp;</span> name.<span style="color:#a6e22e">equals</span>(person.<span style="color:#a6e22e">name</span>);
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Override hashCode</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Override</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">hashCode</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> Objects.<span style="color:#a6e22e">hash</span>(name, age);
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="why-its-required-to-override-the-hashcode-when-overriding-the-equals-method">Why its required to override the hashcode when overriding the equals method?</h3>
-<p>Imagine using <code>HashMap&lt;Key, String&gt;</code> — if <code>equals()</code> says two keys are equal but they have different hash codes,
-the map may store them both — which is wrong behavior for a set.</p>
-<p>Example:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Key</span> {
-</span></span><span style="display:flex;"><span>    String id;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    Key(String id) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Product</span>(String id) {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">id</span> <span style="color:#f92672">=</span> id;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">equals</span>(Object o) {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">this</span> <span style="color:#f92672">==</span> o) <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>(o <span style="color:#66d9ef">instanceof</span> Key)) <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
-</span></span><span style="display:flex;"><span>        Key key <span style="color:#f92672">=</span> (Key) o;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> id.<span style="color:#a6e22e">equals</span>(key.<span style="color:#a6e22e">id</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (o <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">||</span> getClass() <span style="color:#f92672">!=</span> o.<span style="color:#a6e22e">getClass</span>()) <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+</span></span><span style="display:flex;"><span>        Product product <span style="color:#f92672">=</span> (Product) o;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Objects.<span style="color:#a6e22e">equals</span>(id, product.<span style="color:#a6e22e">id</span>);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// hashCode is NOT overridden</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// hashCode() is NOT overridden</span>
 </span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> agrs) {
-</span></span><span style="display:flex;"><span>  Map<span style="color:#f92672">&lt;</span>Key, String<span style="color:#f92672">&gt;</span> map <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashMap<span style="color:#f92672">&lt;&gt;</span>();
-</span></span><span style="display:flex;"><span>  map.<span style="color:#a6e22e">put</span>(<span style="color:#66d9ef">new</span> Key(<span style="color:#e6db74">&#34;a&#34;</span>), <span style="color:#e6db74">&#34;value&#34;</span>);
-</span></span><span style="display:flex;"><span>  map.<span style="color:#a6e22e">put</span>(<span style="color:#66d9ef">new</span> Key(<span style="color:#e6db74">&#34;a&#34;</span>), <span style="color:#e6db74">&#34;value&#34;</span>);
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>  System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Map size: &#34;</span> <span style="color:#f92672">+</span> map.<span style="color:#a6e22e">size</span>());  <span style="color:#75715e">// Output: 2  -&gt; Incorrect behavior</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BrokenContractExample</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        Map<span style="color:#f92672">&lt;</span>Product, String<span style="color:#f92672">&gt;</span> map <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashMap<span style="color:#f92672">&lt;&gt;</span>();
+</span></span><span style="display:flex;"><span>        map.<span style="color:#a6e22e">put</span>(<span style="color:#66d9ef">new</span> Product(<span style="color:#e6db74">&#34;a&#34;</span>), <span style="color:#e6db74">&#34;Apple&#34;</span>);
+</span></span><span style="display:flex;"><span>        map.<span style="color:#a6e22e">put</span>(<span style="color:#66d9ef">new</span> Product(<span style="color:#e6db74">&#34;a&#34;</span>), <span style="color:#e6db74">&#34;Avocado&#34;</span>); <span style="color:#75715e">// Should replace &#34;Apple&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// The map size will be 2, which is incorrect!</span>
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Map size: &#34;</span> <span style="color:#f92672">+</span> map.<span style="color:#a6e22e">size</span>());
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(map);
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>What’s wrong here?</p>
+</span></span></code></pre></div><p><strong>What went wrong?</strong></p>
 <ul>
-<li>You’ve overridden equals() to say that two Key(&ldquo;a&rdquo;) objects are equal.</li>
-<li>But hashCode() is not overridden, so each Key(&ldquo;a&rdquo;) gets a different hash code (based on object reference).</li>
-<li>The map stores them in different buckets, thinking they are different keys.</li>
+<li>We defined <code>equals()</code> to consider two <code>Product</code> objects with the same <code>id</code> as equal.</li>
+<li>However, since we didn&rsquo;t override <code>hashCode()</code>, each <code>new Product(&quot;a&quot;)</code> gets a different hash code from the default <code>Object.hashCode()</code> implementation (which is based on memory address).</li>
+<li>The <code>HashMap</code> calculates two different hash codes, places the objects in two different buckets, and never even calls the <code>equals()</code> method. The result is a map with duplicate logical keys.</li>
 </ul>
+<h2 id="how-to-correctly-implement-hashcode">How to Correctly Implement <code>hashCode()</code></h2>
+<p>To fix this, we must implement <code>hashCode()</code> based on the same fields used in the <code>equals()</code> method. The easiest way is to use the <code>Objects.hash()</code> utility method.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.HashMap;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.Map;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.Objects;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CorrectProduct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String id;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">CorrectProduct</span>(String id) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">id</span> <span style="color:#f92672">=</span> id;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">equals</span>(Object o) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">this</span> <span style="color:#f92672">==</span> o) <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (o <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">||</span> getClass() <span style="color:#f92672">!=</span> o.<span style="color:#a6e22e">getClass</span>()) <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+</span></span><span style="display:flex;"><span>        CorrectProduct that <span style="color:#f92672">=</span> (CorrectProduct) o;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Objects.<span style="color:#a6e22e">equals</span>(id, that.<span style="color:#a6e22e">id</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">hashCode</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Use the same field(s) as in equals()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Objects.<span style="color:#a6e22e">hash</span>(id);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CorrectContractExample</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        Map<span style="color:#f92672">&lt;</span>CorrectProduct, String<span style="color:#f92672">&gt;</span> map <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashMap<span style="color:#f92672">&lt;&gt;</span>();
+</span></span><span style="display:flex;"><span>        map.<span style="color:#a6e22e">put</span>(<span style="color:#66d9ef">new</span> CorrectProduct(<span style="color:#e6db74">&#34;a&#34;</span>), <span style="color:#e6db74">&#34;Apple&#34;</span>);
+</span></span><span style="display:flex;"><span>        map.<span style="color:#a6e22e">put</span>(<span style="color:#66d9ef">new</span> CorrectProduct(<span style="color:#e6db74">&#34;a&#34;</span>), <span style="color:#e6db74">&#34;Avocado&#34;</span>); <span style="color:#75715e">// Correctly replaces &#34;Apple&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// The map size will be 1, which is correct.</span>
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Map size: &#34;</span> <span style="color:#f92672">+</span> map.<span style="color:#a6e22e">size</span>());
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(map);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>By correctly implementing both <code>equals()</code> and <code>hashCode()</code>, we ensure that hash-based collections work as expected, providing both correctness and performance.</p>
 ]]></content>
         </item>
         
         <item>
-            <title>Fail-fast iterator and Fail-safe iterator</title>
-            <link>https://aamernabi.github.io/posts/fail-fast_and_fail-safe_iterator/</link>
+            <title>Understanding Fail-Fast vs. Fail-Safe Iterators in Java</title>
+            <link>https://aamernabi.github.io/posts/java-fail-fast-vs-fail-safe-iterators/</link>
             <pubDate>Mon, 20 Jul 2020 15:44:00 +0530</pubDate>
             
-            <guid>https://aamernabi.github.io/posts/fail-fast_and_fail-safe_iterator/</guid>
-            <description>&lt;h4 id=&#34;fail-fast-iterator&#34;&gt;Fail-fast iterator&lt;/h4&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Fail-Fast iterators immediately throw &lt;strong&gt;ConcurrentModificationException&lt;/strong&gt; if there is &lt;em&gt;&lt;strong&gt;structural modification&lt;/strong&gt;&lt;/em&gt; of
-the collection.&lt;/p&gt;&lt;/blockquote&gt;
-&lt;p&gt;A fail-fast iterator in Java is designed to immediately throw a&lt;code&gt;ConcurrentModificationException&lt;/code&gt;if the collection it is
-iterating over is structurally modified (elements added or removed) while the iteration is in progress, except when
-modification is done through the iterator&amp;rsquo;s own&lt;code&gt;remove()&lt;/code&gt;method. This behavior helps in detecting concurrent
-modification issues early, preventing potential data corruption or unexpected behavior.&lt;/p&gt;</description>
-            <content type="html"><![CDATA[<h4 id="fail-fast-iterator">Fail-fast iterator</h4>
-<blockquote>
-<p>Fail-Fast iterators immediately throw <strong>ConcurrentModificationException</strong> if there is <em><strong>structural modification</strong></em> of
-the collection.</p></blockquote>
-<p>A fail-fast iterator in Java is designed to immediately throw a<code>ConcurrentModificationException</code>if the collection it is
-iterating over is structurally modified (elements added or removed) while the iteration is in progress, except when
-modification is done through the iterator&rsquo;s own<code>remove()</code>method. This behavior helps in detecting concurrent
-modification issues early, preventing potential data corruption or unexpected behavior.</p>
-<p>Fail-fast iterators work by maintaining a modification counter (<code>modCount</code>) within the collection. Each time the
-collection is structurally modified, the<code>modCount</code>is incremented. When an iterator is created, it records the current
-value of<code>modCount</code>. Before each iteration (e.g., in the<code>next()</code>method), the iterator checks if the current<code>modCount</code>of
-the collection matches the recorded value. If they differ, it indicates that the collection has been modified since the
-iterator was created, and a<code>ConcurrentModificationException</code>is thrown.</p>
-<p>Iterator on ArrayList, HashMap classes are some examples of fail-fast Iterator.</p>
-<p>Examples of collections in Java that use fail-fast iterators include<code>ArrayList</code>,<code>HashMap</code>, and<code>HashSet</code>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
-</span></span><span style="display:flex;"><span>  List<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> list <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;&gt;</span>(Arrays.<span style="color:#a6e22e">asList</span>(<span style="color:#e6db74">&#34;A&#34;</span>, <span style="color:#e6db74">&#34;B&#34;</span>, <span style="color:#e6db74">&#34;C&#34;</span>));
-</span></span><span style="display:flex;"><span>  Iterator<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> iterator <span style="color:#f92672">=</span> list.<span style="color:#a6e22e">iterator</span>();
+            <guid>https://aamernabi.github.io/posts/java-fail-fast-vs-fail-safe-iterators/</guid>
+            <description>&lt;p&gt;When working with collections in Java, you&amp;rsquo;ll often use iterators to traverse through their elements. However, not all iterators are created equal. Two common types you&amp;rsquo;ll encounter are &lt;strong&gt;fail-fast&lt;/strong&gt; and &lt;strong&gt;fail-safe&lt;/strong&gt; iterators. Understanding the difference between them is crucial for writing robust and error-free code.&lt;/p&gt;
+&lt;h2 id=&#34;fail-fast-iterators&#34;&gt;Fail-Fast Iterators&lt;/h2&gt;
+&lt;p&gt;Fail-fast iterators immediately throw a &lt;code&gt;ConcurrentModificationException&lt;/code&gt; if the collection is structurally modified (i.e., elements are added or removed) at any time after the iterator is created, except through the iterator&amp;rsquo;s own &lt;code&gt;remove()&lt;/code&gt; method.&lt;/p&gt;</description>
+            <content type="html"><![CDATA[<p>When working with collections in Java, you&rsquo;ll often use iterators to traverse through their elements. However, not all iterators are created equal. Two common types you&rsquo;ll encounter are <strong>fail-fast</strong> and <strong>fail-safe</strong> iterators. Understanding the difference between them is crucial for writing robust and error-free code.</p>
+<h2 id="fail-fast-iterators">Fail-Fast Iterators</h2>
+<p>Fail-fast iterators immediately throw a <code>ConcurrentModificationException</code> if the collection is structurally modified (i.e., elements are added or removed) at any time after the iterator is created, except through the iterator&rsquo;s own <code>remove()</code> method.</p>
+<h3 id="how-they-work">How They Work</h3>
+<p>Fail-fast iterators operate directly on the collection itself. They keep track of the number of modifications made to the collection using an internal flag (like <code>modCount</code>). When you create an iterator, it saves the initial <code>modCount</code>. With each iteration (<code>next()</code> call), it checks if the current <code>modCount</code> has changed. If it has, the iterator knows that the collection has been modified concurrently and throws a <code>ConcurrentModificationException</code>.</p>
+<p>This mechanism helps to prevent unexpected behavior and data corruption by alerting you to concurrent modification issues early on.</p>
+<p>Common collections that use fail-fast iterators include <code>ArrayList</code>, <code>HashMap</code>, and <code>HashSet</code>.</p>
+<h3 id="code-example">Code Example</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.ArrayList;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.Arrays;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.Iterator;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.List;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.ConcurrentModificationException;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">while</span> (iterator.<span style="color:#a6e22e">hasNext</span>()) {
-</span></span><span style="display:flex;"><span>    String element <span style="color:#f92672">=</span> iterator.<span style="color:#a6e22e">next</span>();
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (element.<span style="color:#a6e22e">equals</span>(<span style="color:#e6db74">&#34;B&#34;</span>)) {
-</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">try</span> {
-</span></span><span style="display:flex;"><span>        list.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#34;C&#34;</span>); <span style="color:#75715e">// Structural modification outside iterator</span>
-</span></span><span style="display:flex;"><span>      } <span style="color:#66d9ef">catch</span> (ConcurrentModificationException e) {
-</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Exception: &#34;</span> <span style="color:#f92672">+</span> e);
-</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FailFastExample</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        List<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> list <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;&gt;</span>(Arrays.<span style="color:#a6e22e">asList</span>(<span style="color:#e6db74">&#34;A&#34;</span>, <span style="color:#e6db74">&#34;B&#34;</span>, <span style="color:#e6db74">&#34;C&#34;</span>));
+</span></span><span style="display:flex;"><span>        Iterator<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> iterator <span style="color:#f92672">=</span> list.<span style="color:#a6e22e">iterator</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> (iterator.<span style="color:#a6e22e">hasNext</span>()) {
+</span></span><span style="display:flex;"><span>            String element <span style="color:#f92672">=</span> iterator.<span style="color:#a6e22e">next</span>();
+</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Processing: &#34;</span> <span style="color:#f92672">+</span> element);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// This will throw ConcurrentModificationException</span>
+</span></span><span style="display:flex;"><span>                list.<span style="color:#a6e22e">add</span>(<span style="color:#e6db74">&#34;D&#34;</span>); 
+</span></span><span style="display:flex;"><span>            } <span style="color:#66d9ef">catch</span> (ConcurrentModificationException e) {
+</span></span><span style="display:flex;"><span>                System.<span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Caught a ConcurrentModificationException!&#34;</span>);
+</span></span><span style="display:flex;"><span>                e.<span style="color:#a6e22e">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">break</span>; 
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>  }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>In the example above, attempting to modify the<code>list</code>while iterating through it using the iterator will result in a
-<code>ConcurrentModificationException</code>.</p>
-<h4 id="fail-safe-iterator">Fail-safe Iterator</h4>
-<blockquote>
-<p><strong>Fail-Safe iterators</strong> don’t throw any exceptions if a collection is structurally modified while iterating over it.</p></blockquote>
-<p>This is because, they operate on the <em><strong>clone</strong></em> of the collection, not on the original collection and that’s why they
-are called fail-safe iterators. Iterator on <code>CopyOnWriteArrayList</code>, <code>ConcurrentHashMap</code> classes are examples of fail-safe
-Iterator.</p>
+</span></span></code></pre></div><p>In this example, <code>list.add(&quot;D&quot;)</code> modifies the list while the iterator is active, causing a <code>ConcurrentModificationException</code> to be thrown.</p>
+<h2 id="fail-safe-iterators">Fail-Safe Iterators</h2>
+<p>In contrast, fail-safe iterators (also known as non-fast-fail iterators) do <strong>not</strong> throw a <code>ConcurrentModificationException</code> if the collection is modified while being iterated.</p>
+<h3 id="how-they-work-1">How They Work</h3>
+<p>Fail-safe iterators work on a clone or a snapshot of the underlying collection. This means that any modifications made to the original collection do not affect the iterator. The iterator continues to traverse the snapshot, which remains unchanged. This approach ensures that the iteration can complete without errors, but it also means that the iterator might not reflect the most up-to-date state of the collection.</p>
+<p>Collections that use fail-safe iterators are typically found in the <code>java.util.concurrent</code> package, such as <code>CopyOnWriteArrayList</code> and <code>ConcurrentHashMap</code>.</p>
+<h3 id="code-example-1">Code Example</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.Iterator;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.concurrent.CopyOnWriteArrayList;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FailSafeExample</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        CopyOnWriteArrayList<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> list <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> CopyOnWriteArrayList<span style="color:#f92672">&lt;&gt;</span>(<span style="color:#66d9ef">new</span> String<span style="color:#f92672">[]</span>{<span style="color:#e6db74">&#34;A&#34;</span>, <span style="color:#e6db74">&#34;B&#34;</span>, <span style="color:#e6db74">&#34;C&#34;</span>});
+</span></span><span style="display:flex;"><span>        Iterator<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> iterator <span style="color:#f92672">=</span> list.<span style="color:#a6e22e">iterator</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> (iterator.<span style="color:#a6e22e">hasNext</span>()) {
+</span></span><span style="display:flex;"><span>            String element <span style="color:#f92672">=</span> iterator.<span style="color:#a6e22e">next</span>();
+</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Processing: &#34;</span> <span style="color:#f92672">+</span> element);
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// This modification will not be reflected in the iterator</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (element.<span style="color:#a6e22e">equals</span>(<span style="color:#e6db74">&#34;B&#34;</span>)) {
+</span></span><span style="display:flex;"><span>                list.<span style="color:#a6e22e">add</span>(<span style="color:#e6db74">&#34;D&#34;</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Final list: &#34;</span> <span style="color:#f92672">+</span> list);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>In this case, even though we add &ldquo;D&rdquo; to the list, the iterator doesn&rsquo;t throw an exception. The output will show that the iterator processed the original elements (&ldquo;A&rdquo;, &ldquo;B&rdquo;, &ldquo;C&rdquo;), and the final list contains &ldquo;D&rdquo;.</p>
+<h2 id="key-differences-fail-fast-vs-fail-safe">Key Differences: Fail-Fast vs. Fail-Safe</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Feature</th>
+          <th>Fail-Fast Iterator</th>
+          <th>Fail-Safe Iterator</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Exception Handling</strong></td>
+          <td>Throws <code>ConcurrentModificationException</code></td>
+          <td>Does not throw any exception</td>
+      </tr>
+      <tr>
+          <td><strong>Underlying Data</strong></td>
+          <td>Operates on the original collection</td>
+          <td>Operates on a clone or snapshot of the collection</td>
+      </tr>
+      <tr>
+          <td><strong>Consistency</strong></td>
+          <td>Reflects the current state until modification</td>
+          <td>May not reflect the latest state of the collection</td>
+      </tr>
+      <tr>
+          <td><strong>Performance</strong></td>
+          <td>Generally faster as it doesn&rsquo;t create a copy</td>
+          <td>Slower due to the overhead of creating a snapshot</td>
+      </tr>
+      <tr>
+          <td><strong>Examples</strong></td>
+          <td><code>ArrayList</code>, <code>HashMap</code>, <code>HashSet</code></td>
+          <td><code>CopyOnWriteArrayList</code>, <code>ConcurrentHashMap</code></td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="conclusion">Conclusion</h2>
+<p>Choosing between fail-fast and fail-safe iterators depends on your specific needs.</p>
+<ul>
+<li>Use <strong>fail-fast</strong> iterators when you need to be immediately aware of concurrent modifications, which is typical in single-threaded environments or when you can control modifications.</li>
+<li>Opt for <strong>fail-safe</strong> iterators in multi-threaded environments where you need to ensure that iterations can proceed without interruption, even if the collection is being modified by other threads.</li>
+</ul>
+<p>By understanding these differences, you can write more reliable and predictable Java applications.</p>
 ]]></content>
         </item>
         

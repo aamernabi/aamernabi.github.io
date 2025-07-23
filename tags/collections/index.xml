@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Collections on Aamer Paul</title>
+    <link>https://aamernabi.github.io/tags/collections/</link>
+    <description>Recent content in Collections on Aamer Paul</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 26 Jul 2020 23:03:02 +0530</lastBuildDate>
+    <atom:link href="https://aamernabi.github.io/tags/collections/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Understanding Java&#39;s hashCode() and equals() Contract</title>
+      <link>https://aamernabi.github.io/posts/java-hashcode/</link>
+      <pubDate>Sun, 26 Jul 2020 23:03:02 +0530</pubDate>
+      <guid>https://aamernabi.github.io/posts/java-hashcode/</guid>
+      <description>&lt;p&gt;In Java, the &lt;code&gt;hashCode()&lt;/code&gt; method, inherited from the &lt;code&gt;Object&lt;/code&gt; class, plays a crucial role in the efficient functioning of hash-based collections like &lt;code&gt;HashMap&lt;/code&gt;, &lt;code&gt;HashSet&lt;/code&gt;, and &lt;code&gt;Hashtable&lt;/code&gt;. It generates an integer hash code value for an object, which is used to determine the &amp;ldquo;bucket&amp;rdquo; where the object should be stored.&lt;/p&gt;&#xA;&lt;h2 id=&#34;the-hashcode-and-equals-contract&#34;&gt;The &lt;code&gt;hashCode()&lt;/code&gt; and &lt;code&gt;equals()&lt;/code&gt; Contract&lt;/h2&gt;&#xA;&lt;p&gt;The most important concept to understand is the contract between &lt;code&gt;hashCode()&lt;/code&gt; and &lt;code&gt;equals()&lt;/code&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;If two objects are equal according to the &lt;code&gt;equals(Object)&lt;/code&gt; method, then calling the &lt;code&gt;hashCode()&lt;/code&gt; method on each of the two objects must produce the same integer result.&lt;/li&gt;&#xA;&lt;li&gt;It is &lt;em&gt;not&lt;/em&gt; required that if two objects are unequal according to the &lt;code&gt;equals(Object)&lt;/code&gt; method, then calling the &lt;code&gt;hashCode()&lt;/code&gt; method on each of the two objects must produce distinct integer results. However, producing distinct hash codes for unequal objects may improve the performance of hash tables.&lt;/li&gt;&#xA;&lt;/ol&gt;&lt;/blockquote&gt;&#xA;&lt;p&gt;In simple terms: &lt;strong&gt;equal objects must have equal hash codes.&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
