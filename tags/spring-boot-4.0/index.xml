@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Spring Boot 4.0 on Aamer Paul</title>
+    <link>https://aamernabi.github.io/tags/spring-boot-4.0/</link>
+    <description>Recent content in Spring Boot 4.0 on Aamer Paul</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 24 Jul 2025 10:24:00 +0530</lastBuildDate>
+    <atom:link href="https://aamernabi.github.io/tags/spring-boot-4.0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>What&#39;s new in Spring Boot 4.0? A Look Ahead</title>
+      <link>https://aamernabi.github.io/posts/spring-boot-4.0/</link>
+      <pubDate>Thu, 24 Jul 2025 10:24:00 +0530</pubDate>
+      <guid>https://aamernabi.github.io/posts/spring-boot-4.0/</guid>
+      <description>&lt;p&gt;The Spring ecosystem is constantly evolving to provide developers with the best tools for building modern, robust applications. With the upcoming release of Spring Framework 7.0, the community is eagerly anticipating the next major iteration of Spring Boot: version 4.0.&lt;/p&gt;&#xA;&lt;p&gt;Spring Boot 4.0 is a major release of the Spring Boot framework, introducing significant enhancements for developers.&lt;/p&gt;&#xA;&lt;p&gt;Key features and improvements in Spring Boot 4 includes:&lt;/p&gt;&#xA;&lt;h2 id=&#34;core-enhancements&#34;&gt;Core Enhancements&lt;/h2&gt;&#xA;&lt;p&gt;Spring Boot 4.0 is built upon &lt;strong&gt;Spring Framework 7.0&lt;/strong&gt; which is major upcoming release of Spring Framework (projected for General Availability in November 2025).&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
