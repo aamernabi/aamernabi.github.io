@@ -5,8 +5,1047 @@
         <description>Recent content in Posts on Aamer Paul</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Thu, 24 Jul 2025 10:24:00 +0530</lastBuildDate>
+        <lastBuildDate>Sat, 02 Aug 2025 08:53:20 +0530</lastBuildDate>
         <atom:link href="https://aamernabi.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Strategy design pattern</title>
+            <link>https://aamernabi.github.io/posts/strategy-design-pattern-with-example/</link>
+            <pubDate>Sat, 02 Aug 2025 08:53:20 +0530</pubDate>
+            
+            <guid>https://aamernabi.github.io/posts/strategy-design-pattern-with-example/</guid>
+            <description>&lt;p&gt;&lt;strong&gt;Strategy Pattern&lt;/strong&gt; is a behavioral design pattern that enables selecting an algorithm’s behavior at runtime.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s widely used and very flexible, perfect for cases where you want to avoid complex &lt;code&gt;if-else&lt;/code&gt; or &lt;code&gt;switch&lt;/code&gt; statements.&lt;/p&gt;
+&lt;h3 id=&#34;use-cases&#34;&gt;Use cases&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;You want to replace conditionals (&lt;code&gt;if-else&lt;/code&gt; or &lt;code&gt;switch&lt;/code&gt;) with &lt;strong&gt;polymorphism&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;You need to switch behavior at runtime or make it configurable. Example: User selecting payment option&lt;/li&gt;
+&lt;li&gt;You want to define multiple ways of doing something (e.g., sorting, compression, payment).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;core-concepts&#34;&gt;Core Concepts&lt;/h3&gt;
+&lt;p&gt;The pattern consists of three main components:&lt;/p&gt;</description>
+            <content type="html"><![CDATA[<p><strong>Strategy Pattern</strong> is a behavioral design pattern that enables selecting an algorithm’s behavior at runtime.</p>
+<p>It&rsquo;s widely used and very flexible, perfect for cases where you want to avoid complex <code>if-else</code> or <code>switch</code> statements.</p>
+<h3 id="use-cases">Use cases</h3>
+<ul>
+<li>You want to replace conditionals (<code>if-else</code> or <code>switch</code>) with <strong>polymorphism</strong>.</li>
+<li>You need to switch behavior at runtime or make it configurable. Example: User selecting payment option</li>
+<li>You want to define multiple ways of doing something (e.g., sorting, compression, payment).</li>
+</ul>
+<h3 id="core-concepts">Core Concepts</h3>
+<p>The pattern consists of three main components:</p>
+<ol>
+<li>
+<p><strong>Strategy</strong>: An interface or abstract class that defines a common method for all concrete strategies. The <strong>context</strong> uses this interface to call the algorithm.</p>
+</li>
+<li>
+<p><strong>Concrete Strategy</strong>: The classes that implement the <code>Strategy</code> interface. Each class provides a specific implementation of the algorithm.</p>
+</li>
+<li>
+<p><strong>Context</strong>: The class that holds a reference to a Strategy object. It uses the strategy&rsquo;s method to perform a certain action. The context is unaware of the concrete strategy being used, it only interacts with the Strategy interface.</p>
+</li>
+</ol>
+<h3 id="example">Example</h3>
+<p>Payment Strategy</p>
+<ol>
+<li>Strategy Interface</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">PaymentStrategy</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">pay</span>(<span style="color:#66d9ef">double</span> amount);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="2">
+<li>Concrete Strategies</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CreditCardPayment</span> <span style="color:#66d9ef">implements</span> PaymentStrategy {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">pay</span>(<span style="color:#66d9ef">double</span> amount) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Paid $&#34;</span> <span style="color:#f92672">+</span> amount <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; using Credit Card.&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PayPalPayment</span> <span style="color:#66d9ef">implements</span> PaymentStrategy {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">pay</span>(<span style="color:#66d9ef">double</span> amount) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Paid $&#34;</span> <span style="color:#f92672">+</span> amount <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; using PayPal.&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CryptoPayment</span> <span style="color:#66d9ef">implements</span> PaymentStrategy {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">pay</span>(<span style="color:#66d9ef">double</span> amount) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Paid $&#34;</span> <span style="color:#f92672">+</span> amount <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; using Cryptocurrency.&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="3">
+<li>Context Class</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PaymentContext</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> PaymentStrategy strategy;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">PaymentContext</span>() {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// optional - for example you want to provide default strategy </span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">PaymentContext</span>(PaymentStrategy strategy) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">strategy</span> <span style="color:#f92672">=</span> strategy
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Strategy can be changed at runtime</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setStrategy</span>(PaymentStrategy strategy) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">strategy</span> <span style="color:#f92672">=</span> strategy;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">payAmount</span>(<span style="color:#66d9ef">double</span> amount) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (strategy <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IllegalStateException(<span style="color:#e6db74">&#34;Payment strategy not set.&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        strategy.<span style="color:#a6e22e">pay</span>(amount);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="kotlin-implementation-functional-style-strategy">Kotlin implementation (functional style strategy)</h4>
+<p>In kotlin, you can implement Strategy patten using OOP approach and functional style approach. OOP way is similar to how we implemented in java.</p>
+<p>Function style strategy</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">typealias</span> PaymentStrategy = (Double) <span style="color:#f92672">-&gt;</span> Unit
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PaymentContext</span>(<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">var</span> strategy: PaymentStrategy) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">setStrategy</span>(strategy: PaymentStrategy) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.strategy = strategy
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">pay</span>(amount: Double) = strategy(amount)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">val</span> creditCardPayment: PaymentStrategy = { amount <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>        println(<span style="color:#e6db74">&#34;Paid </span><span style="color:#ae81ff">\$</span><span style="color:#e6db74">$amount</span><span style="color:#e6db74"> using Credit Card.&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">val</span> paypalPayment: PaymentStrategy = { amount <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>        println(<span style="color:#e6db74">&#34;Paid </span><span style="color:#ae81ff">\$</span><span style="color:#e6db74">$amount</span><span style="color:#e6db74"> using PayPal.&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">val</span> cryptoPayment: PaymentStrategy = { amount <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>        println(<span style="color:#e6db74">&#34;Paid </span><span style="color:#ae81ff">\$</span><span style="color:#e6db74">$amount</span><span style="color:#e6db74"> using Cryptocurrency.&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">val</span> context = PaymentContext(creditCardPayment)
+</span></span><span style="display:flex;"><span>    context.setStrategy(paypalPayment)
+</span></span><span style="display:flex;"><span>    context.pay(<span style="color:#ae81ff">100.0</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="real-world-use-cases">Real world use-cases</h3>
+<ul>
+<li>
+<p><code>Comparator&lt;T&gt;</code> for sorting in Java</p>
+</li>
+<li>
+<p><code>ThreadPoolExecutor</code> with RejectedExecutionHandler</p>
+</li>
+<li>
+<p>Logging frameworks (ConsoleLogger, FileLogger, RemoteLogger)</p>
+</li>
+</ul>
+<h3 id="drawbacks">Drawbacks</h3>
+<ul>
+<li>The pattern can lead to explosion of classes and objects. For every new algorithm, you need to create a new concrete strategy class.</li>
+<li>The client (or context) needs to be aware of the different available strategies to choose and instantiate the correct one.</li>
+<li>While the pattern simplifies the context by removing conditional logic, it can introduce more complexity overall.</li>
+<li>For very simple, straightforward algorithms, using a strategy interface and multiple classes can be overkill.</li>
+</ul>
+<h3 id="parking-lot-problem">Parking Lot Problem</h3>
+<p>In this article, let&rsquo;s take it a step further and solve the Parking Lot Problem using the Strategy Pattern.</p>
+<p>Problem:
+Let&rsquo;s say we want to design a <strong>Parking Lot system</strong>. It should assign an available parking spot to any vehicle that wants to park. The way spots are assigned can vary depending on different rules or criteria (eg: vehicle size, vip vehicle, ..). New requirements might also change how the system chooses a parking spot.</p>
+<p>As you can see, there can be multiple ways to assign a parking spot. For example, larger vehicles like trucks may require dedicated spaces that differ from those used by regular cars. Also, we may get new requirements or there may be changes in the requirements.
+Using a traditional approach with multiple <code>if-else</code> or <code>switch</code> statements can quickly become hard to manage and scale. A better solution for this scenario is the Strategy Pattern, which allows us to define different spot assignment strategies based on specific criteria, making the system more flexible and maintainable.</p>
+<p>Lets first define the strategy</p>
+<ol>
+<li>Define Strategy</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// implementations will be like Car, Truck, SUV, Bike ..</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Vehicle</span> {
+</span></span><span style="display:flex;"><span>  String <span style="color:#a6e22e">name</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">ParkingStrategy</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">findAvailableSlot</span>(Vehicle vehicle);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="2">
+<li>Concrete Strategies</li>
+</ol>
+<p>Lets now define the <code>Concrete Strategies</code>. Let say for now we have 3 strategies:</p>
+<ul>
+<li><code>ClosestSpotParkingStrategy</code>: Assign the nearest vacant spot to the entrance to reduce the time taken for vehicles to park.</li>
+<li><code>TypeBasedParkingStrategy</code>: Reserve specific spots for different types of vehicles (e.g., compact cars, oversized vehicles).</li>
+<li><code>PriorityParkingStrategy</code>: Implement priority parking for certain vehicles based on factors like membership status, VIP status, or special needs.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ClosestSpotParkingStrategy</span> <span style="color:#66d9ef">implements</span> ParkingStrategy {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">findAvailableSlot</span>(Vehicle vehicle) {
+</span></span><span style="display:flex;"><span>    System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Using closest spot parking strategy..&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// fake spot number</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> 17; <span style="color:#75715e">// implement closest spot parking logic</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TypeBasedParkingStrategy</span> <span style="color:#66d9ef">implements</span> ParkingStrategy {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">findAvailableSlot</span>(Vehicle vehicle) {
+</span></span><span style="display:flex;"><span>    System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Using type based parking strategy..&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// fake spot number</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> 101; <span style="color:#75715e">// implement type based spot parking logic</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PriorityParkingStrategy</span> <span style="color:#66d9ef">implements</span> ParkingStrategy {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">findAvailableSlot</span>(Vehicle vehicle) {
+</span></span><span style="display:flex;"><span>    System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Using priority parking strategy..&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// fake spot number</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> 1011; <span style="color:#75715e">// implement priority spot parking logic</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As you can see, we can easily create new strategies by implementing the <code>ParkingStategy</code> interface and implement the logic based on new requirements without modifying the existing code.</p>
+<ol start="3">
+<li>Define Context Class</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ParkingLot</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// default strategy</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">private</span> ParkingStrategy strategy <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ClosestSpotParkingStrategy();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">ParkingLot</span>() {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// or provide default strategy</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">ParkingLot</span>(ParkingStrategy strategy) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">strategy</span> <span style="color:#f92672">=</span> strategy;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setParkingStrategy</span>(ParkingStrategy strategy) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">strategy</span> <span style="color:#f92672">=</span> strategy;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">parkVehicle</span>(Vehicle vehicle) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> slot <span style="color:#f92672">=</span> strategy.<span style="color:#a6e22e">findAvailableSlot</span>(vehicle);
+</span></span><span style="display:flex;"><span>    System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Parking &#34;</span> <span style="color:#f92672">+</span> vehicle.<span style="color:#a6e22e">name</span>() <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; in slot -&gt; &#34;</span> <span style="color:#f92672">+</span> slot <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> slot;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="4">
+<li>Client code implementation</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Application</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">var</span> parkingLot <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ParkingLot();
+</span></span><span style="display:flex;"><span>    parkingLot.<span style="color:#a6e22e">setParkingStrategy</span>(<span style="color:#66d9ef">new</span> PriorityParkingStrategy());
+</span></span><span style="display:flex;"><span>    parkingLot.<span style="color:#a6e22e">parkVehicle</span>(<span style="color:#66d9ef">new</span> Car(<span style="color:#e6db74">&#34;Rolls-Royce&#34;</span>));
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>]]></content>
+        </item>
+        
+        <item>
+            <title>Builder Design Pattern</title>
+            <link>https://aamernabi.github.io/posts/builder-design-pattern/</link>
+            <pubDate>Mon, 28 Jul 2025 18:30:20 +0530</pubDate>
+            
+            <guid>https://aamernabi.github.io/posts/builder-design-pattern/</guid>
+            <description>&lt;p&gt;The &lt;strong&gt;Builder Design Pattern&lt;/strong&gt; is a creational design pattern that lets you construct complex objects step by step. Using Builder pattern you can use same construction process to can create different representations.&lt;/p&gt;
+&lt;h3 id=&#34;use-case&#34;&gt;Use case&lt;/h3&gt;
+&lt;p&gt;Use the Builder Pattern when:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;An object has many &lt;strong&gt;optional fields or configurations&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;You want to avoid constructor telescoping (i.e., too many overloaded constructors).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;You need to create &lt;strong&gt;immutable objects&lt;/strong&gt; step by step.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; String firstName;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; String lastName;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; age;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; String email;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; String phone;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt;(String firstName, String lastName) { ... }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt;(String firstName, String lastName, &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; age) { ... }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;User&lt;/span&gt;(String firstName, String lastName, &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; age, String email) { ... }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// ...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;In above example, you can see &lt;code&gt;User&lt;/code&gt; class is hard to maintain and read.&lt;/p&gt;</description>
+            <content type="html"><![CDATA[<p>The <strong>Builder Design Pattern</strong> is a creational design pattern that lets you construct complex objects step by step. Using Builder pattern you can use same construction process to can create different representations.</p>
+<h3 id="use-case">Use case</h3>
+<p>Use the Builder Pattern when:</p>
+<ul>
+<li>
+<p>An object has many <strong>optional fields or configurations</strong>.</p>
+</li>
+<li>
+<p>You want to avoid constructor telescoping (i.e., too many overloaded constructors).</p>
+</li>
+<li>
+<p>You need to create <strong>immutable objects</strong> step by step.</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">User</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String firstName;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String lastName;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> age;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String email;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String phone;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">User</span>(String firstName, String lastName) { ... }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">User</span>(String firstName, String lastName, <span style="color:#66d9ef">int</span> age) { ... }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">User</span>(String firstName, String lastName, <span style="color:#66d9ef">int</span> age, String email) { ... }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>In above example, you can see <code>User</code> class is hard to maintain and read.</p>
+<h3 id="core-concepts">Core Concepts</h3>
+<ol>
+<li><strong>Product</strong>: The complex object being built. It&rsquo;s typically a class with many fields.</li>
+<li><strong>Builder</strong>: An interface or abstract class that defines the steps to build the product.</li>
+<li><strong>ConcreteBuilder</strong>: A class that implements the Builder interface and provides specific implementation for building the product. It keeps track of the object being built and provides a method (<code>build</code>) to return the final product.</li>
+</ol>
+<p>Note: The Builder pattern can be implemented with or without a formal Builder interface or abstract class. The core concept is the separate builder object, not the strict use of an interface.</p>
+<h3 id="implementation">Implementation</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">User</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Required fields </span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> String firstName;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> String lastName;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Optional fields</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> Integer age;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> String email;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> String phone;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">User</span>(Builder builder) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">firstName</span> <span style="color:#f92672">=</span> builder.<span style="color:#a6e22e">firstName</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">lastName</span> <span style="color:#f92672">=</span> builder.<span style="color:#a6e22e">lastName</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">age</span> <span style="color:#f92672">=</span> builder.<span style="color:#a6e22e">age</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">email</span> <span style="color:#f92672">=</span> builder.<span style="color:#a6e22e">email</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">phone</span> <span style="color:#f92672">=</span> builder.<span style="color:#a6e22e">phone</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Builder Class</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Builder</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> String firstName;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> String lastName;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> Integer age;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> String email;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> String phone;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Builder</span>(String firstName, String lastName) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">firstName</span> <span style="color:#f92672">=</span> firstName;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">lastName</span> <span style="color:#f92672">=</span> lastName;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> Builder <span style="color:#a6e22e">age</span>(<span style="color:#66d9ef">int</span> age) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">age</span> <span style="color:#f92672">=</span> age;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> Builder <span style="color:#a6e22e">email</span>(String email) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">email</span> <span style="color:#f92672">=</span> email;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> Builder <span style="color:#a6e22e">phone</span>(String phone) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">phone</span> <span style="color:#f92672">=</span> phone;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> User <span style="color:#a6e22e">build</span>() {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> User(<span style="color:#66d9ef">this</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">toString</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;User{&#34;</span> <span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;firstName=&#39;&#34;</span> <span style="color:#f92672">+</span> firstName <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;\&#39;&#39;</span> <span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;, lastName=&#39;&#34;</span> <span style="color:#f92672">+</span> lastName <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;\&#39;&#39;</span> <span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;, age=&#34;</span> <span style="color:#f92672">+</span> age <span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;, email=&#39;&#34;</span> <span style="color:#f92672">+</span> email <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;\&#39;&#39;</span> <span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;, phone=&#39;&#34;</span> <span style="color:#f92672">+</span> phone <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;\&#39;&#39;</span> <span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#39;}&#39;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Client Code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Main</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        User user <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> User.<span style="color:#a6e22e">Builder</span>(<span style="color:#e6db74">&#34;John&#34;</span>, <span style="color:#e6db74">&#34;Doe&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">age</span>(30)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">email</span>(<span style="color:#e6db74">&#34;john@example.com&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">phone</span>(<span style="color:#e6db74">&#34;1234567890&#34;</span>)
+</span></span><span style="display:flex;"><span>                .<span style="color:#a6e22e">build</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(user);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="real-world-examples">Real world examples</h3>
+<ul>
+<li>StringBuilder (JDK)</li>
+<li>java.time.LocalDateTime.Builder</li>
+<li>AlertDialog.Builder in Android</li>
+<li>Libraries like Lombok, Project Lombok @Builder</li>
+</ul>
+<h3 id="drawbacks">Drawbacks</h3>
+<ul>
+<li>More boilerplate code</li>
+<li>Verbose</li>
+<li>Testing complexity</li>
+<li>Cannot enforce field dependencies easily</li>
+</ul>
+<h3 id="kotlin-implementation-using-dsl">Kotlin Implementation (using DSL)</h3>
+<p>You can simplify builder creation using Kotlin&rsquo;s function literals with <strong>receivers</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">data</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">User</span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">val</span> firstName: String,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">val</span> lastName: String,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> age: Int? = <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> email: String? = <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> phone: String? = <span style="color:#66d9ef">null</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UserBuilder</span>(<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">val</span> firstName: String, <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">val</span> lastName: String) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> age: Int? = <span style="color:#66d9ef">null</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> email: String? = <span style="color:#66d9ef">null</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> phone: String? = <span style="color:#66d9ef">null</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">build</span>() = User(firstName, lastName, age, email, phone)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">buildUser</span>(firstName: String, lastName: String, block: <span style="color:#a6e22e">UserBuilder</span>.() <span style="color:#f92672">-&gt;</span> Unit): User {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">val</span> builder = UserBuilder(firstName, lastName)
+</span></span><span style="display:flex;"><span>    builder.block()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> builder.build()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Client Code</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">val</span> user = buildUser(<span style="color:#e6db74">&#34;Jane&#34;</span>, <span style="color:#e6db74">&#34;Doe&#34;</span>) {
+</span></span><span style="display:flex;"><span>    age = <span style="color:#ae81ff">28</span>
+</span></span><span style="display:flex;"><span>    email = <span style="color:#e6db74">&#34;jane@example.com&#34;</span>
+</span></span><span style="display:flex;"><span>    phone = <span style="color:#e6db74">&#34;012356789&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>]]></content>
+        </item>
+        
+        <item>
+            <title>Factory and Abstract Factory Design Pattern</title>
+            <link>https://aamernabi.github.io/posts/factory-design-pattern/</link>
+            <pubDate>Sun, 27 Jul 2025 10:51:59 +0530</pubDate>
+            
+            <guid>https://aamernabi.github.io/posts/factory-design-pattern/</guid>
+            <description>&lt;h2 id=&#34;factory-design-pattern&#34;&gt;Factory Design Pattern&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Factory Pattern&lt;/strong&gt; is &lt;strong&gt;creational pattern&lt;/strong&gt; that delegate the instantiation of objects to a &lt;strong&gt;separate method or class&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The Factory design pattern provides an interface for creating objects in a superclass, but allows subclasses to alter the type of objects that&amp;rsquo;ll be created. This pattern helps to decouple the client code from the concrete classes it needs to instantiate.&lt;/p&gt;
+&lt;h3 id=&#34;core-components&#34;&gt;Core Components&lt;/h3&gt;
+&lt;p&gt;The Factory pattern has three main components:&lt;/p&gt;</description>
+            <content type="html"><![CDATA[<h2 id="factory-design-pattern">Factory Design Pattern</h2>
+<p><strong>Factory Pattern</strong> is <strong>creational pattern</strong> that delegate the instantiation of objects to a <strong>separate method or class</strong>.</p>
+<p>The Factory design pattern provides an interface for creating objects in a superclass, but allows subclasses to alter the type of objects that&rsquo;ll be created. This pattern helps to decouple the client code from the concrete classes it needs to instantiate.</p>
+<h3 id="core-components">Core Components</h3>
+<p>The Factory pattern has three main components:</p>
+<ol>
+<li>
+<p><strong>Product</strong>: This is the interface that all objects created by the factory must implement.</p>
+</li>
+<li>
+<p><strong>Concrete Products</strong>: These are the actual implementations of the Product interface. The factory will create these objects.</p>
+</li>
+<li>
+<p><strong>Creator (Factory)</strong> : This class declares the method that returns a Product object.</p>
+</li>
+</ol>
+<h3 id="use-cases">Use cases</h3>
+<ul>
+<li>When you need to create objects without exposing instantiation logic</li>
+<li>When your code needs to work with multiple related classes</li>
+<li>When object creation involves complex logic</li>
+</ul>
+<h3 id="example">Example</h3>
+<ol>
+<li>Create an Interface (Product)</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Shape</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">draw</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="2">
+<li>Concrete Implementations (Concrete Products)</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Circle</span> <span style="color:#66d9ef">implements</span> Shape {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">draw</span>() {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Drawing a Circle&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Rectangle</span> <span style="color:#66d9ef">implements</span> Shape {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">draw</span>() {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Drawing a Rectangle&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Square</span> <span style="color:#66d9ef">implements</span> Shape {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">draw</span>() {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Drawing a Square&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="3">
+<li>Factory Class (Creator)</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShapeFactory</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Factory method</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Shape <span style="color:#a6e22e">getShape</span>(String shapeType) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (shapeType <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">switch</span> (shapeType.<span style="color:#a6e22e">toLowerCase</span>()) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;circle&#34;</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Circle();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;rectangle&#34;</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Rectangle();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;square&#34;</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Square();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">default</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IllegalArgumentException(<span style="color:#e6db74">&#34;Unknown shape type: &#34;</span> <span style="color:#f92672">+</span> shapeType);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="4">
+<li>Client Code</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Main</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        ShapeFactory factory <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ShapeFactory();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        Shape shape1 <span style="color:#f92672">=</span> factory.<span style="color:#a6e22e">getShape</span>(<span style="color:#e6db74">&#34;circle&#34;</span>);
+</span></span><span style="display:flex;"><span>        shape1.<span style="color:#a6e22e">draw</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        Shape shape2 <span style="color:#f92672">=</span> factory.<span style="color:#a6e22e">getShape</span>(<span style="color:#e6db74">&#34;rectangle&#34;</span>);
+</span></span><span style="display:flex;"><span>        shape2.<span style="color:#a6e22e">draw</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        Shape shape3 <span style="color:#f92672">=</span> factory.<span style="color:#a6e22e">getShape</span>(<span style="color:#e6db74">&#34;square&#34;</span>);
+</span></span><span style="display:flex;"><span>        shape3.<span style="color:#a6e22e">draw</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="kotlin-implementation">Kotlin Implementation</h4>
+<p>Using sealed classes improves type safety and ensures all cases are handled at compile time.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ShapeType</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">object</span> <span style="color:#a6e22e">Circle</span> : ShapeType()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">object</span> <span style="color:#a6e22e">Square</span> : ShapeType()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">object</span> <span style="color:#a6e22e">Rectangle</span> : ShapeType()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Shape</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">draw</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Creator (Factory Method)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">companion</span> <span style="color:#66d9ef">object</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">create</span>(type: ShapeType): Shape = <span style="color:#66d9ef">when</span> (type) {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">ShapeType</span>.Circle <span style="color:#f92672">-&gt;</span> Circle()
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">ShapeType</span>.Square <span style="color:#f92672">-&gt;</span> Square()
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">ShapeType</span>.Rectangle <span style="color:#f92672">-&gt;</span> Rectangle()
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// concrete creators
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Circle</span> : Shape {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">draw</span>() = println(<span style="color:#e6db74">&#34;Drawing a Circle&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Square</span> : Shape {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">draw</span>() = println(<span style="color:#e6db74">&#34;Drawing a Square&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Rectangle</span> : Shape {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">draw</span>() = println(<span style="color:#e6db74">&#34;Drawing a Rectangle&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// client code
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">val</span> shape = <span style="color:#a6e22e">Shape</span>.create(<span style="color:#a6e22e">ShapeType</span>.Rectangle)
+</span></span><span style="display:flex;"><span>    shape.draw()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="drawbacks">Drawbacks</h3>
+<ul>
+<li>Code can become bloated with many conditionals</li>
+<li>Not ideal for few object types</li>
+</ul>
+<p>We can use Abstract Factory Pattern to fix code bloat.</p>
+<h2 id="abstract-factory-design-pattern">Abstract Factory Design Pattern</h2>
+<p>The Abstract Factory Pattern is an extension of the Factory Method Pattern. Abstract Factory provides an interface for creating <strong>families of related</strong> or <strong>dependent objects</strong> without specifying their concrete classes.</p>
+<h3 id="core-components-1">Core Components</h3>
+<p>The Abstract Factory pattern consists of four main roles:</p>
+<ol>
+<li>
+<p><strong>Abstract Product</strong>: These are the interfaces for each type of product in the family (e.g., <code>Button</code>, <code>Checkbox</code>).</p>
+</li>
+<li>
+<p><strong>Concrete Product</strong>: These are the actual implementations of the Abstract Products, grouped by their specific variant (e.g., <code>AndroidButton</code>, <code>iOSButton</code>).</p>
+</li>
+<li>
+<p><strong>Abstract Factory</strong>: This is an interface that declares the creation methods for each distinct product in the product family.</p>
+</li>
+<li>
+<p><strong>Concrete Factory</strong>: These classes implement the Abstract Factory interface, with each one corresponding to a specific variant or family of products. They are responsible for creating the concrete products.</p>
+</li>
+</ol>
+<h3 id="example-1">Example</h3>
+<ol>
+<li>Product Interfaces</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Button</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">click</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Checkbox</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">check</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="2">
+<li>Concrete Products</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AndroidButton</span> <span style="color:#66d9ef">implements</span> Button {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">click</span>() {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Android Button Clicked&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AndroidCheckbox</span> <span style="color:#66d9ef">implements</span> Checkbox {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">check</span>() {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Android Checkbox Checked&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">IOSButton</span> <span style="color:#66d9ef">implements</span> Button {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">click</span>() {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;iOS Button Clicked&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">IOSCheckbox</span> <span style="color:#66d9ef">implements</span> Checkbox {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">check</span>() {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;iOS Checkbox Checked&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="3">
+<li>Abstract Factory Interface</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">UIFactory</span> {
+</span></span><span style="display:flex;"><span>    Button <span style="color:#a6e22e">createButton</span>();
+</span></span><span style="display:flex;"><span>    Checkbox <span style="color:#a6e22e">createCheckbox</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="4">
+<li>Concrete Factories</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AndroidUiFactory</span> <span style="color:#66d9ef">implements</span> UIFactory {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Button <span style="color:#a6e22e">createButton</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> AndroidButton();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Checkbox <span style="color:#a6e22e">createCheckbox</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> AndroidCheckbox();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">IOSUiFactory</span> <span style="color:#66d9ef">implements</span> UIFactory {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Button <span style="color:#a6e22e">createButton</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> IOSButton();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Checkbox <span style="color:#a6e22e">createCheckbox</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> IOSCheckbox();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="5">
+<li>Client Code</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Application</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> Button button;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> Checkbox checkbox;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">Application</span>(UIFactory factory) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">button</span> <span style="color:#f92672">=</span> factory.<span style="color:#a6e22e">createButton</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">checkbox</span> <span style="color:#f92672">=</span> factory.<span style="color:#a6e22e">createCheckbox</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">render</span>() {
+</span></span><span style="display:flex;"><span>        button.<span style="color:#a6e22e">click</span>();
+</span></span><span style="display:flex;"><span>        checkbox.<span style="color:#a6e22e">check</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        UIFactory factory;
+</span></span><span style="display:flex;"><span>        String osName <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;iOS&#34;</span>; <span style="color:#75715e">// This could be determined at runtime, like Platform.getName();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (osName.<span style="color:#a6e22e">toLowerCase</span>().<span style="color:#a6e22e">contains</span>(<span style="color:#e6db74">&#34;iOS&#34;</span>, <span style="color:#66d9ef">true</span>)) {
+</span></span><span style="display:flex;"><span>            factory <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> IOSUiFactory();
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>            factory <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> AndroidUiFactory();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        Application app <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Application(factory);
+</span></span><span style="display:flex;"><span>        app.<span style="color:#a6e22e">render</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="kotlin-implementation-1">Kotlin Implementation</h4>
+<p>Instead of creating new factory instances, we can use use <code>object</code> for singleton-like factories.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#75715e">// Product Interfaces
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// We use a sealed interface to restrict the possible implementations of Button and Checkbox
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// This allows for exhaustive &#39;when&#39; expressions in consuming code.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Button</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">click</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">Checkbox</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">check</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Concrete Products
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AndroidButton</span> : Button {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">click</span>() {
+</span></span><span style="display:flex;"><span>        println(<span style="color:#e6db74">&#34;Android Button Clicked&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AndroidCheckbox</span> : Checkbox {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">check</span>() {
+</span></span><span style="display:flex;"><span>        println(<span style="color:#e6db74">&#34;Android Checkbox Checked&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">IOSButton</span> : Button {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">click</span>() {
+</span></span><span style="display:flex;"><span>        println(<span style="color:#e6db74">&#34;iOS Button Clicked&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">IOSCheckbox</span> : Checkbox {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">check</span>() {
+</span></span><span style="display:flex;"><span>        println(<span style="color:#e6db74">&#34;iOS Checkbox Checked&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Abstract Factory Interface
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">sealed</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">UIFactory</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">createButton</span>(): Button
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">createCheckbox</span>(): Checkbox
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Concrete Factories
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// We use &#39;object&#39; declarations for stateless, singleton factories.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// This is more concise and thread-safe than a class with a companion object.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">object</span> <span style="color:#a6e22e">AndroidUiFactory</span> : UIFactory {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">createButton</span>(): Button = AndroidButton()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">createCheckbox</span>(): Checkbox = AndroidCheckbox()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">object</span> <span style="color:#a6e22e">IOSUiFactory</span> : UIFactory {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">createButton</span>(): Button = IOSButton()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">createCheckbox</span>(): Checkbox = IOSCheckbox()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Client Code
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Remains similar to the Java version.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Application</span>(<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">val</span> factory: UIFactory) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">val</span> button: Button = factory.createButton()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">val</span> checkbox: Checkbox = factory.createCheckbox()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">render</span>() {
+</span></span><span style="display:flex;"><span>        button.click()
+</span></span><span style="display:flex;"><span>        checkbox.check()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">val</span> osName = <span style="color:#e6db74">&#34;iOS&#34;</span> <span style="color:#75715e">// This would be determined dynamically in a real app
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">val</span> factory: UIFactory = <span style="color:#66d9ef">when</span> (osName.lowercase()) {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;ios&#34;</span> <span style="color:#f92672">-&gt;</span> IOSUiFactory
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span> <span style="color:#f92672">-&gt;</span> AndroidUiFactory
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">val</span> app = Application(factory)
+</span></span><span style="display:flex;"><span>    app.render()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="abstract-factory-vs-factory-method">Abstract Factory vs Factory Method</h3>
+<table>
+  <thead>
+      <tr>
+          <th><strong>Feature</strong></th>
+          <th><strong>Abstract Factory</strong></th>
+          <th><strong>Factory Method</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Purpose</strong></td>
+          <td>Creates entire families of related objects.</td>
+          <td>Creates a single object.</td>
+      </tr>
+      <tr>
+          <td><strong>Structure</strong></td>
+          <td>A &ldquo;factory of factories&rdquo; where a factory class creates multiple types of products.</td>
+          <td>A single factory method in a superclass that subclasses override to create objects.</td>
+      </tr>
+      <tr>
+          <td><strong>Complexity</strong></td>
+          <td>More complex, as it involves multiple interfaces and classes.</td>
+          <td>Simpler, often implemented with just a few classes.</td>
+      </tr>
+  </tbody>
+</table>
+]]></content>
+        </item>
+        
+        <item>
+            <title>Singleton Design Pattern</title>
+            <link>https://aamernabi.github.io/posts/singleton-design-pattern/</link>
+            <pubDate>Sat, 26 Jul 2025 11:02:04 +0530</pubDate>
+            
+            <guid>https://aamernabi.github.io/posts/singleton-design-pattern/</guid>
+            <description>&lt;p&gt;&lt;strong&gt;Singleton design pattern&lt;/strong&gt; is a creational design pattern that restricts instantiation of a class ensuring class has only &lt;strong&gt;one instance&lt;/strong&gt; and provide a &lt;strong&gt;global point&lt;/strong&gt; of access to it.&lt;/p&gt;
+&lt;h3 id=&#34;common-implementations&#34;&gt;Common Implementations&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Lazy Initialization&lt;/strong&gt;: ensures instance is created only when it is first requested.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Eager Initialization&lt;/strong&gt;: instance is created when the class is loaded.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Thread-Safe Implementations&lt;/strong&gt;: ensures the singleton works correctly in multi-threaded environments, such as using &lt;code&gt;synchronized&lt;/code&gt; methods or double-checked locking.
+(though double-checked locking has nuances and is sometimes considered an anti-pattern in modern Java)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;use-cases&#34;&gt;Use Cases&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Logging&lt;/li&gt;
+&lt;li&gt;Configuration settings&lt;/li&gt;
+&lt;li&gt;Thread pools&lt;/li&gt;
+&lt;li&gt;Caches&lt;/li&gt;
+&lt;li&gt;Device drivers&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;h4 id=&#34;eager-initialization&#34;&gt;Eager initialization&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Singleton&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;final&lt;/span&gt; Singleton instance &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Singleton();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;EagerInitializedSingleton&lt;/span&gt;(){}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; Singleton &lt;span style=&#34;color:#a6e22e&#34;&gt;getInstance&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; instance;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;Useful if your singleton class is not using a lot of resources.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;using-synchronized-method-lazy-initialization&#34;&gt;Using &lt;code&gt;synchronized&lt;/code&gt; method (Lazy initialization)&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Singleton&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// Volatile ensures visibility and prevents reordering&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;volatile&lt;/span&gt; Singleton instance;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Singleton&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// Thread-safe with method-level synchronization&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;synchronized&lt;/span&gt; Singleton &lt;span style=&#34;color:#a6e22e&#34;&gt;getInstance&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (instance &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            instance &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Singleton();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; instance;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;example&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        System.&lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;println&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hello from Singleton!, (using synchronized method)&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;Lazily initialization the instance.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;synchronized&lt;/code&gt; ensures that only one thread can enter the method at a time.&lt;/li&gt;
+&lt;li&gt;It ensures lazy initialization — Singleton instance is created only when needed.&lt;/li&gt;
+&lt;li&gt;Performance overhead: Every call to &lt;code&gt;getInstance()&lt;/code&gt; acquires a lock, even after the instance has been initialized. This is unnecessary and can be expensive under heavy load.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;double-checked-locking-lazy-initialization&#34;&gt;Double-Checked Locking (Lazy initialization)&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Singleton&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;volatile&lt;/span&gt; Singleton instance;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Singleton&lt;/span&gt;() {}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; Singleton &lt;span style=&#34;color:#a6e22e&#34;&gt;getInstance&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (instance &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;synchronized&lt;/span&gt; (Singleton.&lt;span style=&#34;color:#a6e22e&#34;&gt;class&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (instance &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;) { &lt;span style=&#34;color:#75715e&#34;&gt;// &amp;lt;- Double-check&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    instance &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Singleton();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; instance;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;example&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        System.&lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;println&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hello from Singleton!, (double-check)&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;Lazily initialization the instance.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;double check&lt;/strong&gt; aims to minimize the overhead of synchronization.&lt;/li&gt;
+&lt;li&gt;Complex&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;bill-pugh-inner-class---recommended-approach&#34;&gt;Bill Pugh (Inner Class) - Recommended Approach&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Singleton&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Singleton&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;// Prevent reflection attack&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (SingletonHelper.&lt;span style=&#34;color:#a6e22e&#34;&gt;INSTANCE&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;throw&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; RuntimeException(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Use getInstance() method to get the single instance of this class&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;SingletonHelper&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;final&lt;/span&gt; Singleton INSTANCE &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Singleton();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; Singleton &lt;span style=&#34;color:#a6e22e&#34;&gt;getInstance&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; SingletonHelper.&lt;span style=&#34;color:#a6e22e&#34;&gt;INSTANCE&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;example&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        System.&lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;println&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hello from Singleton!, (Bill Pugh)&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Static inner helper class&lt;/strong&gt; is loaded only when &lt;code&gt;getInstance()&lt;/code&gt; is called.&lt;/li&gt;
+&lt;li&gt;Class loading is thread-safe.&lt;/li&gt;
+&lt;li&gt;No need for synchronized, and &lt;strong&gt;lazy initialization&lt;/strong&gt; is achieved.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;drawbacks&#34;&gt;Drawbacks&lt;/h3&gt;
+&lt;p&gt;Despite its utility, the Singleton pattern is sometimes criticized as an anti-pattern because it can:&lt;/p&gt;</description>
+            <content type="html"><![CDATA[<p><strong>Singleton design pattern</strong> is a creational design pattern that restricts instantiation of a class ensuring class has only <strong>one instance</strong> and provide a <strong>global point</strong> of access to it.</p>
+<h3 id="common-implementations">Common Implementations</h3>
+<ul>
+<li><strong>Lazy Initialization</strong>: ensures instance is created only when it is first requested.</li>
+<li><strong>Eager Initialization</strong>: instance is created when the class is loaded.</li>
+<li><strong>Thread-Safe Implementations</strong>: ensures the singleton works correctly in multi-threaded environments, such as using <code>synchronized</code> methods or double-checked locking.
+(though double-checked locking has nuances and is sometimes considered an anti-pattern in modern Java)</li>
+</ul>
+<h3 id="use-cases">Use Cases</h3>
+<ul>
+<li>Logging</li>
+<li>Configuration settings</li>
+<li>Thread pools</li>
+<li>Caches</li>
+<li>Device drivers</li>
+</ul>
+<h3 id="examples">Examples</h3>
+<h4 id="eager-initialization">Eager initialization</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Singleton</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Singleton instance <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Singleton();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">EagerInitializedSingleton</span>(){}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Singleton <span style="color:#a6e22e">getInstance</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> instance;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>Useful if your singleton class is not using a lot of resources.</li>
+</ul>
+<h4 id="using-synchronized-method-lazy-initialization">Using <code>synchronized</code> method (Lazy initialization)</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Singleton</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Volatile ensures visibility and prevents reordering</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">volatile</span> Singleton instance;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">Singleton</span>() {
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Thread-safe with method-level synchronization</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">synchronized</span> Singleton <span style="color:#a6e22e">getInstance</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (instance <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>            instance <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Singleton();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> instance;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">example</span>() {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Hello from Singleton!, (using synchronized method)&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>Lazily initialization the instance.</li>
+<li><code>synchronized</code> ensures that only one thread can enter the method at a time.</li>
+<li>It ensures lazy initialization — Singleton instance is created only when needed.</li>
+<li>Performance overhead: Every call to <code>getInstance()</code> acquires a lock, even after the instance has been initialized. This is unnecessary and can be expensive under heavy load.</li>
+</ul>
+<h4 id="double-checked-locking-lazy-initialization">Double-Checked Locking (Lazy initialization)</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Singleton</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">volatile</span> Singleton instance;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">Singleton</span>() {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Singleton <span style="color:#a6e22e">getInstance</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (instance <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">synchronized</span> (Singleton.<span style="color:#a6e22e">class</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (instance <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span>) { <span style="color:#75715e">// &lt;- Double-check</span>
+</span></span><span style="display:flex;"><span>                    instance <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Singleton();
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> instance;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">example</span>() {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Hello from Singleton!, (double-check)&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>Lazily initialization the instance.</li>
+<li><strong>double check</strong> aims to minimize the overhead of synchronization.</li>
+<li>Complex</li>
+</ul>
+<h4 id="bill-pugh-inner-class---recommended-approach">Bill Pugh (Inner Class) - Recommended Approach</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Singleton</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">Singleton</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Prevent reflection attack</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (SingletonHelper.<span style="color:#a6e22e">INSTANCE</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> RuntimeException(<span style="color:#e6db74">&#34;Use getInstance() method to get the single instance of this class&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SingletonHelper</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Singleton INSTANCE <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Singleton();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Singleton <span style="color:#a6e22e">getInstance</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> SingletonHelper.<span style="color:#a6e22e">INSTANCE</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">example</span>() {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;Hello from Singleton!, (Bill Pugh)&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li><strong>Static inner helper class</strong> is loaded only when <code>getInstance()</code> is called.</li>
+<li>Class loading is thread-safe.</li>
+<li>No need for synchronized, and <strong>lazy initialization</strong> is achieved.</li>
+</ul>
+<h3 id="drawbacks">Drawbacks</h3>
+<p>Despite its utility, the Singleton pattern is sometimes criticized as an anti-pattern because it can:</p>
+<ul>
+<li><strong>Creates global state</strong>: Leading to tight coupling and potential side effects.</li>
+<li><strong>Makes Testability difficult</strong>: Making unit testing challenging due to hidden dependencies.</li>
+<li><strong>Violate the Single Responsibility Principle</strong>: When the singleton takes on responsibilities beyond managing its own instance.</li>
+</ul>
+]]></content>
+        </item>
         
         <item>
             <title>What&#39;s new in Spring Boot 4.0? A Look Ahead</title>
@@ -26,9 +1065,9 @@
 <p>Spring Boot 4.0 is built upon <strong>Spring Framework 7.0</strong> which is major upcoming release of Spring Framework (projected for General Availability in November 2025).</p>
 <ol>
 <li>
-<p><strong>Java 21+ Baseline</strong></p>
+<p><strong>Java 17+ Baseline</strong></p>
 <ul>
-<li>Spring Boot 4 will <strong>require Java 21 or higher</strong> while at the same time recommending JDK 25 as the latest LTS release.</li>
+<li>Spring Boot 4 will <strong>require Java 17 or higher</strong> while at the same time recommending JDK 25 as the latest LTS release.</li>
 <li>This baseline enables Spring Boot 4 to leverage the modern features of Java like pattern matching, sealed classes/interfaces, records, virtual threads and includes JVM level performance improvements.</li>
 </ul>
 </li>
@@ -150,7 +1189,7 @@
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">@ImportHttpServices</span>(TodoClient<span style="color:#f92672">::</span><span style="color:#66d9ef">class</span>)
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ClientsConfiguration</span>
 </span></span></code></pre></div><h2 id="conclusion">Conclusion</h2>
-<p>Spring Boot 4 aims to be a transformative release, setting a new standard for modern Java application development.</p>
+<p>Spring Boot 4 aims to be a transformative release, introducing numerous enhancements to the Spring Framework that significantly simplify application development.</p>
 ]]></content>
         </item>
         
