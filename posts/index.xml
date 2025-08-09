@@ -9,7 +9,7 @@
         <atom:link href="https://aamernabi.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
         
         <item>
-            <title>Strategy design pattern</title>
+            <title>Strategy Pattern in Action</title>
             <link>https://aamernabi.github.io/posts/strategy-design-pattern-with-example/</link>
             <pubDate>Sat, 02 Aug 2025 08:53:20 +0530</pubDate>
             
@@ -170,7 +170,7 @@ Using a traditional approach with multiple <code>if-else</code> or <code>switch<
 </span></span></code></pre></div><ol start="2">
 <li>Concrete Strategies</li>
 </ol>
-<p>Lets now define the <code>Concrete Strategies</code>. Let say for now we have 3 strategies:</p>
+<p>Lets now define the <code>Concrete Strategies</code>. Let say we have 3 strategies:</p>
 <ul>
 <li><code>ClosestSpotParkingStrategy</code>: Assign the nearest vacant spot to the entrance to reduce the time taken for vehicles to park.</li>
 <li><code>TypeBasedParkingStrategy</code>: Reserve specific spots for different types of vehicles (e.g., compact cars, oversized vehicles).</li>
@@ -241,6 +241,12 @@ Using a traditional approach with multiple <code>if-else</code> or <code>switch<
 </span></span><span style="display:flex;"><span>    parkingLot.<span style="color:#a6e22e">parkVehicle</span>(<span style="color:#66d9ef">new</span> Car(<span style="color:#e6db74">&#34;Rolls-Royce&#34;</span>));
 </span></span><span style="display:flex;"><span>  }
 </span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">###</span> Conclusion
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The Strategy Pattern is a powerful behavioral design pattern that promotes flexibility and maintainability in your code. By encapsulating algorithms into separate <span style="color:#a6e22e">classes</span> (strategies), it allows you to <span style="color:#66d9ef">switch</span> between them at runtime, eliminating the need <span style="color:#66d9ef">for</span> complex conditional statements.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>While Strategy Pattern introduces more classes, the benefits of decoupling the algorithm from the context often outweigh <span style="color:#66d9ef">this</span> drawback, especially in complex applications where behavior needs to change dynamically.
 </span></span></code></pre></div>]]></content>
         </item>
         
