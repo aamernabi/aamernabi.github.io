@@ -5,8 +5,430 @@
         <description>Recent content in Posts on Aamer Paul</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sat, 02 Aug 2025 08:53:20 +0530</lastBuildDate>
+        <lastBuildDate>Sat, 04 Oct 2025 21:53:45 +0530</lastBuildDate>
         <atom:link href="https://aamernabi.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Building an AI Email Assistant with Prompt Chaining and LangGraph</title>
+            <link>https://aamernabi.github.io/posts/prompt-chaining-using-langgraph/</link>
+            <pubDate>Sat, 04 Oct 2025 21:53:45 +0530</pubDate>
+            
+            <guid>https://aamernabi.github.io/posts/prompt-chaining-using-langgraph/</guid>
+            <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Generative AI has unlocked solutions to problems previously considered impractical or even impossible to automate. Take email management, for example. The daily influx of client inquiries, meeting requests, and project updates, it can consume your entire workday. While simple AI solutions promise relief but they often fall short, generating generic and context-blind replies.&lt;/p&gt;
+&lt;p&gt;In this article, we will move beyond  basic &amp;ldquo;one-shot&amp;rdquo; LLM prompts to build an intelligent email responder using &lt;strong&gt;Prompt Chaining&lt;/strong&gt;, &lt;strong&gt;Context Engineering&lt;/strong&gt;, and &lt;strong&gt;LangGraph&lt;/strong&gt; for robust orchestration. We will build a sophisticated multi-step agent that:&lt;/p&gt;</description>
+            <content type="html"><![CDATA[<h2 id="introduction">Introduction</h2>
+<p>Generative AI has unlocked solutions to problems previously considered impractical or even impossible to automate. Take email management, for example. The daily influx of client inquiries, meeting requests, and project updates, it can consume your entire workday. While simple AI solutions promise relief but they often fall short, generating generic and context-blind replies.</p>
+<p>In this article, we will move beyond  basic &ldquo;one-shot&rdquo; LLM prompts to build an intelligent email responder using <strong>Prompt Chaining</strong>, <strong>Context Engineering</strong>, and <strong>LangGraph</strong> for robust orchestration. We will build a sophisticated multi-step agent that:</p>
+<ol>
+<li>Extracts <strong>intent</strong> and <strong>key information</strong> from an incoming email</li>
+<li>Generates a <strong>structured outline</strong> for the response</li>
+<li>Drafts the <strong>complete email body</strong></li>
+<li>Rewrites the draft to match your <strong>desired tone</strong> (formal, friendly, etc.)</li>
+</ol>
+<p>By the end, you will have a clear understanding of how to decompose complex AI tasks into reliable workflows.</p>
+<p>But before we dive into implementation, we need to understand what Prompt Chaining, Context Engineering, and LangGraph are.</p>
+<h2 id="prompt-chaining">Prompt Chaining</h2>
+<p>What is Prompt Chaining?</p>
+<p><strong>Prompt chaining</strong> involves breaking down a complex task into a <strong>sequence of smaller, more manageable steps</strong>, with each
+step handled by a separate LLM prompt. The output from one prompt then serves as the input for the subsequent prompt,
+allowing the LLM to build a final solution incrementally. For example, one prompt could extract key entities from
+a document, and a second prompt could then use these entities to generate a summary.</p>
+<p><img src="/the_prompt_chaining_workflow.webp" alt="The prompt chaining workflow">
+Prompt chaining workflow. (Image source: <a href="https://www.anthropic.com/engineering/building-effective-agents">Building effective agents - Anthropic</a>)</p>
+<p>Prompt Chaining offers several advantages:</p>
+<ul>
+<li>
+<p><strong>Improved Accuracy:</strong> The main advantage of the chaining prompts is that it allows iterative refinements, improving
+accurancy of the final output. However the downside of this workflow is latency. It trade offs latency for higher accuracy.</p>
+</li>
+<li>
+<p><strong>Scalability:</strong> Chaining prompts allow generation of long or detailed content by breaking down into smaller, and manageable parts.</p>
+</li>
+</ul>
+<p><strong>Why Prompt Chaining Matters</strong></p>
+<p>This approach ensures each step has a focused responsibility, making the system more reliable and debuggable than a single monolithic prompt.</p>
+<p>Examples where prompt chaining can be useful:</p>
+<ul>
+<li><strong>Content Creation:</strong> Generating detailed articles, stories, or scripts by chaining related prompts.</li>
+<li><strong>Language Translation:</strong> Translating text across multiple languages using a chain of prompts to ensure accuracy and fluency.</li>
+</ul>
+<h2 id="context-engineering">Context Engineering</h2>
+<p>LLMs are stateless, meaning they don&rsquo;t retain memory of past interactions between calls. To get best results, we must provide an optimized <strong>context</strong> during each interaction.</p>
+<p>Context refers to everything sent to the model in the prompt and can include:</p>
+<ul>
+<li>Instructions (what the model is supposed to do)</li>
+<li>User input or questions</li>
+<li>External data (RAG)</li>
+<li>State or history (e.g., tool calls, results from previous tool calls or prior messages in a conversation)</li>
+<li>Expected output structure (e.g., response format, schema, or constraints)</li>
+</ul>
+<p><strong>Context engineering</strong> is the process of curating, structuring, and managing the input (context window) provided to a language model in order to maximize its performance on a given task.</p>
+<p><img src="/context-engineering-for-agents.png" alt="Context Engineering"></p>
+<p>Image source: <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents</a></p>
+<h2 id="langgraph">LangGraph</h2>
+<p>In this article, we&rsquo;ll use LangGraph to build an intelligent email responder.</p>
+<p>But what exactly is LangGraph?</p>
+<p><strong>LangGraph</strong> is an open-source AI agent framework, for building, deploying, and managing complex AI Agentic systems.
+It&rsquo;s a low-level framework for  building <strong>stateful</strong>, <strong>long-running</strong>, <strong>multi-actor</strong> agents and workflows.</p>
+<p>Before we begin the implementation, let&rsquo;s first understand the core concepts behind LangGraph.</p>
+<h3 id="core-concepts-of-langgraph">Core Concepts of LangGraph</h3>
+<p>LangGraph is build on the concept of <strong>graph</strong>. In LangGraph, you build a graph, instead of linear chains (LangChain).
+This makes LangGraph better for complex workflows eg: loops, branching, retries, multi-agent coordination</p>
+<p>Following are the core concepts in LangGraph:</p>
+<ol>
+<li>
+<p><strong>State</strong>:</p>
+<ul>
+<li>Unlike LangChain&rsquo;s memory, LangGraph uses a <strong>state object</strong> that is passed and updated as nodes run.</li>
+<li>A state is a dictionary (<code>TypedDict</code>) of all variables your workflow needs.</li>
+<li>Example:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">State</span>(TypedDict):
+</span></span><span style="display:flex;"><span>  question: str
+</span></span><span style="display:flex;"><span>  classification: str <span style="color:#f92672">|</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>  answer: str <span style="color:#f92672">|</span> <span style="color:#66d9ef">None</span>
+</span></span></code></pre></div></li>
+</ul>
+</li>
+<li>
+<p><strong>Nodes</strong>:</p>
+<ul>
+<li>A node is a function that takes in state and returns updates</li>
+<li>Nodes can call LLMs, APIs, or some logic</li>
+<li>Example:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">classify_node</span>(state):
+</span></span><span style="display:flex;"><span>    q <span style="color:#f92672">=</span> state[<span style="color:#e6db74">&#34;question&#34;</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;hello&#34;</span> <span style="color:#f92672">in</span> q<span style="color:#f92672">.</span>lower():
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;classification&#34;</span>: <span style="color:#e6db74">&#34;greeting&#34;</span>}
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;classification&#34;</span>: <span style="color:#e6db74">&#34;question&#34;</span>}
+</span></span></code></pre></div></li>
+</ul>
+</li>
+<li>
+<p><strong>Edges</strong>:</p>
+<ul>
+<li>Edges connect nodes</li>
+<li>They can be <strong>fixed</strong> (always go A → B) or <strong>conditional</strong> (branch depending on state)</li>
+<li>LangGraph supports Control Flow:
+<ul>
+<li><em>Branching</em>: if condition X, go to Node &lsquo;A&rsquo;; else, go to Node &lsquo;B&rsquo;</li>
+<li><em>Loops</em>: repeat until condition met (retry, re-ask user, refine)</li>
+<li><em>Parallel</em>: run multiple nodes on a list and merge (map-reduce)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Durable execution &amp; Checkpointing</strong>:</p>
+<ul>
+<li>LangGraph can pause and resume workflows</li>
+<li>Useful for long-running agents or workflows with <a href="https://docs.langchain.com/oss/python/langgraph/add-human-in-the-loop">human approval</a></li>
+</ul>
+</li>
+</ol>
+<h3 id="setting-up-langgraph">Setting Up LangGraph</h3>
+<p>This section will guide you through the process of installing and configuring LangGraph in your development environment.</p>
+<ul>
+<li>
+<p>First ensure that <code>Python 3.12</code> or later is installed on your machine</p>
+</li>
+<li>
+<p>Create a Virtual Environment</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python -m venv .
+</span></span><span style="display:flex;"><span>source langgraph_env/bin/activate 
+</span></span></code></pre></div></li>
+<li>
+<p>Install LangGraph dependencies</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install langgraph python-dotenv
+</span></span><span style="display:flex;"><span>pip install langchain-openai   <span style="color:#75715e"># integration package</span>
+</span></span></code></pre></div></li>
+<li>
+<p>Verify Installation</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> langgraph
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(langgraph<span style="color:#f92672">.</span>__version__)
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="implementation-building-email-assistant-step-by-step">Implementation: Building Email Assistant Step by Step</h2>
+<p>Now that we understand the core concepts, let&rsquo;s start building AI Email Assistant using LangGraph. We&rsquo;ll model the email response process as a structured pipeline where each step builds upon the previous one.</p>
+<h3 id="defining-processing-pipeline">Defining Processing Pipeline</h3>
+<p>Our AI assistant will transform incoming emails into thoughtful responses through four distinct stages:</p>
+<ul>
+<li>Input: Raw email text</li>
+<li>Step 1: Extract key information and intent</li>
+<li>Step 2: Generate a structured response outline</li>
+<li>Step 3: Draft the complete email body</li>
+<li>Step 4: Apply tone transformation (professional, friendly, casual, etc.)</li>
+<li>Output: Polished, context-aware email response</li>
+</ul>
+<p>The chain will look like following</p>
+<p><strong>Chain:</strong></p>
+<ol>
+<li>Prompt 1 → &ldquo;Extract intent and key info from incoming email&rdquo;</li>
+<li>Prompt 2 → &ldquo;Generate a response outline&rdquo;</li>
+<li>Prompt 3 → &ldquo;Draft complete email body&rdquo;</li>
+<li>Prompt 4 (Optional) → &ldquo;Apply tone transformation (professional, friendly, casual, etc.)&rdquo;</li>
+</ol>
+<p><img src="/langgraph-graph-graph_api_example.png" alt="Example"></p>
+<p><strong>Usercase:</strong> Automate customer service or inbox zero workflows.</p>
+<h3 id="implementation">Implementation</h3>
+<ol>
+<li>
+<p>Define tools and model</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>load_dotenv()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@tool</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">last_unread_email</span>() <span style="color:#f92672">-&gt;</span> str:
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># your logic to retrieve last unread email</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> email_text
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>tools <span style="color:#f92672">=</span> [last_unread_email]
+</span></span><span style="display:flex;"><span>tools_by_name <span style="color:#f92672">=</span> {tool<span style="color:#f92672">.</span>name: tool <span style="color:#66d9ef">for</span> tool <span style="color:#f92672">in</span> tools}
+</span></span><span style="display:flex;"><span>llm <span style="color:#f92672">=</span> init_chat_model(model<span style="color:#f92672">=</span>os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#34;MODEL_NAME&#34;</span>), model_provider<span style="color:#f92672">=</span>os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#34;MODEL_PROVIDER&#34;</span>), temperature<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+</span></span></code></pre></div><p>Make sure to add .env file with two variables:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#a6e22e">MODEL_PROVIDER</span><span style="color:#f92672">=</span><span style="color:#e6db74">&lt;model-provider&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">MODEL_NAME</span><span style="color:#f92672">=</span><span style="color:#e6db74">&lt;model-name&gt;</span>
+</span></span></code></pre></div></li>
+<li>
+<p>Define state</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">EmailIntentExtraction</span>(BaseModel):
+</span></span><span style="display:flex;"><span>    intent: str
+</span></span><span style="display:flex;"><span>    questions: list[str]
+</span></span><span style="display:flex;"><span>    tone: str
+</span></span><span style="display:flex;"><span>    urgency: str
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@classmethod</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">empty</span>(cls) <span style="color:#f92672">-&gt;</span> <span style="color:#e6db74">&#34;EmailIntentExtraction&#34;</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> EmailIntentExtraction(intent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>, questions<span style="color:#f92672">=</span>[], tone<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>, urgency<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">State</span>(TypedDict):
+</span></span><span style="display:flex;"><span>    email_text: str
+</span></span><span style="display:flex;"><span>    extraction: EmailIntentExtraction
+</span></span><span style="display:flex;"><span>    reply_outline: str
+</span></span><span style="display:flex;"><span>    full_email: str
+</span></span><span style="display:flex;"><span>    final_polished_email: str
+</span></span></code></pre></div></li>
+<li>
+<p>Define model nodes</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_last_unread_email</span>(state: State) <span style="color:#f92672">-&gt;</span> dict[str, Any]:
+</span></span><span style="display:flex;"><span>    llm_with_tools <span style="color:#f92672">=</span> llm<span style="color:#f92672">.</span>bind_tools(tools)
+</span></span><span style="display:flex;"><span>    message <span style="color:#f92672">=</span> llm_with_tools<span style="color:#f92672">.</span>invoke(
+</span></span><span style="display:flex;"><span>        [
+</span></span><span style="display:flex;"><span>            SystemMessage(content<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;You are a helpful assistant that can get unread emails.&#34;</span>),
+</span></span><span style="display:flex;"><span>            HumanMessage(content<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Get last unread mail from inbox&#34;</span>),
+</span></span><span style="display:flex;"><span>        ]
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># unnecessary: message is of type BaseMessage</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> isinstance(message, AIMessage):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> message<span style="color:#f92672">.</span>tool_calls:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> tool_call <span style="color:#f92672">in</span> message<span style="color:#f92672">.</span>tool_calls:
+</span></span><span style="display:flex;"><span>            tool <span style="color:#f92672">=</span> tools_by_name[tool_call[<span style="color:#e6db74">&#34;name&#34;</span>]]
+</span></span><span style="display:flex;"><span>            tool_result <span style="color:#f92672">=</span> tool<span style="color:#f92672">.</span>invoke(tool_call[<span style="color:#e6db74">&#34;args&#34;</span>])
+</span></span><span style="display:flex;"><span>            result<span style="color:#f92672">.</span>append(tool_result)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        result<span style="color:#f92672">.</span>append(message<span style="color:#f92672">.</span>content)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;email_text&#34;</span>: <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(result)}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">extract_intent_key_info</span>(state: State) <span style="color:#f92672">-&gt;</span> dict[str, Any]:
+</span></span><span style="display:flex;"><span>    extraction_prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Extract the following information from the email below:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    1. Sender&#39;s intent
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    2. Specific questions or requests
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    3. Tone of the email
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    4. Urgency or deadline
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Email:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    </span><span style="color:#ae81ff">\&#34;\&#34;\&#34;</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    </span><span style="color:#e6db74">{</span>state[<span style="color:#e6db74">&#34;email_text&#34;</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    </span><span style="color:#ae81ff">\&#34;\&#34;\&#34;</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Respond in JSON format.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    llm_with_structured_output <span style="color:#f92672">=</span> llm<span style="color:#f92672">.</span>with_structured_output(EmailIntentExtraction)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    message <span style="color:#f92672">=</span> llm_with_structured_output<span style="color:#f92672">.</span>invoke(
+</span></span><span style="display:flex;"><span>        [
+</span></span><span style="display:flex;"><span>            SystemMessage(content<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;You are a helpful assistant that extracts structured data from emails.&#34;</span>),
+</span></span><span style="display:flex;"><span>            HumanMessage(content<span style="color:#f92672">=</span>extraction_prompt),
+</span></span><span style="display:flex;"><span>        ]
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;extraction&#34;</span>: message}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_reply_outline</span>(state: State) <span style="color:#f92672">-&gt;</span> dict[str, Any]:
+</span></span><span style="display:flex;"><span>    extracted_info: EmailIntentExtraction <span style="color:#f92672">=</span> state[<span style="color:#e6db74">&#34;extraction&#34;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    outline_prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    You are an email assistant.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Based on the following extracted info, generate a structured email **outline** with these parts:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    1. Greeting
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    2. Acknowledgment of the sender&#39;s intent
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    3. Answers to questions or information needed
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    4. Next steps or follow-up
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    5. Closing
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Make sure the tone is </span><span style="color:#e6db74">{</span>extracted_info<span style="color:#f92672">.</span>tone<span style="color:#e6db74">}</span><span style="color:#e6db74"> and mention that a response will be sent before
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    </span><span style="color:#e6db74">{</span>extracted_info<span style="color:#f92672">.</span>urgency<span style="color:#f92672">.</span>lower()<span style="color:#e6db74">}</span><span style="color:#e6db74">.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Extracted Info:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    </span><span style="color:#e6db74">{</span>extracted_info<span style="color:#f92672">.</span>model_dump_json()<span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    message <span style="color:#f92672">=</span> llm<span style="color:#f92672">.</span>invoke(
+</span></span><span style="display:flex;"><span>        [
+</span></span><span style="display:flex;"><span>            SystemMessage(
+</span></span><span style="display:flex;"><span>                content<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;You are a helpful assistant that generates email outlines based on extracted intent.&#34;</span>
+</span></span><span style="display:flex;"><span>            ),
+</span></span><span style="display:flex;"><span>            HumanMessage(content<span style="color:#f92672">=</span>outline_prompt),
+</span></span><span style="display:flex;"><span>        ]
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;reply_outline&#34;</span>: message<span style="color:#f92672">.</span>content}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_full_reply_email</span>(state: State) <span style="color:#f92672">-&gt;</span> dict[str, Any]:
+</span></span><span style="display:flex;"><span>    email_outline <span style="color:#f92672">=</span> state[<span style="color:#e6db74">&#34;reply_outline&#34;</span>]
+</span></span><span style="display:flex;"><span>    compose_prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Using the following email outline, write a professional and polite email reply.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Format it as a formal business email. Keep the tone professional.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Outline:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    </span><span style="color:#e6db74">{</span>email_outline<span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    message <span style="color:#f92672">=</span> llm<span style="color:#f92672">.</span>invoke(
+</span></span><span style="display:flex;"><span>        [
+</span></span><span style="display:flex;"><span>            SystemMessage(content<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;You are an AI that writes professional business emails based on outlines.&#34;</span>),
+</span></span><span style="display:flex;"><span>            HumanMessage(content<span style="color:#f92672">=</span>compose_prompt),
+</span></span><span style="display:flex;"><span>        ]
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;full_email&#34;</span>: message<span style="color:#f92672">.</span>content}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__get_rewrite_prompt</span>(email_text: str, tone: Literal[<span style="color:#e6db74">&#34;friendly&#34;</span>, <span style="color:#e6db74">&#34;formal&#34;</span>, <span style="color:#e6db74">&#34;casual&#34;</span>, <span style="color:#e6db74">&#34;firm&#34;</span>]):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Rewrite the following email in a more **</span><span style="color:#e6db74">{</span>tone<span style="color:#e6db74">}</span><span style="color:#e6db74">** tone.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Keep all the original information intact, but adapt the language to fit the new tone.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Email:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    </span><span style="color:#ae81ff">\&#34;\&#34;\&#34;</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    </span><span style="color:#e6db74">{</span>email_text<span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    </span><span style="color:#ae81ff">\&#34;\&#34;\&#34;</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">tone_rewriter</span>(state: State) <span style="color:#f92672">-&gt;</span> dict[str, Any]:
+</span></span><span style="display:flex;"><span>    full_email <span style="color:#f92672">=</span> state[<span style="color:#e6db74">&#34;full_email&#34;</span>]
+</span></span><span style="display:flex;"><span>    prompt <span style="color:#f92672">=</span> __get_rewrite_prompt(full_email, <span style="color:#e6db74">&#34;formal&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    message <span style="color:#f92672">=</span> llm<span style="color:#f92672">.</span>invoke(
+</span></span><span style="display:flex;"><span>        [
+</span></span><span style="display:flex;"><span>            SystemMessage(
+</span></span><span style="display:flex;"><span>                content<span style="color:#f92672">=</span>(
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;You are an assistant that rewrites emails in different tones while keeping the original meaning.&#34;</span>
+</span></span><span style="display:flex;"><span>                )
+</span></span><span style="display:flex;"><span>            ),
+</span></span><span style="display:flex;"><span>            HumanMessage(content<span style="color:#f92672">=</span>prompt),
+</span></span><span style="display:flex;"><span>        ]
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;final_polished_email&#34;</span>: message<span style="color:#f92672">.</span>content}
+</span></span></code></pre></div></li>
+<li>
+<p>Define logic to determine whether to end (Conditional Gate)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">validate_incoming_email</span>(state: State) <span style="color:#f92672">-&gt;</span> str:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> len(state[<span style="color:#e6db74">&#34;email_text&#34;</span>]<span style="color:#f92672">.</span>strip()) <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">100</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;extract_intent_key_info&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> END
+</span></span></code></pre></div></li>
+<li>
+<p>Build an agent</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Build workflow</span>
+</span></span><span style="display:flex;"><span>workflow <span style="color:#f92672">=</span> StateGraph(State)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Add nodes</span>
+</span></span><span style="display:flex;"><span>workflow<span style="color:#f92672">.</span>add_node(<span style="color:#e6db74">&#34;get_last_unread_email&#34;</span>, get_last_unread_email)
+</span></span><span style="display:flex;"><span>workflow<span style="color:#f92672">.</span>add_node(<span style="color:#e6db74">&#34;extract_intent_key_info&#34;</span>, extract_intent_key_info)
+</span></span><span style="display:flex;"><span>workflow<span style="color:#f92672">.</span>add_node(<span style="color:#e6db74">&#34;generate_reply_outline&#34;</span>, generate_reply_outline)
+</span></span><span style="display:flex;"><span>workflow<span style="color:#f92672">.</span>add_node(<span style="color:#e6db74">&#34;generate_full_reply_email&#34;</span>, generate_full_reply_email)
+</span></span><span style="display:flex;"><span>workflow<span style="color:#f92672">.</span>add_node(<span style="color:#e6db74">&#34;tone_rewriter&#34;</span>, tone_rewriter)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Add edges to connect nodes</span>
+</span></span><span style="display:flex;"><span>workflow<span style="color:#f92672">.</span>add_edge(START, <span style="color:#e6db74">&#34;get_last_unread_email&#34;</span>)
+</span></span><span style="display:flex;"><span>workflow<span style="color:#f92672">.</span>add_conditional_edges(<span style="color:#e6db74">&#34;get_last_unread_email&#34;</span>, validate_incoming_email, [<span style="color:#e6db74">&#34;extract_intent_key_info&#34;</span>, END])
+</span></span><span style="display:flex;"><span>workflow<span style="color:#f92672">.</span>add_edge(<span style="color:#e6db74">&#34;extract_intent_key_info&#34;</span>, <span style="color:#e6db74">&#34;generate_reply_outline&#34;</span>)
+</span></span><span style="display:flex;"><span>workflow<span style="color:#f92672">.</span>add_edge(<span style="color:#e6db74">&#34;generate_reply_outline&#34;</span>, <span style="color:#e6db74">&#34;generate_full_reply_email&#34;</span>)
+</span></span><span style="display:flex;"><span>workflow<span style="color:#f92672">.</span>add_edge(<span style="color:#e6db74">&#34;generate_full_reply_email&#34;</span>, <span style="color:#e6db74">&#34;tone_rewriter&#34;</span>)
+</span></span><span style="display:flex;"><span>workflow<span style="color:#f92672">.</span>add_edge(<span style="color:#e6db74">&#34;tone_rewriter&#34;</span>, END)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>chain <span style="color:#f92672">=</span> workflow<span style="color:#f92672">.</span>compile()
+</span></span></code></pre></div></li>
+<li>
+<p>Invoke</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>initial_state <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;email_text&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;extraction&#34;</span>: EmailIntentExtraction<span style="color:#f92672">.</span>empty(),
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;reply_outline&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;full_email&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;final_polished_email&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>messages <span style="color:#f92672">=</span> chain<span style="color:#f92672">.</span>invoke(initial_state)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> key <span style="color:#f92672">in</span> messages:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>key<span style="color:#e6db74">}</span><span style="color:#e6db74">: &#34;</span>)
+</span></span><span style="display:flex;"><span>    print(messages[key])
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;---------------------------------------------&#34;</span>)
+</span></span></code></pre></div></li>
+<li>
+<p>Test</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Input emails</span>
+</span></span><span style="display:flex;"><span>input_email <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">From: adam@example.com
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Date: 2024, Dec 12 14:00
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Subject: Bulk Order Inquiry
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Hi Neha,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">I’m reaching out to inquire about the availability of your product in bulk.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">We are looking to order around 500 units and would like to know the pricing and delivery timeline.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Please get back to me by the end of the week.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Best Regards,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Adam Willson
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Final Response (tone &#34;formal&#34;)</span>
+</span></span><span style="display:flex;"><span>Subject: Re: Your Inquiry Regarding Bulk Order
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Dear <span style="color:#f92672">[</span>Sender Name<span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>We wish to express our gratitude <span style="color:#66d9ef">for</span> your inquiry concerning a bulk order. Your consideration of our products <span style="color:#66d9ef">for</span> your requirements is highly valued.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>We have duly noted your specific questions pertaining to the pricing structure <span style="color:#66d9ef">for</span> <span style="color:#ae81ff">500</span> units and the projected delivery timeline <span style="color:#66d9ef">for</span> an order of that magnitude. Our dedicated team is presently engaged in compiling the most precise and current information to comprehensively address these matters.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>You can expect to receive a comprehensive response containing all the requested information prior to the conclusion of this week.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Sincerely,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Your Name/Company Name<span style="color:#f92672">]</span>
+</span></span></code></pre></div></li>
+</ol>
+<h2 id="conclusion">Conclusion</h2>
+<p>In this article, we&rsquo;ve built a sophisticated AI Email Assistant that demonstrates the power of modern LLM orchestration. By decomposing the complex task of email response into manageable steps using <strong>Prompt Chaining</strong>, we created a system that is more reliable, and effective than a single monolithic prompt.</p>
+<p>This approach doesn&rsquo;t just apply to email assistants, the same pattern can be applied to countless other AI applications, from customer support systems to content generation pipelines.</p>
+]]></content>
+        </item>
         
         <item>
             <title>Strategy Pattern in Action</title>
