@@ -46,7 +46,7 @@ In this article, we will move beyond basic &ldquo;one-shot&rdquo; LLM prompts to
 In this article, we will move beyond basic “one-shot” LLM prompts to build an intelligent email responder using Prompt Chaining, Context Engineering, and LangGraph for robust orchestration. We will build a sophisticated multi-step agent that:">
   <meta itemprop="datePublished" content="2025-10-04T21:53:45+05:30">
   <meta itemprop="dateModified" content="2025-10-04T21:53:45+05:30">
-  <meta itemprop="wordCount" content="1748">
+  <meta itemprop="wordCount" content="2152">
   <meta itemprop="keywords" content="Python,Langgraph,Langchain,Effective Agents,LLMs">
 
   <meta name="twitter:card" content="summary">
@@ -130,7 +130,7 @@ In this article, we will move beyond basic “one-shot” LLM prompts to build a
           <circle cx="12" cy="12" r="10"></circle>
           <polyline points="12 6 12 12 16 14"></polyline>
         </svg>
-        9 minutes
+        11 minutes
 
         
       </p>
@@ -221,7 +221,7 @@ accurancy of the final output. However the downside of this workflow is latency.
 </ul>
 <p><strong>Context engineering</strong> is the process of curating, structuring, and managing the input (context window) provided to a language model in order to maximize its performance on a given task.</p>
 <p><img src="/context-engineering-for-agents.png" alt="Context Engineering"></p>
-<p>Image source: <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents</a></p>
+<p>Image source: <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents - Anthropic</a></p>
 <h2 id="langgraph">LangGraph</h2>
 <p>In this article, we&rsquo;ll use LangGraph to build an intelligent email responder.</p>
 <p>But what exactly is LangGraph?</p>
@@ -297,6 +297,8 @@ This makes LangGraph better for complex workflows eg: loops, branching, retries,
 <p>Install LangGraph dependencies</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install langgraph python-dotenv
 </span></span><span style="display:flex;"><span>pip install langchain-openai   <span style="color:#75715e"># integration package</span>
+</span></span></code></pre></div><p>Set environment variable <code>OPENAI_API_KEY</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export OPENAI_API_KEY<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;your-api-key&#34;</span>
 </span></span></code></pre></div></li>
 <li>
 <p>Verify Installation</p>
@@ -326,7 +328,6 @@ This makes LangGraph better for complex workflows eg: loops, branching, retries,
 <li>Prompt 4 (Optional) → &ldquo;Apply tone transformation (professional, friendly, casual, etc.)&rdquo;</li>
 </ol>
 <p><img src="/langgraph-graph-graph_api_example.png" alt="Example"></p>
-<p><strong>Usercase:</strong> Automate customer service or inbox zero workflows.</p>
 <h3 id="implementation">Implementation</h3>
 <ol>
 <li>
@@ -336,8 +337,20 @@ This makes LangGraph better for complex workflows eg: loops, branching, retries,
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">@tool</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">last_unread_email</span>() <span style="color:#f92672">-&gt;</span> str:
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e"># your logic to retrieve last unread email</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> email_text
-</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    From: adam@example.com
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Date: 2024, Dec 12 14:00
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Subject: Bulk Order Inquiry
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Hi Neha,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    I’m reaching out to inquire about the availability of your product in bulk.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    We are looking to order around 500 units and would like to know the pricing and delivery timeline.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Please get back to me by the end of the week.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Best Regards,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Adam Willson
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>tools <span style="color:#f92672">=</span> [last_unread_email]
 </span></span><span style="display:flex;"><span>tools_by_name <span style="color:#f92672">=</span> {tool<span style="color:#f92672">.</span>name: tool <span style="color:#66d9ef">for</span> tool <span style="color:#f92672">in</span> tools}
@@ -564,20 +577,70 @@ This makes LangGraph better for complex workflows eg: loops, branching, retries,
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Best Regards,
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Adam Willson
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Final Response (tone &#34;formal&#34;)</span>
-</span></span><span style="display:flex;"><span>Subject: Re: Your Inquiry Regarding Bulk Order
+</span></span></code></pre></div><p>Response (tone &ldquo;formal&rdquo;)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>extraction:
+</span></span><span style="display:flex;"><span>intent<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Inquiring about bulk order&#39;</span> questions<span style="color:#f92672">=[</span><span style="color:#e6db74">&#39;What is the pricing for 500 units?&#39;</span>, <span style="color:#e6db74">&#39;What is the delivery timeline for 500 units?&#39;</span><span style="color:#f92672">]</span> tone<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Professional&#39;</span> urgency<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;End of the week&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>---------------------------------------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>reply_outline:
+</span></span><span style="display:flex;"><span>Here is an email outline based on the information provided:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>**Subject: Re: Bulk Order Inquiry - <span style="color:#ae81ff">500</span> Units**
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>1.  **Greeting**
+</span></span><span style="display:flex;"><span>    *   Dear <span style="color:#f92672">[</span>Sender Name<span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>2.  **Acknowledgment of Sender<span style="color:#960050;background-color:#1e0010">&#39;</span>s Intent**
+</span></span><span style="display:flex;"><span>    *   Thank you <span style="color:#66d9ef">for</span> reaching out to us regarding your interest in a bulk order. We appreciate you considering our products.
+</span></span><span style="display:flex;"><span>    *   We understand you are specifically inquiring about the pricing and delivery timeline <span style="color:#66d9ef">for</span> <span style="color:#ae81ff">500</span> units.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>3.  **Answers to Questions / Information Needed**
+</span></span><span style="display:flex;"><span>    *   We are currently compiling the detailed information regarding the pricing structure <span style="color:#66d9ef">for</span> <span style="color:#ae81ff">500</span> units and the estimated delivery timeline.
+</span></span><span style="display:flex;"><span>    *   Please be assured that we will send a comprehensive response addressing both of your questions before the end of the week.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>4.  **Next Steps / Follow-up**
+</span></span><span style="display:flex;"><span>    *   We look forward to providing you with the necessary details and assisting you further with your bulk order.
+</span></span><span style="display:flex;"><span>    *   Should you have any additional questions in the meantime, please <span style="color:#66d9ef">do</span> not hesitate to contact us.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>5.  **Closing**
+</span></span><span style="display:flex;"><span>    *   Sincerely,
+</span></span><span style="display:flex;"><span>    *   <span style="color:#f92672">[</span>Your Name/Company Name<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>---------------------------------------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>full_email: 
+</span></span><span style="display:flex;"><span>Subject: Re: Bulk Order Inquiry - <span style="color:#ae81ff">500</span> Units
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Dear <span style="color:#f92672">[</span>Sender Name<span style="color:#f92672">]</span>,
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>We wish to express our gratitude <span style="color:#66d9ef">for</span> your inquiry concerning a bulk order. Your consideration of our products <span style="color:#66d9ef">for</span> your requirements is highly valued.
+</span></span><span style="display:flex;"><span>Thank you <span style="color:#66d9ef">for</span> reaching out to us regarding your interest in a bulk order. We appreciate you considering our products and understand you are specifically inquiring about the pricing and delivery timeline <span style="color:#66d9ef">for</span> <span style="color:#ae81ff">500</span> units.
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>We have duly noted your specific questions pertaining to the pricing structure <span style="color:#66d9ef">for</span> <span style="color:#ae81ff">500</span> units and the projected delivery timeline <span style="color:#66d9ef">for</span> an order of that magnitude. Our dedicated team is presently engaged in compiling the most precise and current information to comprehensively address these matters.
+</span></span><span style="display:flex;"><span>We are currently compiling the detailed information regarding the pricing structure <span style="color:#66d9ef">for</span> <span style="color:#ae81ff">500</span> units and the estimated delivery timeline. Please be assured that we will send a comprehensive response addressing both of your questions before the end of the week.
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>You can expect to receive a comprehensive response containing all the requested information prior to the conclusion of this week.
+</span></span><span style="display:flex;"><span>We look forward to providing you with the necessary details and assisting you further with your bulk order. Should you have any additional questions in the meantime, please <span style="color:#66d9ef">do</span> not hesitate to contact us.
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Sincerely,
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Your Name/Company Name<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>---------------------------------------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>final_polished_email: 
+</span></span><span style="display:flex;"><span>Subject: Re: Bulk Order Inquiry - <span style="color:#ae81ff">500</span> Units
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Dear <span style="color:#f92672">[</span>Sender Name<span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>We acknowledge receipt of your inquiry regarding a bulk order. We appreciate your interest in our products and note your specific request concerning the pricing and estimated delivery timeline <span style="color:#66d9ef">for</span> <span style="color:#ae81ff">500</span> units.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>We are currently in the process of compiling the comprehensive details pertaining to the pricing structure <span style="color:#66d9ef">for</span> <span style="color:#ae81ff">500</span> units and the projected delivery schedule. Please be advised that a comprehensive response addressing both of your inquiries will be dispatched prior to the close of this week.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>We anticipate furnishing you with the requisite details and offering further assistance with your bulk order. Should you require any additional information or have further questions in the interim, please <span style="color:#66d9ef">do</span> not hesitate to contact us.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Sincerely,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Your Name/Company Name<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>---------------------------------------------
 </span></span></code></pre></div></li>
 </ol>
 <h2 id="conclusion">Conclusion</h2>
@@ -612,7 +675,7 @@ This makes LangGraph better for complex workflows eg: loops, branching, retries,
           <line x1="16" y1="17" x2="8" y2="17"></line>
           <polyline points="10 9 9 9 8 9"></polyline>
         </svg>
-        1748 Words
+        2152 Words
       </p>
 
       <p>
